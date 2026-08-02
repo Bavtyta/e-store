@@ -1,0 +1,32 @@
+.header {
+  margin-bottom: var(--space-6);
+}
+.header h1 {
+  margin-bottom: var(--space-3);
+}
+.header p {
+  max-width: 50rem;
+  color: var(--color-text-secondary);
+}
+.children {
+  margin-bottom: var(--space-6);
+}
+.children ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.children a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.children a:hover {
+  background: var(--color-warning-surface);
+}

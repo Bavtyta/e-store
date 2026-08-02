@@ -1,0 +1,18 @@
+.root {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.root h1,
+.root p {
+  margin: 0;
+}
+
+.root p {
+  max-width: 38rem;
+  color: var(--color-text-secondary);
+}

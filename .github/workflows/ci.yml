@@ -1,0 +1,61 @@
+name: Frontend CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  VITE_ANALYTICS_ID: ''
+  VITE_API_BASE_URL: /api/v1
+  VITE_APP_ENV: production
+  VITE_ERROR_REPORTING_DSN: ''
+  VITE_MSW_ENABLED: 'false'
+  VITE_PUBLIC_SITE_URL: https://storefront.ci.invalid/
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Run unit and integration tests
+        run: npm run test
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Verify production output
+        run: npm run verify:production-output
+
+      - name: Install Chromium
+        run: npm exec -- playwright install --with-deps chromium
+
+      - name: Run E2E smoke test
+        run: npm run test:e2e

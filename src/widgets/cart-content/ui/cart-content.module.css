@@ -1,0 +1,146 @@
+.list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.imageLink {
+  display: block;
+  align-self: start;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.details,
+.heading,
+.commercial {
+  min-width: 0;
+}
+
+.details {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.heading h2,
+.heading p,
+.warning,
+.subtotal {
+  margin: 0;
+}
+
+.heading h2 {
+  font-size: var(--font-size-lg);
+  overflow-wrap: anywhere;
+}
+
+.heading h2 a {
+  color: var(--color-text-primary);
+}
+
+.heading p {
+  color: var(--color-text-secondary);
+}
+
+.identity {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.identity div {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.identity dt {
+  color: var(--color-text-secondary);
+}
+
+.identity dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.options li {
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface-subtle);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+}
+
+.commercial {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.warning {
+  padding: var(--space-3);
+  color: var(--color-warning);
+  background: var(--color-warning-surface);
+  border-radius: var(--radius-md);
+}
+
+.subtotal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 40rem) {
+  .item {
+    grid-template-columns: 1fr;
+  }
+
+  .imageLink,
+  .image {
+    max-width: 14rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .identity div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

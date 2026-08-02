@@ -1,0 +1,26 @@
+.root {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.root h1,
+.root p {
+  margin: 0;
+}
+
+.root a {
+  margin-top: var(--space-2);
+  color: inherit;
+}
+
+.root a:focus-visible {
+  outline-color: var(--color-focus);
+}
+
+.status {
+  font-weight: var(--font-weight-bold);
+}

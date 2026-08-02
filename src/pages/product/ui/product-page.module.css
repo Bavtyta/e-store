@@ -1,0 +1,41 @@
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.page main {
+  min-width: 0;
+}
+
+.content {
+  padding-block: clamp(var(--space-6), 5vw, var(--space-12));
+}
+
+.productGrid,
+.skeletonGrid {
+  display: grid;
+  gap: clamp(var(--space-5), 4vw, var(--space-8));
+  align-items: start;
+}
+
+.skeleton {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.skeletonGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+@media (min-width: 48rem) {
+  .productGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 1fr);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+  }
+}

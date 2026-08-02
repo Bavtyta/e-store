@@ -1,0 +1,751 @@
+openapi: 3.1.0
+info:
+  title: Storefront Catalog API
+  version: 1.1.0
+  description: |
+    Версионированный контракт storefront-каталога. Все суммы передаются
+    в копейках, валюта MVP — только RUB.
+servers:
+  - url: /
+paths:
+  /api/v1/catalog/categories:
+    get:
+      operationId: listCategories
+      summary: Получить дерево категорий
+      responses:
+        '200':
+          description: Категории storefront
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /api/v1/catalog/categories/{categoryPath}:
+    get:
+      operationId: getCategory
+      summary: Получить категорию по полному пути в каталоге
+      parameters:
+        - $ref: '#/components/parameters/CategoryPath'
+      responses:
+        '200':
+          description: Категория storefront
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /api/v1/catalog/products:
+    get:
+      operationId: listProducts
+      summary: Получить список товаров storefront
+      parameters:
+        - name: category
+          in: query
+          description: Глобально уникальный slug категории
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: Поисковая строка
+          schema:
+            type: string
+        - name: sort
+          in: query
+          schema:
+            $ref: '#/components/schemas/ProductSort'
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 20
+        - name: filter[attributeCode]
+          in: query
+          description: |
+            Шаблон параметра фильтра. Вместо attributeCode передаётся код
+            атрибута, например filter[diameter]=110.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Постраничный список активных товаров
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /api/v1/catalog/products/{slug}:
+    get:
+      operationId: getProduct
+      summary: Получить активный товар по slug
+      parameters:
+        - $ref: '#/components/parameters/ProductSlug'
+      responses:
+        '200':
+          description: Полные данные активного товара
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetails'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /api/v1/catalog/variants/resolve:
+    post:
+      operationId: resolveProductVariants
+      summary: Актуализировать варианты при восстановлении корзины
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolveVariantsRequest'
+      responses:
+        '200':
+          description: Найденные и отсутствующие варианты
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveVariantsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+components:
+  parameters:
+    CategoryPath:
+      name: categoryPath
+      in: path
+      required: true
+      description: Полный путь категории без префикса /catalog, например truby/pnd
+      schema:
+        type: string
+    ProductSlug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Некорректный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    NotFound:
+      description: Ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    Conflict:
+      description: Конфликт состояния
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    UnprocessableEntity:
+      description: Ошибка валидации
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    TooManyRequests:
+      description: Слишком много запросов
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    InternalServerError:
+      description: Внутренняя ошибка
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+    ServiceUnavailable:
+      description: Временная недоступность
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorEnvelope'
+  schemas:
+    Money:
+      type: object
+      additionalProperties: false
+      required:
+        - amountMinor
+        - currency
+      properties:
+        amountMinor:
+          type: integer
+          description: Сумма в копейках
+        currency:
+          type: string
+          const: RUB
+    Image:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - url
+        - alt
+        - width
+        - height
+        - sortOrder
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        alt:
+          type: string
+        width:
+          anyOf:
+            - type: number
+            - type: 'null'
+        height:
+          anyOf:
+            - type: number
+            - type: 'null'
+        sortOrder:
+          type: number
+    SeoData:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - description
+        - canonicalUrl
+        - indexable
+      properties:
+        title:
+          anyOf:
+            - type: string
+            - type: 'null'
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+        canonicalUrl:
+          anyOf:
+            - type: string
+            - type: 'null'
+        indexable:
+          type: boolean
+    Category:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - externalId
+        - parentId
+        - name
+        - slug
+        - path
+        - description
+        - image
+        - sortOrder
+        - childrenCount
+        - seo
+      properties:
+        id:
+          type: string
+        externalId:
+          anyOf:
+            - type: string
+            - type: 'null'
+        parentId:
+          anyOf:
+            - type: string
+            - type: 'null'
+        name:
+          type: string
+        slug:
+          type: string
+        path:
+          type: string
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+        image:
+          anyOf:
+            - $ref: '#/components/schemas/Image'
+            - type: 'null'
+        sortOrder:
+          type: number
+        childrenCount:
+          type: number
+        seo:
+          $ref: '#/components/schemas/SeoData'
+    CategoryReference:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - path
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+    ProductSort:
+      type: string
+      enum:
+        - relevance
+        - price_asc
+        - price_desc
+        - name_asc
+        - name_desc
+    AvailabilityStatus:
+      type: string
+      enum:
+        - in_stock
+        - low_stock
+        - out_of_stock
+        - on_order
+        - unknown
+    Availability:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - message
+      properties:
+        status:
+          $ref: '#/components/schemas/AvailabilityStatus'
+        message:
+          anyOf:
+            - type: string
+            - type: 'null'
+    ProductUnitCode:
+      type: string
+      enum:
+        - piece
+        - meter
+        - kilogram
+        - roll
+        - set
+        - package
+    ProductUnit:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - label
+      properties:
+        code:
+          $ref: '#/components/schemas/ProductUnitCode'
+        label:
+          type: string
+    Attribute:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - name
+        - value
+        - unit
+        - group
+        - sortOrder
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        value:
+          oneOf:
+            - type: string
+            - type: number
+            - type: boolean
+        unit:
+          anyOf:
+            - type: string
+            - type: 'null'
+        group:
+          anyOf:
+            - type: string
+            - type: 'null'
+        sortOrder:
+          type: number
+    VariantOptionValue:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - label
+        - value
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+    VariantOptionGroup:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - name
+        - sortOrder
+        - values
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        sortOrder:
+          type: number
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantOptionValue'
+    ProductVariant:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - externalId
+        - sku
+        - name
+        - price
+        - oldPrice
+        - priceType
+        - unit
+        - quantityStep
+        - minOrderQuantity
+        - maxOrderQuantity
+        - packageQuantity
+        - availability
+        - availableQuantity
+        - optionValues
+        - attributes
+        - imageId
+      properties:
+        id:
+          type: string
+        externalId:
+          anyOf:
+            - type: string
+            - type: 'null'
+        sku:
+          type: string
+        name:
+          type: string
+        price:
+          anyOf:
+            - $ref: '#/components/schemas/Money'
+            - type: 'null'
+        oldPrice:
+          anyOf:
+            - $ref: '#/components/schemas/Money'
+            - type: 'null'
+        priceType:
+          type: string
+          enum:
+            - fixed
+            - from
+            - on_request
+        unit:
+          $ref: '#/components/schemas/ProductUnit'
+        quantityStep:
+          type: string
+        minOrderQuantity:
+          type: string
+        maxOrderQuantity:
+          anyOf:
+            - type: string
+            - type: 'null'
+        packageQuantity:
+          anyOf:
+            - type: string
+            - type: 'null'
+        availability:
+          $ref: '#/components/schemas/Availability'
+        availableQuantity:
+          anyOf:
+            - type: string
+            - type: 'null'
+        optionValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantOptionValue'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        imageId:
+          anyOf:
+            - type: string
+            - type: 'null'
+    ProductListItem:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - slug
+        - name
+        - thumbnail
+        - categoryId
+        - priceFrom
+        - priceTo
+        - primaryUnit
+        - availability
+        - shortAttributes
+        - badges
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        thumbnail:
+          anyOf:
+            - $ref: '#/components/schemas/Image'
+            - type: 'null'
+        categoryId:
+          type: string
+        priceFrom:
+          anyOf:
+            - $ref: '#/components/schemas/Money'
+            - type: 'null'
+        priceTo:
+          anyOf:
+            - $ref: '#/components/schemas/Money'
+            - type: 'null'
+        primaryUnit:
+          anyOf:
+            - $ref: '#/components/schemas/ProductUnit'
+            - type: 'null'
+        availability:
+          $ref: '#/components/schemas/Availability'
+        shortAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        badges:
+          type: array
+          items:
+            type: string
+    ProductDetails:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - externalId
+        - slug
+        - name
+        - description
+        - category
+        - status
+        - images
+        - attributes
+        - optionGroups
+        - variants
+        - seo
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+        externalId:
+          anyOf:
+            - type: string
+            - type: 'null'
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+        category:
+          $ref: '#/components/schemas/CategoryReference'
+        status:
+          type: string
+          const: active
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        optionGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariantOptionGroup'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+        seo:
+          $ref: '#/components/schemas/SeoData'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Pagination:
+      type: object
+      additionalProperties: false
+      required:
+        - page
+        - limit
+        - total
+        - totalPages
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        limit:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+        totalPages:
+          type: integer
+          minimum: 0
+    ProductListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - pagination
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductListItem'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ResolveVariantsRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - variantIds
+      properties:
+        variantIds:
+          type: array
+          items:
+            type: string
+    CartProductReference:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - slug
+        - name
+        - image
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        image:
+          anyOf:
+            - $ref: '#/components/schemas/Image'
+            - type: 'null'
+    CartResolvedVariant:
+      type: object
+      additionalProperties: false
+      required:
+        - product
+        - variant
+      properties:
+        product:
+          $ref: '#/components/schemas/CartProductReference'
+        variant:
+          $ref: '#/components/schemas/ProductVariant'
+    ResolveVariantsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - missingVariantIds
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartResolvedVariant'
+        missingVariantIds:
+          type: array
+          items:
+            type: string
+    ApiError:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - message
+        - details
+        - requestId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          description: Произвольные безопасные структурированные детали либо null
+        requestId:
+          anyOf:
+            - type: string
+            - type: 'null'
+    ApiErrorEnvelope:
+      type: object
+      additionalProperties: false
+      required:
+        - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ApiError'

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+package-lock.json
+public/mockServiceWorker.js
+.vscode/
+tz.md
+engineering_standards.md
+frontend_architercture.md

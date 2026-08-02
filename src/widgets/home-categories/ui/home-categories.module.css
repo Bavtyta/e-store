@@ -1,0 +1,38 @@
+.root {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.heading h2 {
+  margin: 0;
+}
+.root ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.root li {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+.root li a {
+  display: block;
+  padding: var(--space-4);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+.root li a:hover {
+  background: var(--color-warning-surface);
+}

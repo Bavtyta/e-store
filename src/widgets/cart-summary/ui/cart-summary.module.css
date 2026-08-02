@@ -1,0 +1,33 @@
+.root {
+  position: sticky;
+  top: var(--space-4);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.root h2,
+.row,
+.note {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.note {
+  padding: var(--space-3);
+  color: var(--color-warning);
+  background: var(--color-warning-surface);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 55rem) {
+  .root {
+    position: static;
+  }
+}

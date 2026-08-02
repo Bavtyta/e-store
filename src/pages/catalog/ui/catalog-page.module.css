@@ -1,0 +1,26 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.content {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-12);
+}
+.content > h1 {
+  margin-bottom: var(--space-6);
+}
+.layout {
+  display: grid;
+  gap: var(--space-6);
+}
+.layout aside h2 {
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-lg);
+}
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}

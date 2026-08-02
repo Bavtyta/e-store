@@ -1,0 +1,23 @@
+.root {
+  min-width: 0;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.compact {
+  padding: var(--space-4);
+}
+
+.comfortable {
+  padding: var(--space-6);
+}
+
+.outlined {
+  border: 1px solid var(--color-border);
+}
+
+.elevated {
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-card);
+}

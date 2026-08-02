@@ -1,0 +1,92 @@
+.root {
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.skipLink {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-surface);
+  background: var(--color-dark-surface);
+  border-radius: var(--radius-md);
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 4.5rem;
+}
+.brand {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+.content nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.content nav a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+.content nav a[aria-current='page'] {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-hover);
+  text-decoration-thickness: 0.2rem;
+  text-underline-offset: var(--space-2);
+}
+
+.cartLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cartCount {
+  display: inline-grid;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  padding-inline: var(--space-1);
+  place-items: center;
+  color: var(--color-text-primary);
+  background: var(--color-accent);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-decoration: none;
+}
+
+@media (max-width: 30rem) {
+  .content {
+    align-content: center;
+    padding-block: var(--space-3);
+  }
+
+  .brand,
+  .content nav {
+    width: 100%;
+  }
+
+  .content nav {
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .content nav a {
+    padding-block: var(--space-2);
+  }
+}
