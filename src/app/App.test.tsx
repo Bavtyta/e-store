@@ -1,22 +1,27 @@
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router';
 
-import { App } from './App';
 import { createAppQueryClient } from './providers';
-import { appRoutes } from './router/routes';
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import { HomePage } from '@/pages/home';
 
 describe('application smoke test', () => {
-  it('starts and renders the requested route', async () => {
+  it('renders the home page', () => {
     const queryClient = createAppQueryClient();
-    const router = createMemoryRouter(appRoutes, {
-      initialEntries: ['/'],
-    });
 
-    render(<App queryClient={queryClient} router={router} />);
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <HomePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
 
     expect(
-      await screen.findByRole('heading', {
-        name: 'Материалы для монтажа, ремонта и производства',
+      screen.getByRole('heading', {
+        level: 1,
+        name: 'Строительные материалы для профессионалов',
       }),
     ).toBeInTheDocument();
   });

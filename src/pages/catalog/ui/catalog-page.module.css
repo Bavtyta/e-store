@@ -1,26 +1,202 @@
 .page {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+  min-width: 0;
 }
+
 .content {
-  padding-top: var(--space-6);
-  padding-bottom: var(--space-12);
+  min-width: 0;
+  padding-block: var(--space-6);
 }
-.content > h1 {
-  margin-bottom: var(--space-6);
+
+.heading {
+  margin: 0 0 var(--space-6);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-heading);
 }
+
 .layout {
   display: grid;
+  grid-template-columns: 1fr;
   gap: var(--space-6);
 }
-.layout aside h2 {
-  margin-bottom: var(--space-3);
-  font-size: var(--font-size-lg);
+
+.sidebarTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
+
+.filters {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.filtersTitle {
+  margin: 0 0 var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filterGroup {
+  margin-bottom: var(--space-4);
+}
+
+.filterLabel {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.filterInput {
+  width: 100%;
+  height: 2.25rem;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  transition: border-color var(--transition-fast);
+}
+
+.filterInput:focus {
+  border-color: var(--color-accent);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.filterDash {
+  color: var(--color-text-secondary);
+}
+
+.filterChecks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.filterCheck {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.filterCheck input[type='checkbox'] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--color-accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.filterSelect {
+  width: 100%;
+  height: 2.25rem;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  border-color: var(--color-accent);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.main {
+  min-width: 0;
+}
+
+/* Desktop: details раскрыт и ведёт себя как обычный блок */
+.sidebarToggle {
+  display: none;
+}
+
+/* Mobile: sidebar складывается в аккордеон */
+@media (max-width: 47.9375rem) {
+  .sidebarInner {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .sidebarToggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-align: left;
+    list-style: none;
+  }
+
+  .sidebarToggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .sidebarToggleIcon {
+    transition: transform var(--transition-fast);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+  }
+
+  .sidebarInner[open] .sidebarToggleIcon {
+    transform: rotate(180deg);
+  }
+
+  .sidebarBody {
+    padding: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+@media (min-width: 48rem) {
+  .layout {
+    grid-template-columns: 13rem 1fr;
+    align-items: start;
+  }
+
+  .sidebarBody {
+    padding: 0;
+    border-top: none;
+  }
+}
+
 @media (min-width: 64rem) {
   .layout {
-    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
-    align-items: start;
+    grid-template-columns: 15rem 1fr;
   }
 }

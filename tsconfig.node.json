@@ -19,5 +19,10 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "src/shared/config/parseEnvironment.ts"]
+  "include": [
+    "vite.config.ts",
+    "playwright.config.ts",
+    "scripts/seo-assets.ts",
+    "src/shared/config/parseEnvironment.ts"
+  ]
 }

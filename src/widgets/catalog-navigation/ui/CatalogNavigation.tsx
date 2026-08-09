@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 
 import type { Category } from '@/entities/category';
 
@@ -27,7 +27,14 @@ function CategoryBranch({
     <ul>
       {items.map((category) => (
         <li key={category.id}>
-          <Link to={category.path}>{category.name}</Link>
+          <NavLink
+            className={({ isActive }) =>
+              [styles.link, isActive ? styles.linkActive : ''].join(' ').trim()
+            }
+            to={category.path}
+          >
+            {category.name}
+          </NavLink>
           <CategoryBranch categories={categories} parentId={category.id} />
         </li>
       ))}

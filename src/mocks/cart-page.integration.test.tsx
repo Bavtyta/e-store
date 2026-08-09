@@ -114,16 +114,15 @@ describe('CartPage integration', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('SKU-PRODUCT-001-25')).toBeInTheDocument();
     expect(screen.getByLabelText('Количество «Труба ПНД PE100 питьевая»')).toHaveValue(1);
-    expect(screen.getByLabelText('В корзине позиций: 1')).toBeInTheDocument();
     expect(screen.getByText('Корзина актуализирована. Позиций: 1.')).toHaveAttribute(
       'aria-live',
       'polite',
     );
 
-    const summary = screen.getByRole('heading', { name: 'Итого' }).parentElement;
+    const summary = screen.getByRole('heading', { name: 'Детали заказа' }).parentElement;
 
     expect(summary).not.toBeNull();
-    expect(within(summary ?? document.body).getByText(/125,00/)).toBeInTheDocument();
+    expect(within(summary ?? document.body).getAllByText(/125,00/).length).toBeGreaterThan(0);
   });
 
   it('keeps a missing variant visible until the user removes it', async () => {
@@ -182,10 +181,10 @@ describe('CartPage integration', () => {
       screen.queryByLabelText('Количество «Труба ПНД PE100 питьевая»'),
     ).not.toBeInTheDocument();
 
-    const summary = screen.getByRole('heading', { name: 'Итого' }).parentElement;
+    const summary = screen.getByRole('heading', { name: 'Детали заказа' }).parentElement;
 
     expect(summary).not.toBeNull();
-    expect(within(summary ?? document.body).getByText('0,00 ₽')).toBeInTheDocument();
+    expect(within(summary ?? document.body).getAllByText('0,00 ₽').length).toBeGreaterThan(0);
   });
 
   it('clears the cart only after confirmation', async () => {

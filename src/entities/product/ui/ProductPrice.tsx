@@ -30,6 +30,7 @@ export function ProductPrice({ variant }: ProductPriceProps) {
       <span className={styles.type}>{priceTypeLabels[variant.priceType]}</span>
       <strong className={styles.current}>
         {formatProductPrice(variant.price, variant.priceType)}
+        <span className={styles.unit}>за {variant.unit.label}</span>
       </strong>
       {variant.oldPrice === null ? null : (
         <span className={styles.old}>

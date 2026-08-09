@@ -9,8 +9,6 @@ import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata } from '@/shared/lib';
 import type { PageMetadataDescriptor } from '@/shared/lib';
 import { Breadcrumbs, Container, EmptyState, ErrorState, Skeleton } from '@/shared/ui';
-import { Footer } from '@/widgets/footer';
-import { Header } from '@/widgets/header';
 import { ProductDetails } from '@/widgets/product-details';
 import { ProductGallery } from '@/widgets/product-gallery';
 
@@ -75,11 +73,7 @@ function ProductPageFrame({ children, metadata }: ProductPageFrameProps) {
   return (
     <div className={styles.page}>
       <PageMetadata metadata={metadata} />
-      <Header />
-      <main id="main-content" tabIndex={-1}>
-        <Container className={styles.content}>{children}</Container>
-      </main>
-      <Footer />
+      <Container className={styles.content}>{children}</Container>
     </div>
   );
 }

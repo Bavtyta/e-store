@@ -1,10 +1,4 @@
 .page {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
-}
-
-.page main {
   min-width: 0;
 }
 
@@ -15,7 +9,7 @@
 .productGrid,
 .skeletonGrid {
   display: grid;
-  gap: clamp(var(--space-5), 4vw, var(--space-8));
+  gap: var(--space-6);
   align-items: start;
 }
 
@@ -25,12 +19,17 @@
 }
 
 .skeletonGrid {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 48rem) {
   .productGrid {
-    grid-template-columns: minmax(0, 1fr) minmax(22rem, 1fr);
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-8);
+  }
+
+  .skeletonGrid {
+    grid-template-columns: 7fr 5fr;
   }
 }
 

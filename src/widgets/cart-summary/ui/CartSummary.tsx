@@ -1,6 +1,5 @@
 import { formatCartMoney } from '@/entities/cart';
 import { CheckoutPlaceholder } from '@/features/checkout-placeholder';
-import { ClearCartButton } from '@/features/clear-cart';
 import { Card } from '@/shared/ui';
 
 import styles from './cart-summary.module.css';
@@ -29,14 +28,26 @@ function formatLineCount(count: number): string {
 export function CartSummary({ excludedFromTotalCount, lineCount, totalMinor }: CartSummaryProps) {
   return (
     <Card className={styles.root} variant="elevated">
-      <h2>Итого</h2>
-      <p className={styles.row}>
-        <span>В корзине</span>
-        <strong>{formatLineCount(lineCount)}</strong>
-      </p>
-      <p className={styles.row}>
-        <span>Предварительная сумма</span>
-        <strong aria-atomic="true" aria-live="polite">
+      <h2>Детали заказа</h2>
+      <div className={styles.rows}>
+        <p className={styles.row}>
+          <span>Сумма заказа ({formatLineCount(lineCount)})</span>
+          <strong aria-atomic="true" aria-live="polite">
+            {formatCartMoney(totalMinor)}
+          </strong>
+        </p>
+        <p className={styles.row}>
+          <span>НДС</span>
+          <span className={styles.muted}>Включён в цену</span>
+        </p>
+        <p className={styles.row}>
+          <span>Доставка</span>
+          <span className={styles.muted}>Рассчитывается при оформлении</span>
+        </p>
+      </div>
+      <p className={styles.total}>
+        <span>Итого</span>
+        <strong aria-atomic="true" aria-live="polite" className={styles.totalValue}>
           {formatCartMoney(totalMinor)}
         </strong>
       </p>
@@ -45,8 +56,11 @@ export function CartSummary({ excludedFromTotalCount, lineCount, totalMinor }: C
           {excludedFromTotalCount} поз. не включено в сумму: цена или доступность требует уточнения.
         </p>
       )}
+      <p className={styles.disclaimer}>
+        Цены ориентировочные. Итоговая стоимость может варьироваться в зависимости от места
+        доставки и оптовых скидок.
+      </p>
       <CheckoutPlaceholder />
-      <ClearCartButton />
     </Card>
   );
 }

@@ -4,7 +4,7 @@ import { classNames } from '@/shared/lib';
 
 import styles from './badge.module.css';
 
-export type BadgeTone = 'neutral' | 'success' | 'warning' | 'error';
+export type BadgeTone = 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
 
 export interface BadgeProps extends ComponentPropsWithoutRef<'span'> {
   tone?: BadgeTone;

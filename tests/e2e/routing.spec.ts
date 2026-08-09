@@ -5,11 +5,11 @@ const responsiveViewports = [320, 375, 768, 1024, 1440] as const;
 
 const responsivePages = [
   {
-    heading: 'Материалы для монтажа, ремонта и производства',
+    heading: 'Строительные материалы для профессионалов',
     path: '/',
   },
   {
-    heading: 'Каталог материалов',
+    heading: 'Каталог товаров',
     path: '/catalog',
   },
   {
@@ -69,11 +69,11 @@ async function expectMetadataTag(
 test('opens a product from the catalog, changes its variant and handles 404', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Материалы для монтажа, ремонта и производства' }),
+    page.getByRole('heading', { name: 'Строительные материалы для профессионалов' }),
   ).toBeVisible();
 
   await page.getByRole('link', { name: 'Каталог' }).first().click();
-  await expect(page.getByRole('heading', { name: 'Каталог материалов' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Каталог товаров' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
 
   await page.getByLabel('Поиск товаров').fill('ПВХ');
@@ -258,9 +258,9 @@ test('opens the development UI preview and keeps dialog focus contained', async 
 test('applies indexable metadata to public storefront pages', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Материалы для монтажа, ремонта и производства' }),
+    page.getByRole('heading', { name: 'Строительные материалы для профессионалов' }),
   ).toBeVisible();
-  await expect(page).toHaveTitle('Строительные и промышленные материалы — ПромМатериалы');
+  await expect(page).toHaveTitle('BELT | Строительные материалы для профессионалов — ПромМатериалы');
   await expectMetadataTag(page, 'link[rel="canonical"]', 'href', 'http://127.0.0.1:4173/');
   await expectMetadataTag(page, 'meta[name="robots"]', 'content', 'index, follow');
 

@@ -96,6 +96,7 @@ VITE_ANALYTICS_ID=
 | `npm run test`                     | Выполнить unit, component и integration tests |
 | `npm run test:watch`               | Запустить Vitest в watch-режиме               |
 | `npm run test:e2e`                 | Выполнить Playwright smoke-тесты              |
+| `npm run test:a11y`                | Выполнить независимый axe accessibility-аудит |
 | `npm run build`                    | Проверить типы и собрать production bundle    |
 | `npm run verify:production-output` | Проверить отсутствие MSW/fixtures в `dist/`   |
 | `npm run format`                   | Отформатировать проект                        |

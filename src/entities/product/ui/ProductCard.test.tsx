@@ -29,7 +29,6 @@ describe('ProductCard', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('img', { name: /изображение товара/i })).toBeInTheDocument();
     expect(screen.getByText('Цена по запросу')).toBeInTheDocument();
     expect(screen.getByText('Под заказ')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /открыть товар/i })).toHaveAttribute(

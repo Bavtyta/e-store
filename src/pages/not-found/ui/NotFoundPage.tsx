@@ -19,12 +19,12 @@ export function NotFoundPage() {
   return (
     <>
       <PageMetadata metadata={notFoundMetadata} />
-      <main className={styles.root} id="main-content" tabIndex={-1}>
+      <section className={styles.root}>
         <p className={styles.status}>404</p>
         <h1>Страница не найдена</h1>
         <p>Проверьте адрес или вернитесь на главную страницу.</p>
         <Link to="/">Вернуться на главную</Link>
-      </main>
+      </section>
     </>
   );
 }

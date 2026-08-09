@@ -9,7 +9,12 @@
 }
 
 .current {
-  font-size: clamp(var(--font-size-xl), 5vw, var(--font-size-2xl));
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
   line-height: var(--line-height-tight);
   overflow-wrap: anywhere;
 }
@@ -17,4 +22,11 @@
 .old {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+}
+
+.unit {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+  letter-spacing: 0;
 }

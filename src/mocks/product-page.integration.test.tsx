@@ -185,6 +185,5 @@ describe('ProductPage integration', () => {
       }),
     ]);
     expect(screen.getByText('Товар добавлен в корзину')).toBeInTheDocument();
-    expect(screen.getByLabelText('В корзине позиций: 1')).toBeInTheDocument();
   });
 });

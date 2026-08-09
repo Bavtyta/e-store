@@ -12,6 +12,8 @@ html {
   font-size: 100%;
   line-height: var(--line-height-normal);
   text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -20,37 +22,51 @@ body {
   margin: 0;
   color: var(--color-text-primary);
   background: var(--color-background);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
 }
 
 #root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+
+#root > main,
+main[id='main-content'] {
+  flex-grow: 1;
+  padding-bottom: var(--bottom-nav-inset);
 }
 
 h1,
 h2,
 h3,
+h4,
 p {
   margin-block-start: 0;
 }
 
 h1,
 h2,
-h3 {
-  line-height: var(--line-height-tight);
+h3,
+h4 {
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-2xl));
+  font-size: clamp(var(--font-size-xl), 3.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
 }
 
 h2 {
   font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
 }
 
 h3 {
   font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
 }
 
 button,
@@ -80,7 +96,7 @@ textarea,
 }
 
 ::selection {
-  color: var(--color-text-primary);
+  color: var(--color-on-accent);
   background: var(--color-accent);
 }
 
