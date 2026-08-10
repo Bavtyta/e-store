@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BELT | Строительные материалы в Тольятти</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-tertiary-fixed-variant": "#004e59",
+                "secondary-fixed": "#ffdad6",
+                "surface-container-low": "#f1f3ff",
+                "surface-container-highest": "#dce2f7",
+                "on-tertiary-fixed": "#001f25",
+                "secondary-fixed-dim": "#ffb4ab",
+                "on-primary-fixed-variant": "#574500",
+                "surface-dim": "#d3daef",
+                "secondary-container": "#e02928",
+                "secondary": "#bb0112",
+                "primary-container": "#facc15",
+                "on-tertiary": "#ffffff",
+                "inverse-surface": "#293040",
+                "surface-variant": "#dce2f7",
+                "on-secondary-container": "#fffbff",
+                "tertiary-fixed-dim": "#15daf4",
+                "on-surface": "#141b2b",
+                "error": "#ba1a1a",
+                "surface": "#f9f9ff",
+                "on-secondary": "#ffffff",
+                "primary": "#735c00",
+                "on-tertiary-container": "#006270",
+                "on-surface-variant": "#4d4632",
+                "on-secondary-fixed": "#410002",
+                "background": "#f9f9ff",
+                "surface-container": "#e9edff",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed-variant": "#93000b",
+                "error-container": "#ffdad6",
+                "on-background": "#141b2b",
+                "tertiary": "#006876",
+                "outline-variant": "#d1c6ab",
+                "inverse-primary": "#eec200",
+                "tertiary-fixed": "#a0efff",
+                "surface-tint": "#735c00",
+                "surface-container-lowest": "#ffffff",
+                "outline": "#7f7660",
+                "on-primary-fixed": "#231b00",
+                "tertiary-container": "#33e4ff",
+                "inverse-on-surface": "#edf0ff",
+                "on-primary-container": "#6c5700",
+                "surface-container-high": "#e1e8fd",
+                "on-error": "#ffffff",
+                "primary-fixed-dim": "#eec200",
+                "primary-fixed": "#ffe083",
+                "on-primary": "#ffffff",
+                "surface-bright": "#f9f9ff"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "lg": "24px",
+                "base": "8px",
+                "md": "16px",
+                "gutter": "24px",
+                "xl": "32px",
+                "xs": "4px",
+                "sm": "8px",
+                "container-max": "1280px"
+        },
+        "fontFamily": {
+                "display-md": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Inter"
+                ],
+                "code": [
+                        "jetbrainsMono"
+                ],
+                "headline-lg": [
+                        "Inter"
+                ],
+                "headline-sm": [
+                        "Inter"
+                ],
+                "body-sm": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "display-md": [
+                        "30px",
+                        {
+                                "lineHeight": "38px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "36px",
+                        {
+                                "lineHeight": "44px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "code": [
+                        "13px",
+                        {
+                                "lineHeight": "18px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "body-lg": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>.hero-bg {
+    background-color: #141b2b;
+    /* on-surface roughly */
+    background-image: linear-gradient(rgba(20, 27, 43, 0.8), rgba(20, 27, 43, 0.9)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuC6rgRyA18SZc9gFaDG-dJJByxeYzm4acpfwfnfLNm0T71AcXP8ifJ6YNr29AufE0yEVPTN3FvvI1IemO7iJ7Vh2AMnbG6jI3EBKLVk0x5aV6mv4kI5KsZOV8Mc8QfX6GcIZPaux4K7Ifn10MlvHll1f2FPCTv2e2NDhgwb5TKxuG2ySUKQbAY_aW-117V9rlv8_C_9YgZk5VF0xs6ccOYZsOTUCtzOQg5KUie25MnMCwyEJEngnqZr);
+    background-size: cover;
+    background-position: center
+    }
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px
+    }
+.bento-item {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.25rem;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+    }</style>
+</head>
+<body class="bg-surface text-on-surface font-body-lg">
+<!-- Top Info Bar -->
+<div class="bg-inverse-surface text-inverse-on-surface py-2 px-lg text-center font-body-sm hidden md:block">
+<div class="max-w-container-max mx-auto flex justify-between items-center">
+<span>📍 Склад в Тольятти | 🚚 Доставка по Самарской области</span>
+<span>📞 +7 (8482) 00-00-00</span>
+</div>
+</div>
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline z-50">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-lg h-20">
+<div class="flex items-center gap-md">
+<img alt="BELT Logo" class="h-10 w-10 object-contain" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<span class="font-display-md text-display-md font-black text-on-surface dark:text-inverse-on-surface">BELT</span>
+</div>
+<div class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+<!-- Assuming 'Catalog' is an active match for a generic homepage browsing -->
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary hover:text-primary dark:hover:text-inverse-primary transition-colors py-2" href="#">Каталог</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors py-2" href="#">Бренды</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors py-2" href="#">Услуги</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors py-2" href="#">Доставка</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors py-2" href="#">Контакты</a>
+</div>
+<div class="flex items-center gap-md text-primary dark:text-inverse-primary">
+<button aria-label="person" class="hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button aria-label="shopping_cart" class="hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="hero-bg w-full min-h-[500px] flex items-center" data-alt="A massive, high-tech industrial warehouse or manufacturing facility with rows of neatly organized heavy materials. High-contrast lighting with deep dramatic shadows, industrial metallic tones, and subtle ambient glows. The atmosphere is professional, scale-focused, and modern. Sharp focus, architectural photography style.">
+<div class="max-w-container-max mx-auto px-lg w-full">
+<div class="max-w-2xl">
+<div class="mb-4 inline-flex items-center gap-2 bg-surface/10 backdrop-blur-sm border border-surface/20 rounded-full px-4 py-2 text-on-secondary font-label-md">
+<span class="material-symbols-outlined text-sm">location_on</span> Тольятти и Самарская область
+                </div>
+<h1 class="font-display-lg text-display-lg text-on-secondary mb-md">Строительные материалы в Тольятти и Самарской области</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl text-surface-container-highest">
+                    Розничные и оптовые поставки труб, фитингов и комплектующих. Доставка по всей области.
+                </p>
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-md rounded hover:opacity-90 transition-opacity">
+                    Перейти в каталог
+                </button>
+</div>
+</div>
+</section>
+<!-- Categories Section -->
+<section class="max-w-container-max mx-auto px-lg py-xl mt-xl">
+<h2 class="font-headline-lg text-headline-lg mb-lg">Категории</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<a class="group block relative h-48 bg-surface-container-lowest border border-outline-variant rounded hover:shadow-md transition-all overflow-hidden flex items-end p-md" href="#">
+<div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity" data-alt="Close up view of stacked industrial steel and PVC pipes in a warehouse setting. Cold, metallic lighting with high contrast. Industrial, clean, and organized aesthetic. Focus on textures of metal and plastic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsKKjq4-db3vHKzVnoXKq1ZaCHB7MF3mESvjzFBKcd3vT0SrUoT5OefWa1FI_kdz2BzieKFxHI31vOTN_jq7ADrrCdsbAe8oaajXWfBUgXiV1IEUXAnxfIyJGug-7v9ufX9flIdyPpFuaWeeLkvX_N1mKa1K9phncneaCNWdhBDBN9YXl7WwfQILCI7E-ra5pKnhqB0ew9v12J9TFQUIfC9P8TIKIpC3dEJ893x8C1lurRJlW0lzeT')"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">Трубы</span>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+</div>
+</a>
+<a class="group block relative h-48 bg-surface-container-lowest border border-outline-variant rounded hover:shadow-md transition-all overflow-hidden flex items-end p-md" href="#">
+<div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity" data-alt="Macro photography of brass and steel plumbing fittings scattered on an engineering workbench. Warm brass tones contrasting with cool steel. Sharp focus on threading and industrial precision. Professional engineering aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-Kotw_xyopblX0XLh-eHBCDV6X-BML4Db6f4Q2dPwN733jRxoqBHk5-GbnmLWsNu7OpqGO1gbbI_FnLBnln3uaY6TM9E5ggJtOF_1heppW0ZcLi6IiWeQ2J2k5TczOv44zpAK2sxpE9z89d2o0f5oy_z_9YeGBjuEvhcYloIuErS6xYzJA7ikkRFlCwGz24gXr5VuMjdTpjsGikfPM7bm029XbFgdJ00LYKS1RkQWVGEV2sVNqezO')"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">Фитинги</span>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+</div>
+</a>
+<a class="group block relative h-48 bg-surface-container-lowest border border-outline-variant rounded hover:shadow-md transition-all overflow-hidden flex items-end p-md" href="#">
+<div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity" data-alt="Industrial rubber goods and seals neatly arranged on a technical blueprint. Dark, matte rubber textures against crisp white and blue linework. Clean, technical, and precise industrial photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASqSp_7fIMp-m7PhmQYlqnAeqiFhsWttg9KdXwG3snoY5HpSO6AyMlTbkPYFXkhskVWxJj8cjB7YriHLAEmEIG03OQs7rSySTLGejV4cxfBYYKgLq-Jfn0n2aVDSzs3LUDAUA11GYO4Lm_V0RzKBCotDKGg7qKfjuhU3lkJsePr7TpqBoFtBvUHog8eSF2tLmMkYVpxgNVGHOkFFn-Xi5n8U5-qc8cr_b7fMREbMLUMBImXHUMSHOa')"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">РТИ</span>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+</div>
+</a>
+<a class="group block relative h-48 bg-surface-container-lowest border border-outline-variant rounded hover:shadow-md transition-all overflow-hidden flex items-end p-md" href="#">
+<div class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity" data-alt="Industrial monitoring cameras and sensor equipment mounted on structural steel beams. High-tech, clinical lighting emphasizing lenses and metallic housings. Modern smart-factory aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWwSLfb0kRLjo7Wi-zgRXJynXf6xcZkndkoI4mUvdtpk75Sg_IyQtAJUZjuvtZWRF0V4EjFWm6OfoEZ6J2Wg21-dK01knhK7IHmqJXfVqvZE0mfEzDfm4UU8QPxOVkshM8MJCzBSwF9qu_cy_Yyk6Lz5X07S8x3MdEiHiwt0-kSovV0HyghCjBNPGHHqvcWrzIH08Ui510NcIb8SOABsps83s6YB_8B_PKU84O8rAa6nc9t_Cu9R8c')"></div>
+<div class="relative z-10 w-full flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">Камеры</span>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+</div>
+</a>
+</div>
+</section>
+<!-- Popular Products (Bento Grid Style) -->
+<section class="max-w-container-max mx-auto px-lg py-xl bg-surface-container-low rounded-lg my-xl">
+<h2 class="font-headline-lg text-headline-lg mb-lg">Популярные товары</h2>
+<div class="bento-grid">
+<!-- Product Card 1 -->
+<div class="bento-item col-span-12 md:col-span-6 lg:col-span-3">
+<div class="mb-md">
+<div class="bg-surface-dim h-40 rounded mb-md flex items-center justify-center overflow-hidden">
+<img class="object-contain h-full w-full p-4" data-alt="A clean product shot of black high-density polyethylene (HDPE) pipe section on a pure white background. Sharp lighting, clear technical details, professional catalog style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAC7Q-1ryJPMUjY51YOJ1jNX5xRiusO80YDfRnLjN3kFNIdlWaOub-nHelMlaHiLjdCsoHOX8Q-XpHiUZZIZA1-NaNicdY-dm1beO5GLq1Kfs7Foz5dcpX5YyyLsyW9LfGCZEC70p3ZM89xLwzIiLZHIh1gsu0vqXaQjABh6Wd2x6_ABPldA0nqdGOLtRnk2wCTf0LD69o91dBpg3wop9-6D9OmjxIsIQ7i5jGcv2D0SPQPnkPIEod"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-tertiary-fixed text-on-tertiary-fixed-variant">
+                            В наличии
+                        </span>
+<span class="text-xs text-on-surface-variant font-code">ART: 994-HD</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1">Труба ПНД 32мм</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">PN10, SDR 17, Питьевая</p>
+</div>
+<div>
+<div class="border-t border-outline-variant pt-3 mb-4">
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant">Материал:</span>
+<span class="font-semibold">Полиэтилен</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Давление:</span>
+<span class="font-semibold">10 атм</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-headline-sm text-headline-sm font-bold">145 ₽/м</span>
+<button aria-label="Add to cart" class="bg-primary-container text-on-primary-container p-2 rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bento-item col-span-12 md:col-span-6 lg:col-span-3">
+<div class="mb-md">
+<div class="bg-surface-dim h-40 rounded mb-md flex items-center justify-center overflow-hidden">
+<img class="object-contain h-full w-full p-4" data-alt="A pristine studio shot of a 1/2 inch brass threaded fitting. The brass is polished and reflective against a stark white background. High depth of field, industrial catalog quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBClKehghzb5ex-wJB5dViMZ86ix8v6J0NIYSPeSSs18jMzuZGrDW3iyr7s8ciYyV7oq9OPKQt4oskDgTU3MaJwNDVAM5TwsTBMGGFhEAGP2ZzAfUGcF6X4NVeQhl04EaYgW87z9NbO4LL0ZiuVU60Hl6XgxmFl3DkprnrzkdlVfKnjR_AolvaQ6XmQY5xoxpTzNplwWg-duqox5T15sRhJIIkq51hJwZEMfkp8sbEoyQbjky82BJLL"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-tertiary-fixed text-on-tertiary-fixed-variant">
+                            В наличии
+                        </span>
+<span class="text-xs text-on-surface-variant font-code">ART: 112-BR</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1">Фитинг латунный 1/2"</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Муфта соединительная, ВР-ВР</p>
+</div>
+<div>
+<div class="border-t border-outline-variant pt-3 mb-4">
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant">Материал:</span>
+<span class="font-semibold">Латунь ЛС59-1</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Резьба:</span>
+<span class="font-semibold">Внутренняя</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-headline-sm text-headline-sm font-bold">120 ₽/шт</span>
+<button aria-label="Add to cart" class="bg-primary-container text-on-primary-container p-2 rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bento-item col-span-12 md:col-span-6 lg:col-span-3">
+<div class="mb-md">
+<div class="bg-surface-dim h-40 rounded mb-md flex items-center justify-center overflow-hidden">
+<img class="object-contain h-full w-full p-4" data-alt="Product photography of black industrial rubber sheet (TMKS). Matte texture, clean cut edges, isolated on a white background. Utilitarian, sharp focus, professional B2B presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOygWEojvLbsguWt3ulCSEQSJu5ZbmH0XUB0IW2oLfgYo4S5Lk15oArW1BNUBRYmEToCcpLPURqmxJpug-2LQwFnzS1VMutwFOGoieJOxJ_xLuKTNcWF3yPhMLszpfzmZ7kVmmODHCsONpubEgRGRnJNA0_IuUZ4dRBCnRSNpg7tG2M0Qd0fh9YX_uebUaYDEpe4D39CzItId4Mm1JHr2Ua-SGiVLxFEKPmPiLi5OI43C6D6EytICv"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-surface-variant text-on-surface-variant">
+                            Под заказ
+                        </span>
+<span class="text-xs text-on-surface-variant font-code">ART: 405-RU</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1">Техпластина ТМКЩ</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Толщина 10мм, ГОСТ 7338-90</p>
+</div>
+<div>
+<div class="border-t border-outline-variant pt-3 mb-4">
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant">Среда:</span>
+<span class="font-semibold">Вода, воздух</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Температура:</span>
+<span class="font-semibold">от -30 до +80°C</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-headline-sm text-headline-sm font-bold">450 ₽/кг</span>
+<button aria-label="Request quote" class="bg-surface-container-highest text-on-surface p-2 rounded hover:bg-surface-dim transition-colors">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bento-item col-span-12 md:col-span-6 lg:col-span-3">
+<div class="mb-md">
+<div class="bg-surface-dim h-40 rounded mb-md flex items-center justify-center overflow-hidden">
+<img class="object-contain h-full w-full p-4" data-alt="Heavy cast iron gate valve (DN50) painted in industrial blue. Isolated on a white background with strong directional light to show metal casting texture. Engineering component catalog style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfHatUmnS2s4GOjzxH_5MDsCeCuJXoWNEA4cPargmR2w6gJJpjT0e9BSnPt9QH-fTjCxuAGhmx2cBDqOt0azx6XLUhOq6_cBggY9cLQfxyFAHMLM_g7tw4E8Rv5hekpJpF_J0xlA0bEnRv9MgW6o86j2q9y4rL5BU3pAfbrJnQKM76aetPT0ycGCvxqKOkMUj1xT0s9OjjgDDS8Euy4gy9say5kwMiA3Jp4eDkpPwbwgTe8Z1kYDON"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-tertiary-fixed text-on-tertiary-fixed-variant">
+                            В наличии
+                        </span>
+<span class="text-xs text-on-surface-variant font-code">ART: 801-VL</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1">Задвижка чугунная Ду50</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">30ч39р с обрезиненным клином</p>
+</div>
+<div>
+<div class="border-t border-outline-variant pt-3 mb-4">
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant">Материал:</span>
+<span class="font-semibold">Чугун ВЧ50</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Давление:</span>
+<span class="font-semibold">16 атм</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-headline-sm text-headline-sm font-bold">6 200 ₽</span>
+<button aria-label="Add to cart" class="bg-primary-container text-on-primary-container p-2 rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full mt-xl bg-inverse-surface dark:bg-surface-container-lowest border-t-0">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-lg max-w-container-max mx-auto px-lg py-xl">
+<div class="col-span-2 md:col-span-1">
+<span class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest dark:text-on-surface mb-md block">BELT — Строительные материалы</span>
+<p class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant mt-2 mb-4">
+                    Надежные поставки строительных материалов в Тольятти и Самарской области.
+                </p>
+<div class="text-surface-container-lowest dark:text-on-surface text-sm">
+<p class="mb-1">📍 г. Тольятти, ул. Строителей, 1</p>
+<p class="mb-1">📞 +7 (8482) 00-00-00</p>
+<p>✉️ info@belt-tlt.ru</p>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary-fixed dark:text-primary mb-sm">Компания</h4>
+<ul class="space-y-2 font-body-sm text-body-sm">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">О нас</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Контакты</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Реквизиты</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary-fixed dark:text-primary mb-sm">Клиентам</h4>
+<ul class="space-y-2 font-body-sm text-body-sm">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Оптовые заказы</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Доставка</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Возврат товара</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary-fixed dark:text-primary mb-sm">Правовая информация</h4>
+<ul class="space-y-2 font-body-sm text-body-sm">
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Пользовательское соглашение</a></li>
+<li><a class="text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Политика конфиденциальности</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-lg pb-lg">
+<p class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant opacity-70">
+                © 2024 BELT. Все права защищены.
+            </p>
+</div>
+</footer>
+</body></html>
