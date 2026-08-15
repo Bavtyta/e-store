@@ -3,13 +3,16 @@ import type { ReactNode } from 'react';
 
 import styles from './empty-state.module.css';
 
+export type EmptyStateVariant = 'page' | 'inline';
+
 export interface EmptyStateProps {
   action?: ReactNode;
   description?: string;
   title: string;
+  variant?: EmptyStateVariant;
 }
 
-export function EmptyState({ action, description, title }: EmptyStateProps) {
+export function EmptyState({ action, description, title, variant = 'page' }: EmptyStateProps) {
   const titleId = useId();
 
   return (
@@ -17,7 +20,7 @@ export function EmptyState({ action, description, title }: EmptyStateProps) {
       aria-atomic="true"
       aria-labelledby={titleId}
       aria-live="polite"
-      className={styles.root}
+      className={[styles.root, styles[variant]].join(' ').trim()}
       role="status"
     >
       <span aria-hidden="true" className={styles.icon}>

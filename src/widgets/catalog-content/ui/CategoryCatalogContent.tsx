@@ -62,7 +62,9 @@ export function CategoryCatalogContent({
           onRetry={() => {
             void categoriesQuery.refetch();
           }}
+          retryLabel="Повторить загрузку подкатегорий"
           title="Не удалось загрузить подкатегории"
+          variant="inline"
         />
       ) : null}
       {children.length > 0 ? (

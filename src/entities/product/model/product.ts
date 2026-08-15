@@ -95,7 +95,15 @@ export const cartResolvedVariantSchema = z.strictObject({
   variant: productVariantSchema,
 });
 
+export const addToCartTargetSchema = z.strictObject({
+  id: z.string(),
+  maxOrderQuantity: z.string().nullable(),
+  minOrderQuantity: z.string(),
+  quantityStep: z.string(),
+});
+
 export const productListItemSchema = z.strictObject({
+  addToCartTarget: addToCartTargetSchema.nullable(),
   availability: availabilitySchema,
   badges: z.array(z.string()),
   categoryId: z.string(),
@@ -128,6 +136,7 @@ export const productDetailsSchema = z.strictObject({
 
 export type AttributeValue = z.infer<typeof attributeValueSchema>;
 export type Attribute = z.infer<typeof attributeSchema>;
+export type AddToCartTarget = z.infer<typeof addToCartTargetSchema>;
 export type AvailabilityStatus = z.infer<typeof availabilityStatusSchema>;
 export type Availability = z.infer<typeof availabilitySchema>;
 export type CartProductReference = z.infer<typeof cartProductReferenceSchema>;

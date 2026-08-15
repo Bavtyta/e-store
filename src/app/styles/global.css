@@ -90,6 +90,16 @@ textarea,
   outline-offset: var(--focus-ring-offset);
 }
 
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 0.125em;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
 :disabled,
 [aria-disabled='true'] {
   cursor: not-allowed;

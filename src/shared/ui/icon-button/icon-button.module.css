@@ -17,6 +17,10 @@
   opacity: var(--disabled-opacity);
 }
 
+.root:active:not(:disabled) {
+  transform: translateY(0.0625rem);
+}
+
 .small {
   width: var(--control-height-sm);
   height: var(--control-height-sm);

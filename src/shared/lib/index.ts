@@ -1,4 +1,5 @@
 export { classNames } from './classNames';
+export { getFocusableElements } from './focusUtils';
 export { createDefaultObservabilityAdapter, Observability } from './observability';
 export { createPageMetadata, PageMetadata } from './page-metadata';
 export type {

@@ -1,6 +1,14 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router';
 
 import { useCategoriesQuery } from '@/entities/category';
+import {
+  applyCatalogFilterChanges,
+  CatalogFilterPanel,
+  parseCatalogFilterState,
+  removeCatalogFilterParams,
+} from '@/features/catalog-filter';
+import type { CatalogFilterState } from '@/features/catalog-filter';
 import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata } from '@/shared/lib';
 import { Breadcrumbs, Container, ErrorState, Skeleton } from '@/shared/ui';
@@ -31,8 +39,22 @@ const catalogErrorMetadata = createPageMetadata(
 
 export function CatalogPage() {
   const categoriesQuery = useCategoriesQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [hasProductsError, setHasProductsError] = useState(false);
   const hasPageError = categoriesQuery.isError || hasProductsError;
+  const filterState = parseCatalogFilterState(searchParams);
+
+  function handleFiltersChange(changes: Partial<CatalogFilterState>): void {
+    const next = applyCatalogFilterChanges(searchParams, changes);
+    next.delete('page');
+    setSearchParams(next);
+  }
+
+  function handleResetFilters(): void {
+    const next = removeCatalogFilterParams(searchParams);
+    next.delete('page');
+    setSearchParams(next);
+  }
 
   return (
     <div className={styles.page}>
@@ -66,64 +88,20 @@ export function CatalogPage() {
                 {categoriesQuery.isError ? (
                   <ErrorState
                     onRetry={() => void categoriesQuery.refetch()}
+                    retryLabel="Повторить загрузку категорий"
                     title="Не удалось загрузить категории"
+                    variant="inline"
                   />
                 ) : null}
                 {categoriesQuery.data === undefined ? null : (
                   <CatalogNavigation categories={categoriesQuery.data} />
                 )}
                 <div className={styles.filters}>
-                  <h3 className={styles.filtersTitle}>Фильтры</h3>
-                  <div className={styles.filterGroup}>
-                    <span className={styles.filterLabel}>Цена, ₽</span>
-                    <div className={styles.filterRow}>
-                      <input
-                        aria-label="Цена от"
-                        className={styles.filterInput}
-                        placeholder="От"
-                        type="number"
-                      />
-                      <span className={styles.filterDash}>-</span>
-                      <input
-                        aria-label="Цена до"
-                        className={styles.filterInput}
-                        placeholder="До"
-                        type="number"
-                      />
-                    </div>
-                  </div>
-                  <div className={styles.filterGroup}>
-                    <label className={styles.filterLabel}>Диаметр, мм</label>
-                    <div className={styles.filterChecks}>
-                      <label className={styles.filterCheck}>
-                        <input type="checkbox" />
-                        <span>25</span>
-                      </label>
-                      <label className={styles.filterCheck}>
-                        <input type="checkbox" />
-                        <span>32</span>
-                      </label>
-                      <label className={styles.filterCheck}>
-                        <input type="checkbox" />
-                        <span>50</span>
-                      </label>
-                      <label className={styles.filterCheck}>
-                        <input type="checkbox" />
-                        <span>110</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className={styles.filterGroup}>
-                    <label className={styles.filterLabel} htmlFor="catalog-material-filter">
-                      Материал
-                    </label>
-                    <select className={styles.filterSelect} id="catalog-material-filter">
-                      <option>Любой</option>
-                      <option>ПНД (PE100)</option>
-                      <option>ПВХ</option>
-                      <option>Сталь</option>
-                    </select>
-                  </div>
+                  <CatalogFilterPanel
+                    onFiltersChange={handleFiltersChange}
+                    onReset={handleResetFilters}
+                    state={filterState}
+                  />
                 </div>
               </div>
             </details>

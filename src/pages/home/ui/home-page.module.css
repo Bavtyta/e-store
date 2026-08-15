@@ -39,6 +39,8 @@
 .heroCta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: var(--control-height-sm);
   padding: var(--space-3) var(--space-6);
   background: var(--color-accent);
   color: var(--color-on-accent);
@@ -46,11 +48,18 @@
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: opacity var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .heroCta:hover {
-  opacity: 0.9;
+  background: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.heroCta:active {
+  transform: translateY(0.0625rem);
 }
 
 /* Responsive */

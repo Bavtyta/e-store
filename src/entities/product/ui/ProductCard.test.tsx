@@ -6,6 +6,12 @@ import type { ProductListItem } from '../model/product';
 import { ProductCard } from './ProductCard';
 
 const product: ProductListItem = {
+  addToCartTarget: {
+    id: 'product-1-variant-default',
+    maxOrderQuantity: null,
+    minOrderQuantity: '1',
+    quantityStep: '1',
+  },
   availability: { message: 'Под заказ', status: 'on_order' },
   badges: ['Новинка'],
   categoryId: 'category-pipes',

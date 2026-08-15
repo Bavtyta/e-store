@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 
 import { selectCartLineCount, useCartHydration, useCartStore } from '@/entities/cart';
+import { getFocusableElements } from '@/shared/lib';
 import { Container, IconButton } from '@/shared/ui';
 
+import { HeaderSearch } from './HeaderSearch';
 import styles from './header.module.css';
 
 function BrandMark() {
@@ -75,22 +77,58 @@ const NAV_ITEMS = [
 ] as const;
 
 interface MobileMenuProps {
+  drawerId: string;
   isOpen: boolean;
   onClose: () => void;
+  titleId: string;
 }
 
-function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
+  const drawerRef = useRef<HTMLDivElement | null>(null);
   const closeReference = useRef<HTMLButtonElement | null>(null);
+  const openerReference = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
+
+    const drawer = drawerRef.current;
+    const activeElement = document.activeElement;
+    openerReference.current = activeElement instanceof HTMLElement ? activeElement : null;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     closeReference.current?.focus();
 
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') onClose();
+    function handleKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || drawer === null) return;
+
+      const focusableElements = getFocusableElements(drawer);
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements.at(-1);
+
+      if (firstElement === undefined || lastElement === undefined) {
+        event.preventDefault();
+        drawer.focus();
+        return;
+      }
+
+      const activeFocusable = document.activeElement;
+
+      if (event.shiftKey && (activeFocusable === firstElement || activeFocusable === drawer)) {
+        event.preventDefault();
+        lastElement.focus();
+        return;
+      }
+
+      if (!event.shiftKey && activeFocusable === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -98,6 +136,8 @@ function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
+      openerReference.current?.focus();
+      openerReference.current = null;
     };
   }, [isOpen, onClose]);
 
@@ -109,14 +149,18 @@ function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   return (
     <div
+      aria-labelledby={titleId}
       aria-modal="true"
       className={styles.drawerBackdrop}
+      id={drawerId}
       onClick={handleBackdropClick}
       role="dialog"
     >
-      <div className={styles.drawer}>
+      <div className={styles.drawer} ref={drawerRef} tabIndex={-1}>
         <div className={styles.drawerHeader}>
-          <span className={styles.drawerTitle}>BELT</span>
+          <span className={styles.drawerTitle} id={titleId}>
+            BELT
+          </span>
           <button
             aria-label="Закрыть меню"
             className={styles.drawerClose}
@@ -161,6 +205,8 @@ export function Header() {
   const cartLineCount = useCartStore(selectCartLineCount);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const drawerId = useId();
+  const drawerTitleId = useId();
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
@@ -177,6 +223,7 @@ export function Header() {
       </a>
       <Container className={styles.content} size="wide">
         <IconButton
+          aria-controls={drawerId}
           aria-expanded={isMenuOpen}
           className={styles.burger}
           label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
@@ -204,6 +251,10 @@ export function Header() {
           ))}
         </nav>
 
+        <div className={styles.search}>
+          <HeaderSearch />
+        </div>
+
         <div className={styles.actions}>
           <span className={styles.accountStub} title="Личный кабинет появится в следующем релизе">
             <UserIcon />
@@ -221,7 +272,13 @@ export function Header() {
           </NavLink>
         </div>
       </Container>
-      <MobileMenu isOpen={isMenuOpen} key={location.key} onClose={closeMenu} />
+      <MobileMenu
+        drawerId={drawerId}
+        isOpen={isMenuOpen}
+        key={location.key}
+        onClose={closeMenu}
+        titleId={drawerTitleId}
+      />
     </header>
   );
 }

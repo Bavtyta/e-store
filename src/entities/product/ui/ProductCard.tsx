@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
 import type { ProductListItem } from '../model/product';
@@ -7,6 +8,7 @@ import { Badge, Card } from '@/shared/ui';
 import styles from './product-card.module.css';
 
 export interface ProductCardProps {
+  action?: ReactNode;
   product: ProductListItem;
 }
 
@@ -43,7 +45,7 @@ function getAvailabilityInfo(
   }
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ action, product }: ProductCardProps) {
   const price = formatProductPrice(
     product.priceFrom,
     product.priceFrom === null ? 'on_request' : product.priceTo === null ? 'fixed' : 'from',
@@ -114,17 +116,20 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         ) : null}
 
-        {/* Footer: price + cart */}
+        {/* Footer: price + availability + action */}
         <div className={styles.footer}>
-          <div className={styles.priceBlock}>
-            {product.primaryUnit ? (
-              <span className={styles.priceUnit}>за {product.primaryUnit.label}</span>
-            ) : null}
-            <span className={styles.priceValue}>{price}</span>
+          <div className={styles.footerMeta}>
+            <div className={styles.priceBlock}>
+              {product.primaryUnit ? (
+                <span className={styles.priceUnit}>за {product.primaryUnit.label}</span>
+              ) : null}
+              <span className={styles.priceValue}>{price}</span>
+            </div>
+            <span className={[styles.availabilityBadge, availability.cssClass].join(' ')}>
+              {availability.text}
+            </span>
           </div>
-          <span className={[styles.availabilityBadge, availability.cssClass].join(' ')}>
-            {availability.text}
-          </span>
+          {action ?? null}
         </div>
       </div>
     </Card>

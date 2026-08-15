@@ -155,6 +155,25 @@ function parseFilters(searchParams: URLSearchParams): Map<string, string> | null
   return filters;
 }
 
+function parsePriceParam(searchParams: URLSearchParams, name: string): number | null {
+  const value = searchParams.get(name);
+
+  if (value === null) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+
+  return Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : null;
+}
+
+function parsePriceRange(searchParams: URLSearchParams): { min: number | null; max: number | null } {
+  return {
+    min: parsePriceParam(searchParams, 'price_min'),
+    max: parsePriceParam(searchParams, 'price_max'),
+  };
+}
+
 function normalizeText(value: string | number | boolean): string {
   return String(value).trim().toLocaleLowerCase('ru-RU');
 }
@@ -189,12 +208,48 @@ function matchesFilters(
     ...fixture.details.attributes,
     ...fixture.details.variants.flatMap((variant) => variant.attributes),
   ];
+  const normalizedAttributes = attributes.map((attribute) => ({
+    code: attribute.code,
+    value: normalizeText(attribute.value),
+  }));
 
-  return [...filters.entries()].every(([code, expectedValue]) =>
-    attributes.some(
-      (attribute) =>
-        attribute.code === code && normalizeText(attribute.value) === normalizeText(expectedValue),
-    ),
+  return [...filters.entries()].every(([code, rawValue]) => {
+    const expectedValues = rawValue
+      .split(',')
+      .map((value) => normalizeText(value))
+      .filter((value) => value.length > 0);
+
+    return (
+      expectedValues.length > 0 &&
+      expectedValues.some((expectedValue) =>
+        normalizedAttributes.some(
+          (attribute) => attribute.code === code && attribute.value === expectedValue,
+        ),
+      )
+    );
+  });
+}
+
+function matchesPriceRange(
+  fixture: (typeof storefrontProductFixtures)[number],
+  priceRange: { min: number | null; max: number | null },
+): boolean {
+  if (priceRange.min === null && priceRange.max === null) {
+    return true;
+  }
+
+  const priceFromMinor = fixture.listItem.priceFrom?.amountMinor ?? null;
+
+  if (priceFromMinor === null) {
+    return false;
+  }
+
+  const minimumMinor = priceRange.min === null ? null : priceRange.min * 100;
+  const maximumMinor = priceRange.max === null ? null : priceRange.max * 100;
+
+  return (
+    (minimumMinor === null || priceFromMinor >= minimumMinor) &&
+    (maximumMinor === null || priceFromMinor <= maximumMinor)
   );
 }
 
@@ -394,6 +449,7 @@ const productHandlers = [
     }
 
     const search = url.searchParams.get('search') ?? '';
+    const priceRange = parsePriceRange(url.searchParams);
     const filteredFixtures =
       scenario === 'empty'
         ? []
@@ -401,7 +457,8 @@ const productHandlers = [
             (fixture) =>
               (categoryIds === null || categoryIds.has(fixture.listItem.categoryId)) &&
               matchesSearch(fixture, search) &&
-              matchesFilters(fixture, filters),
+              matchesFilters(fixture, filters) &&
+              matchesPriceRange(fixture, priceRange),
           );
     const sortedFixtures = sortProductFixtures(filteredFixtures, sort);
     const startIndex = (pagination.data.page - 1) * pagination.data.limit;

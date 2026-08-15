@@ -36,6 +36,8 @@ export interface ProductListParams {
   filters?: Readonly<Record<string, string>>;
   limit?: number;
   page?: number;
+  priceMax?: number;
+  priceMin?: number;
   search?: string;
   sort?: ProductSort;
 }

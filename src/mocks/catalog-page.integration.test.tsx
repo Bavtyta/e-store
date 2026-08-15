@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { MemoryRouter } from 'react-router';
@@ -91,12 +91,12 @@ describe('CatalogPage integration', () => {
     expect(screen.getByRole('status')).toHaveAttribute('aria-live', 'polite');
     expect(screen.getByRole('searchbox', { name: 'Поиск товаров' })).toHaveValue('несуществующий');
 
-    fireEvent.click(screen.getByRole('button', { name: 'Сбросить поиск' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Сбросить поиск и фильтры' }));
 
     expect(screen.getByRole('searchbox', { name: 'Поиск товаров' })).toHaveValue('');
     expect(
       await screen.findByRole('heading', {
-        name: 'Каталог пуст',
+        name: 'Ничего не найдено',
       }),
     ).toBeInTheDocument();
   });
@@ -134,6 +134,53 @@ describe('CatalogPage integration', () => {
     expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute(
       'content',
       'noindex, nofollow',
+    );
+  });
+
+  it('applies live filters to the result list and resets them', async () => {
+    renderCatalogPage();
+
+    expect(await screen.findByText(/Найдено товаров: \d+/)).toBeInTheDocument();
+
+    fireEvent.change(screen.getByRole('combobox', { name: 'Материал' }), {
+      target: { value: 'ПВХ' },
+    });
+    fireEvent.click(screen.getByRole('checkbox', { name: '110' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Труба ПВХ канализационная 110 мм')).toBeInTheDocument();
+    });
+    expect(screen.getByRole('combobox', { name: 'Материал' })).toHaveValue('ПВХ');
+    expect(screen.getByRole('checkbox', { name: '110' })).toBeChecked();
+    expect(
+      screen.queryByRole('link', { name: 'Открыть товар «Труба ПНД PE100 питьевая»' }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Сбросить фильтры' }));
+
+    expect(await screen.findByText('Труба ПНД PE100 питьевая')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: '110' })).not.toBeChecked();
+    expect(screen.getByRole('combobox', { name: 'Материал' })).toHaveValue('');
+  });
+
+  it('adds a product directly to the cart from its card', async () => {
+    renderCatalogPage();
+
+    expect(await screen.findByText('Труба ПНД PE100 питьевая')).toBeInTheDocument();
+
+    const addButton = screen.getAllByRole('button', { name: 'В корзину' })[0];
+    if (!addButton) throw new Error('Кнопка "В корзину" не найдена');
+
+    fireEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(useCartStore.getState().items).toHaveLength(1);
+    });
+    expect(useCartStore.getState().items[0]).toEqual(
+      expect.objectContaining({
+        quantity: '1',
+        variantId: 'product-001-variant-20',
+      }),
     );
   });
 });

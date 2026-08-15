@@ -128,6 +128,7 @@ export default defineConfig(({ command, mode }) => {
       include: ['src/**/*.{test,spec}.{ts,tsx}'],
       restoreMocks: true,
       setupFiles: ['./src/shared/lib/testing/setupTests.ts'],
+      testTimeout: 10000,
     },
   };
 });

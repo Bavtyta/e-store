@@ -30,6 +30,14 @@ function createProductListQuery(params: ProductListParams): Record<string, numbe
     query.limit = params.limit;
   }
 
+  if (params.priceMin !== undefined) {
+    query.price_min = params.priceMin;
+  }
+
+  if (params.priceMax !== undefined) {
+    query.price_max = params.priceMax;
+  }
+
   if (params.filters !== undefined) {
     for (const [attributeCode, value] of Object.entries(params.filters)) {
       query[`filter[${attributeCode}]`] = value;

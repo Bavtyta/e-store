@@ -3,6 +3,8 @@ import { useLocation, useSearchParams } from 'react-router';
 
 import { productSortSchema, ProductCard, useProductsQuery } from '@/entities/product';
 import type { ProductSort } from '@/entities/product';
+import { ProductCardAddToCartButton } from '@/features/add-to-cart';
+import { createProductFilterParams, parseCatalogFilterState, removeCatalogFilterParams } from '@/features/catalog-filter';
 import { ProductSearch } from '@/features/product-search';
 import { ProductSorting } from '@/features/product-sorting';
 import { Button, EmptyState, ErrorState, Pagination, Skeleton } from '@/shared/ui';
@@ -32,9 +34,16 @@ export function CatalogContent({ categoryPath, onQueryErrorChange }: CatalogCont
   const search = searchParams.get('search') ?? '';
   const sort = getSort(searchParams.get('sort'));
   const page = getPage(searchParams.get('page'));
+  const filterState = parseCatalogFilterState(searchParams);
+  const hasActiveFilters =
+    filterState.diameters.length > 0 ||
+    filterState.material !== null ||
+    filterState.priceMin !== null ||
+    filterState.priceMax !== null;
   const query = useProductsQuery({
     ...(categoryPath === undefined ? {} : { category: categoryPath }),
     ...(search.length === 0 ? {} : { search }),
+    ...createProductFilterParams(filterState),
     limit: 12,
     page,
     sort,
@@ -95,29 +104,35 @@ export function CatalogContent({ categoryPath, onQueryErrorChange }: CatalogCont
           onRetry={() => {
             void query.refetch();
           }}
+          retryLabel="Повторить загрузку товаров"
           title="Не удалось загрузить товары"
+          variant="inline"
         />
       ) : null}
       {query.data?.items.length === 0 ? (
         <EmptyState
           action={
-            search.length === 0 ? undefined : (
+            search.length === 0 && !hasActiveFilters ? undefined : (
               <Button
                 onClick={() => {
-                  updateSearchParams({ page: null, search: null });
+                  const next = removeCatalogFilterParams(searchParams);
+                  next.delete('page');
+                  next.delete('search');
+                  setSearchParams(next);
                 }}
                 variant="secondary"
               >
-                Сбросить поиск
+                Сбросить поиск и фильтры
               </Button>
             )
           }
           description={
-            search.length > 0
-              ? 'Измените запрос или сбросьте поиск.'
+            search.length > 0 || hasActiveFilters
+              ? 'Измените запрос или сбросьте поиск и фильтры.'
               : 'В этой категории пока нет товаров.'
           }
-          title={search.length > 0 ? 'Ничего не найдено' : 'Каталог пуст'}
+          title="Ничего не найдено"
+          variant="inline"
         />
       ) : null}
       {query.data?.items.length ? (
@@ -127,7 +142,11 @@ export function CatalogContent({ categoryPath, onQueryErrorChange }: CatalogCont
           </p>
           <div className={styles.grid}>
             {query.data.items.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                action={<ProductCardAddToCartButton product={product} />}
+                key={product.id}
+                product={product}
+              />
             ))}
           </div>
           <Pagination
