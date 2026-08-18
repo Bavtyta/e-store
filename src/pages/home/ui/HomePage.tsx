@@ -1,35 +1,87 @@
 import { Link } from 'react-router';
 
 import { appConfig } from '@/shared/config';
-import { createPageMetadata, PageMetadata } from '@/shared/lib';
+import { createPageMetadata, PageMetadata, StructuredData } from '@/shared/lib';
 import { Container } from '@/shared/ui';
 import { HomeCategories } from '@/widgets/home-categories';
+import { HomeFeaturedProducts } from '@/widgets/home-featured-products';
 
 import styles from './home-page.module.css';
+
+const TASK_LINKS = [
+  {
+    description: 'ПНД, ПВХ, полипропиленовые и металлические трубы.',
+    label: 'Для трубопровода',
+    to: '/catalog/truby',
+  },
+  {
+    description: 'Муфты, угольники, тройники, переходники и заглушки.',
+    label: 'Для соединения и монтажа',
+    to: '/catalog/fitingi-i-soedineniya',
+  },
+  {
+    description: 'Уплотнители, манжеты, прокладки, шланги и техническая резина.',
+    label: 'Для герметизации и защиты',
+    to: '/catalog/rezinotehnicheskie-izdeliya',
+  },
+] as const;
 
 const homeMetadata = createPageMetadata(
   {
     canonicalPath: '/',
     description:
-      'Строительные материалы для профессионалов. Надежные поставки промышленных комплектующих.',
-    title: 'BELT | Строительные материалы для профессионалов',
+      'Каталог труб, фитингов, РТИ и промышленных комплектующих BELT. Склад в Тольятти, работаем с заказами по Самарской области.',
+    title: 'Трубы, фитинги и РТИ в Тольятти',
+    brandName: 'BELT',
   },
   appConfig.publicSiteUrl,
 );
+
+const homeStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@id': new URL('/#organization', appConfig.publicSiteUrl).toString(),
+      '@type': 'Organization',
+      name: 'BELT',
+      url: new URL('/', appConfig.publicSiteUrl).toString(),
+    },
+    {
+      '@id': new URL('/#website', appConfig.publicSiteUrl).toString(),
+      '@type': 'WebSite',
+      name: 'BELT',
+      publisher: { '@id': new URL('/#organization', appConfig.publicSiteUrl).toString() },
+      url: new URL('/', appConfig.publicSiteUrl).toString(),
+    },
+  ],
+} as const;
 
 function HeroSection() {
   return (
     <section aria-label="Главный баннер" className={styles.hero}>
       <Container size="wide">
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Строительные материалы для профессионалов</h1>
-          <p className={styles.heroText}>
-            Надежные поставки промышленных комплектующих. Прямые контракты с производителями,
-            прозрачная логистика и оптовые цены для вашего бизнеса.
-          </p>
-          <Link className={styles.heroCta} to="/catalog">
-            Перейти в каталог
-          </Link>
+        <div className={styles.heroLayout}>
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для рабочих задач</h1>
+            <p className={styles.heroText}>
+              Сравнивайте характеристики, выбирайте подходящий вариант товара и добавляйте нужные
+              позиции в корзину.
+            </p>
+            <div className={styles.heroActions}>
+              <Link className={styles.heroCta} to="/catalog">
+                Перейти в каталог
+              </Link>
+              <Link className={styles.heroSecondaryCta} to="/contacts">
+                Помощь с подбором
+              </Link>
+            </div>
+          </div>
+          <div aria-hidden="true" className={styles.heroVisual}>
+            <span className={styles.heroPipeLarge} />
+            <span className={styles.heroPipeMedium} />
+            <span className={styles.heroPipeSmall} />
+            <span className={styles.heroLine} />
+          </div>
         </div>
       </Container>
     </section>
@@ -40,8 +92,56 @@ export function HomePage() {
   return (
     <div className={styles.page}>
       <PageMetadata metadata={homeMetadata} />
+      <StructuredData data={homeStructuredData} />
       <HeroSection />
       <HomeCategories />
+      <HomeFeaturedProducts />
+      <section aria-labelledby="task-selection-title" className={styles.taskSelection}>
+        <Container className={styles.taskSelectionContent} size="wide">
+          <div className={styles.taskSelectionIntro}>
+            <h2 id="task-selection-title">Подберите материалы под вашу задачу</h2>
+            <p>
+              Начните со сценария применения. В категориях можно сравнить характеристики, варианты
+              товара и условия продажи.
+            </p>
+          </div>
+          <div className={styles.taskList}>
+            {TASK_LINKS.map((task) => (
+              <Link className={styles.taskLink} key={task.to} to={task.to}>
+                <span className={styles.taskCopy}>
+                  <span className={styles.taskTitle}>{task.label}</span>
+                  <span className={styles.taskDescription}>{task.description}</span>
+                </span>
+                <span aria-hidden="true" className={styles.taskArrow}>
+                  →
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className={styles.selectionCta}>
+            <div>
+              <h3>Не нашли нужные характеристики?</h3>
+              <p>Поможем подобрать материал, размер и подходящий вариант под условия эксплуатации.</p>
+            </div>
+            <div className={styles.selectionActions}>
+              <Link className={styles.selectionPrimary} to="/contacts">
+                Помощь с подбором
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+      <section aria-labelledby="service-area-title" className={styles.serviceArea}>
+        <Container className={styles.serviceAreaContent} size="wide">
+          <div>
+            <h2 id="service-area-title">Склад в Тольятти, работаем по Самарской области</h2>
+            <p>
+              BELT комплектует заказы на трубы, фитинги, резинотехнические изделия и промышленные
+              комплектующие. Условия получения и доставки зависят от состава заказа и адреса.
+            </p>
+          </div>
+        </Container>
+      </section>
     </div>
   );
 }

@@ -1,10 +1,10 @@
+import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
-import { createAppQueryClient } from './providers';
-import { QueryClientProvider } from '@tanstack/react-query';
-
 import { HomePage } from '@/pages/home';
+
+import { createAppQueryClient } from './providers';
 
 describe('application smoke test', () => {
   it('renders the home page', () => {
@@ -21,7 +21,7 @@ describe('application smoke test', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: 'Строительные материалы для профессионалов',
+        name: 'Трубы, фитинги и РТИ для рабочих задач',
       }),
     ).toBeInTheDocument();
   });

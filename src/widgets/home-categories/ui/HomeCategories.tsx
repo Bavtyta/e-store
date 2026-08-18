@@ -5,6 +5,13 @@ import { Skeleton } from '@/shared/ui';
 
 import styles from './home-categories.module.css';
 
+const CATEGORY_DESCRIPTIONS: Readonly<Record<string, string>> = {
+  kamery: 'Камеры и комплектующие',
+  'fitingi-i-soedineniya': 'Муфты, угольники, тройники и переходники',
+  'rezinotehnicheskie-izdeliya': 'Уплотнители, манжеты, прокладки и шланги',
+  truby: 'ПНД, ПВХ, полипропиленовые и металлические',
+};
+
 export function HomeCategories() {
   const query = useCategoriesQuery();
 
@@ -45,19 +52,20 @@ export function HomeCategories() {
         <div className={styles.categoriesGrid}>
           {categories.map((category) => (
             <Link className={styles.categoryCard} key={category.id} to={category.path}>
-              <span className={styles.categoryName}>{category.name}</span>
-              <svg
+              <span
                 aria-hidden="true"
-                className={styles.categoryArrow}
-                fill="none"
-                height="20"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="20"
-              >
-                <path d="M5 12h14m-7-7 7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+                className={styles.categoryVisual}
+                data-category={category.slug}
+              />
+              <span className={styles.categoryContent}>
+                <span className={styles.categoryName}>{category.name}</span>
+                <span className={styles.categoryDescription}>
+                  {CATEGORY_DESCRIPTIONS[category.slug] ?? 'Перейти к товарам категории'}
+                </span>
+              </span>
+              <span aria-hidden="true" className={styles.categoryArrow}>
+                →
+              </span>
             </Link>
           ))}
         </div>

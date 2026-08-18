@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Storefront Catalog API
-  version: 1.1.0
+  version: 1.2.0
   description: |
     Версионированный контракт storefront-каталога. Все суммы передаются
     в копейках, валюта MVP — только RUB.
@@ -55,7 +55,9 @@ paths:
       parameters:
         - name: category
           in: query
-          description: Глобально уникальный slug категории
+          description: |
+            Полный путь категории без префикса `/catalog`, например `truby/pnd`.
+            В выборку также входят товары дочерних категорий.
           schema:
             type: string
         - name: search
@@ -79,13 +81,30 @@ paths:
             type: integer
             minimum: 1
             default: 20
-        - name: filter[attributeCode]
+        - name: price_min
+          in: query
+          description: Минимальная цена в рублях. Сравнение выполняется с `priceFrom`.
+          schema:
+            type: number
+            minimum: 0
+        - name: price_max
+          in: query
+          description: Максимальная цена в рублях. Сравнение выполняется с `priceFrom`.
+          schema:
+            type: number
+            minimum: 0
+        - name: filter
           in: query
           description: |
-            Шаблон параметра фильтра. Вместо attributeCode передаётся код
-            атрибута, например filter[diameter]=110.
+            Фильтры по кодам атрибутов в формате deepObject. Значение может содержать
+            несколько вариантов через запятую. Пример:
+            `filter[diameter]=110,160&filter[material]=ПНД`.
+          style: deepObject
+          explode: true
           schema:
-            type: string
+            type: object
+            additionalProperties:
+              type: string
       responses:
         '200':
           description: Постраничный список активных товаров
@@ -157,15 +176,21 @@ components:
       name: categoryPath
       in: path
       required: true
-      description: Полный путь категории без префикса /catalog, например truby/pnd
+      description: |
+        Полный путь категории без префикса `/catalog`, например `truby/pnd`.
+        Поскольку значение содержит `/`, клиент передаёт его как один percent-encoded
+        сегмент (`truby%2Fpnd`), а сервер обязан декодировать сегмент перед поиском.
       schema:
         type: string
+        minLength: 1
+      example: truby/pnd
     ProductSlug:
       name: slug
       in: path
       required: true
       schema:
         type: string
+        minLength: 1
   responses:
     BadRequest:
       description: Некорректный запрос
@@ -527,6 +552,7 @@ components:
       type: object
       additionalProperties: false
       required:
+        - addToCartTarget
         - id
         - slug
         - name
@@ -539,6 +565,10 @@ components:
         - shortAttributes
         - badges
       properties:
+        addToCartTarget:
+          anyOf:
+            - $ref: '#/components/schemas/AddToCartTarget'
+            - type: 'null'
         id:
           type: string
         slug:
@@ -573,6 +603,25 @@ components:
           type: array
           items:
             type: string
+    AddToCartTarget:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - quantityStep
+        - minOrderQuantity
+        - maxOrderQuantity
+      properties:
+        id:
+          type: string
+        quantityStep:
+          type: string
+        minOrderQuantity:
+          type: string
+        maxOrderQuantity:
+          anyOf:
+            - type: string
+            - type: 'null'
     ProductDetails:
       type: object
       additionalProperties: false
@@ -631,8 +680,10 @@ components:
           $ref: '#/components/schemas/SeoData'
         createdAt:
           type: string
+          format: date-time
         updatedAt:
           type: string
+          format: date-time
     Pagination:
       type: object
       additionalProperties: false

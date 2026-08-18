@@ -213,8 +213,7 @@ export function Header() {
   }, []);
 
   const cartCountText = cartLineCount > 99 ? '99+' : String(cartLineCount);
-  const cartLabel =
-    cartLineCount > 0 ? `В корзине позиций: ${String(cartLineCount)}` : 'Корзина';
+  const cartLabel = cartLineCount > 0 ? `В корзине позиций: ${String(cartLineCount)}` : 'Корзина';
 
   return (
     <header className={styles.root}>
@@ -256,7 +255,12 @@ export function Header() {
         </div>
 
         <div className={styles.actions}>
-          <span className={styles.accountStub} title="Личный кабинет появится в следующем релизе">
+          <span
+            aria-label="Личный кабинет — скоро"
+            className={styles.accountStub}
+            role="img"
+            title="Личный кабинет появится в следующем релизе"
+          >
             <UserIcon />
           </span>
           <NavLink

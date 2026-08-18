@@ -3,7 +3,7 @@
 }
 
 .content {
-  padding-block: clamp(var(--space-6), 5vw, var(--space-12));
+  padding-block: clamp(var(--space-6), 5vw, var(--space-16));
 }
 
 .productGrid,
@@ -24,7 +24,7 @@
 
 @media (min-width: 48rem) {
   .productGrid {
-    grid-template-columns: 7fr 5fr;
+    grid-template-columns: minmax(0, 7fr) minmax(20rem, 5fr);
     gap: var(--space-8);
   }
 

@@ -5,7 +5,7 @@ const responsiveViewports = [320, 375, 768, 1024, 1440] as const;
 
 const responsivePages = [
   {
-    heading: 'Строительные материалы для профессионалов',
+    heading: 'Трубы, фитинги и РТИ для рабочих задач',
     path: '/',
   },
   {
@@ -69,7 +69,9 @@ async function expectMetadataTag(
 test('opens a product from the catalog, changes its variant and handles 404', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Строительные материалы для профессионалов' }),
+    page.getByRole('heading', {
+      name: 'Трубы, фитинги и РТИ для рабочих задач',
+    }),
   ).toBeVisible();
 
   await page.getByRole('link', { name: 'Каталог' }).first().click();
@@ -171,7 +173,7 @@ test('adds a variant, changes quantity and restores the cart after reload', asyn
   const resolveResponsePromise = page.waitForResponse((response) =>
     response.url().endsWith('/api/v1/catalog/variants/resolve'),
   );
-  await page.getByRole('link', { name: /Корзина/ }).click();
+  await page.getByLabel('В корзине позиций: 1').click();
   const resolveResponse = await resolveResponsePromise;
 
   expect(resolveResponse.status()).toBe(200);
@@ -258,11 +260,19 @@ test('opens the development UI preview and keeps dialog focus contained', async 
 test('applies indexable metadata to public storefront pages', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Строительные материалы для профессионалов' }),
+    page.getByRole('heading', {
+      name: 'Трубы, фитинги и РТИ для рабочих задач',
+    }),
   ).toBeVisible();
-  await expect(page).toHaveTitle('BELT | Строительные материалы для профессионалов — ПромМатериалы');
+  await expect(page).toHaveTitle('Трубы, фитинги и РТИ в Тольятти — BELT');
   await expectMetadataTag(page, 'link[rel="canonical"]', 'href', 'http://127.0.0.1:4173/');
   await expectMetadataTag(page, 'meta[name="robots"]', 'content', 'index, follow');
+  const structuredData = page.locator('script[type="application/ld+json"]');
+  await expect(structuredData).toHaveCount(1);
+  const structuredDataContent = await structuredData.textContent();
+  expect(structuredDataContent).toContain('"@type":"Organization"');
+  expect(structuredDataContent).toContain('"@type":"WebSite"');
+  expect(structuredDataContent).not.toContain('LocalBusiness');
 
   await page.goto('/catalog/truby/pnd');
   await expect(page.getByRole('heading', { level: 1, name: 'ПНД' })).toBeVisible();

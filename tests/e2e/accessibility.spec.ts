@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const pagesToAudit = [
   {
-    heading: 'Строительные материалы для профессионалов',
+    heading: 'Трубы, фитинги и РТИ для рабочих задач',
     path: '/',
   },
   {
@@ -31,9 +31,7 @@ const pagesToAudit = [
 for (const pageCase of pagesToAudit) {
   test(`has no axe violations on ${pageCase.path}`, async ({ page }) => {
     await page.goto(pageCase.path);
-    await expect(
-      page.getByRole('heading', { exact: true, name: pageCase.heading }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { exact: true, name: pageCase.heading })).toBeVisible();
 
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

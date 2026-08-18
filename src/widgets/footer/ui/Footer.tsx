@@ -5,6 +5,8 @@ import { Container } from '@/shared/ui';
 import styles from './footer.module.css';
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className={styles.root}>
       <Container className={styles.content} size="wide">
@@ -13,36 +15,45 @@ export function Footer() {
           <div className={styles.brandCol}>
             <div className={styles.brand}>BELT</div>
             <p className={styles.brandTagline}>
-              © 2024 BELT Промышленные поставки. Все права защищены.
+              Промышленные поставки строительных материалов и комплектующих для бизнеса.
             </p>
           </div>
 
-          {/* Nav columns */}
           <div className={styles.col}>
-            <Link className={styles.link} to="/">
+            <h2 className={styles.heading}>Компания</h2>
+            <Link className={styles.link} to="/contacts">
               О компании
             </Link>
-            <Link className={styles.link} to="/terms">
-              Пользовательское соглашение
+            <Link className={styles.link} to="/contacts">
+              Контакты и адреса
             </Link>
           </div>
           <div className={styles.col}>
-            <Link className={styles.link} to="/privacy">
-              Политика конфиденциальности
+            <h2 className={styles.heading}>Покупателям</h2>
+            <Link className={styles.link} to="/catalog">
+              Каталог
+            </Link>
+            <Link className={styles.link} to="/cart">
+              Корзина
+            </Link>
+            <Link className={styles.link} to="/contacts">
+              Оптовые заказы
             </Link>
             <Link className={styles.link} to="/contacts">
               Служба поддержки
             </Link>
           </div>
           <div className={styles.col}>
-            <Link className={styles.link} to="/contacts">
-              Оптовые заказы
+            <h2 className={styles.heading}>Документы</h2>
+            <Link className={styles.link} to="/privacy">
+              Политика конфиденциальности
             </Link>
-            <Link className={styles.link} to="/contacts">
-              Контакты и адреса
+            <Link className={styles.link} to="/terms">
+              Пользовательское соглашение
             </Link>
           </div>
         </div>
+        <p className={styles.copyright}>© {currentYear} BELT. Все права защищены.</p>
       </Container>
     </footer>
   );

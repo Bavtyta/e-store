@@ -1,5 +1,6 @@
 .section {
-  padding: var(--space-10) 0;
+  padding-block: var(--section-padding-block);
+  background: var(--color-background);
 }
 
 .container {
@@ -10,9 +11,10 @@
 }
 
 .sectionTitle {
-  margin: 0 0 var(--space-6);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--space-8);
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
   color: var(--color-text-primary);
 }
 
@@ -25,26 +27,118 @@
 /* Categories grid */
 .categoriesGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
 }
 
 .categoryCard {
+  position: relative;
   display: flex;
   min-width: 0;
   align-items: flex-end;
   justify-content: space-between;
-  height: 12rem;
+  min-height: 10rem;
   padding: var(--space-4);
-  background: var(--color-surface);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-surface-container);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   text-decoration: none;
-  transition: box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .categoryCard:hover {
+  border-color: var(--color-border-strong);
   box-shadow: var(--shadow-card-hover);
+  transform: translateY(-0.125rem);
+}
+
+.categoryVisual {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.76;
+  transition:
+    opacity var(--transition-fast),
+    transform 300ms ease;
+}
+
+.categoryVisual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(249 249 255 / 4%), rgb(249 249 255 / 96%) 88%);
+  content: '';
+}
+
+.categoryVisual[data-category='truby'] {
+  background:
+    radial-gradient(
+      ellipse at 15% 115%,
+      transparent 0 25%,
+      rgb(20 27 43 / 68%) 26% 32%,
+      transparent 33%
+    ),
+    repeating-linear-gradient(
+      14deg,
+      transparent 0 1.8rem,
+      rgb(20 27 43 / 56%) 1.9rem 2.55rem,
+      transparent 2.65rem 4.2rem
+    ),
+    linear-gradient(135deg, var(--color-surface-container), var(--color-surface-subtle));
+}
+
+.categoryVisual[data-category='fitingi-i-soedineniya'] {
+  background:
+    radial-gradient(
+      circle at 23% 36%,
+      transparent 0 1.1rem,
+      rgb(250 204 21 / 62%) 1.18rem 1.5rem,
+      transparent 1.56rem
+    ),
+    radial-gradient(
+      circle at 66% 62%,
+      transparent 0 1.35rem,
+      rgb(41 48 64 / 46%) 1.42rem 1.85rem,
+      transparent 1.91rem
+    ),
+    linear-gradient(135deg, var(--color-surface-subtle), var(--color-surface-container));
+}
+
+.categoryVisual[data-category='rezinotehnicheskie-izdeliya'] {
+  background:
+    repeating-radial-gradient(
+      ellipse at 42% 48%,
+      transparent 0 1.5rem,
+      rgb(20 27 43 / 58%) 1.56rem 1.9rem,
+      transparent 1.96rem 3rem
+    ),
+    linear-gradient(135deg, var(--color-surface-container), var(--color-surface-subtle));
+}
+
+.categoryVisual[data-category='kamery'] {
+  background:
+    radial-gradient(
+      circle at 69% 45%,
+      transparent 0 1.4rem,
+      rgb(41 48 64 / 62%) 1.45rem 2.45rem,
+      transparent 2.5rem
+    ),
+    linear-gradient(130deg, var(--color-surface-container), var(--color-surface-subtle));
+}
+
+.categoryCard:hover .categoryVisual {
+  opacity: 1;
+  transform: scale(1.035);
+}
+
+.categoryContent {
+  display: grid;
+  gap: var(--space-1);
+  max-width: calc(100% - 2rem);
 }
 
 .categoryName {
@@ -55,20 +149,57 @@
   color: var(--color-text-primary);
 }
 
-.categoryArrow {
+.categoryDescription {
   color: var(--color-text-secondary);
-  opacity: 0;
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
 }
 
-.categoryCard:hover .categoryArrow {
-  opacity: 1;
-  transform: translateX(4px);
+.categoryArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: var(--color-text-secondary);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.categoryCard:hover .categoryArrow,
+.categoryCard:focus-visible .categoryArrow {
+  color: var(--color-accent-active);
+  transform: translateX(var(--space-1));
 }
 
 /* Responsive */
-@media (min-width: 48rem) {
+@media (min-width: 36rem) {
   .categoriesGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .categoryCard {
+    min-height: 12rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .categoriesGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .categoryCard {
+    min-height: 13rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categoryCard:hover,
+  .categoryCard:hover .categoryVisual,
+  .categoryCard:hover .categoryArrow,
+  .categoryCard:focus-visible .categoryArrow {
+    transform: none;
   }
 }

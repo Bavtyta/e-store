@@ -12,13 +12,13 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  min-height: 20rem;
+  min-height: clamp(20rem, 42vw, 32rem);
 }
 
 .mainImage {
   display: block;
   width: 100%;
-  max-height: 30rem;
+  max-height: 32rem;
   object-fit: contain;
 }
 
@@ -43,11 +43,14 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: border-color var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .thumbnail:hover {
   border-color: var(--color-accent-active);
+  transform: translateY(-0.0625rem);
 }
 
 .thumbnail[aria-pressed='true'] {

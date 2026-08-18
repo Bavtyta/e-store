@@ -36,12 +36,17 @@ export function createRobotsTxt(siteOrigin: string): string {
   ].join('\n');
 }
 
-export function createSitemapXml(siteOrigin: string): string {
-  const urls = INDEXABLE_STATIC_ROUTES.map((route) => {
-    const location = escapeXml(new URL(route, `${siteOrigin}/`).toString());
+export function createSitemapXml(
+  siteOrigin: string,
+  routes: readonly string[] = INDEXABLE_STATIC_ROUTES,
+): string {
+  const urls = routes
+    .map((route) => {
+      const location = escapeXml(new URL(route, `${siteOrigin}/`).toString());
 
-    return `  <url>\n    <loc>${location}</loc>\n  </url>`;
-  }).join('\n');
+      return `  <url>\n    <loc>${location}</loc>\n  </url>`;
+    })
+    .join('\n');
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',

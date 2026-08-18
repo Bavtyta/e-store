@@ -1,6 +1,6 @@
 .list {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -8,8 +8,9 @@
 
 .item {
   display: grid;
-  grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
-  gap: var(--space-4);
+  grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5);
 }
 
 .imageLink {
@@ -17,6 +18,7 @@
   align-self: start;
   min-width: 0;
   overflow: hidden;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   aspect-ratio: 1;
   background: var(--color-surface-container);
@@ -39,7 +41,7 @@
 
 .details {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .heading {
@@ -52,7 +54,7 @@
 
 .heading h2 {
   margin: 0;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   overflow-wrap: anywhere;
 }
