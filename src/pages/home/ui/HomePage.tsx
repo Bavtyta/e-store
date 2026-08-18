@@ -59,7 +59,18 @@ const homeStructuredData = {
 function HeroSection() {
   return (
     <section aria-label="Главный баннер" className={styles.hero}>
-      <Container size="wide">
+      <picture aria-hidden="true" className={styles.heroMedia}>
+        <source media="(max-width: 47.9375rem)" srcSet="/images/home/hero/hero-mobile.jpg" />
+        <img
+          alt=""
+          decoding="async"
+          fetchPriority="high"
+          height="1024"
+          src="/images/home/hero/hero-desktop.jpg"
+          width="1536"
+        />
+      </picture>
+      <Container className={styles.heroContainer} size="wide">
         <div className={styles.heroLayout}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для рабочих задач</h1>
@@ -71,16 +82,10 @@ function HeroSection() {
               <Link className={styles.heroCta} to="/catalog">
                 Перейти в каталог
               </Link>
-              <Link className={styles.heroSecondaryCta} to="/contacts">
+              <Link className={styles.heroSecondaryCta} to="/selection-help">
                 Помощь с подбором
               </Link>
             </div>
-          </div>
-          <div aria-hidden="true" className={styles.heroVisual}>
-            <span className={styles.heroPipeLarge} />
-            <span className={styles.heroPipeMedium} />
-            <span className={styles.heroPipeSmall} />
-            <span className={styles.heroLine} />
           </div>
         </div>
       </Container>
@@ -121,10 +126,12 @@ export function HomePage() {
           <div className={styles.selectionCta}>
             <div>
               <h3>Не нашли нужные характеристики?</h3>
-              <p>Поможем подобрать материал, размер и подходящий вариант под условия эксплуатации.</p>
+              <p>
+                Поможем подобрать материал, размер и подходящий вариант под условия эксплуатации.
+              </p>
             </div>
             <div className={styles.selectionActions}>
-              <Link className={styles.selectionPrimary} to="/contacts">
+              <Link className={styles.selectionPrimary} to="/selection-help">
                 Помощь с подбором
               </Link>
             </div>
@@ -134,7 +141,7 @@ export function HomePage() {
       <section aria-labelledby="service-area-title" className={styles.serviceArea}>
         <Container className={styles.serviceAreaContent} size="wide">
           <div>
-            <h2 id="service-area-title">Склад в Тольятти, работаем по Самарской области</h2>
+            <h2 id="service-area-title">Доставка из Тольятти по всей Самарской области</h2>
             <p>
               BELT комплектует заказы на трубы, фитинги, резинотехнические изделия и промышленные
               комплектующие. Условия получения и доставки зависят от состава заказа и адреса.

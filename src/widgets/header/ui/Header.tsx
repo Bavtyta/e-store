@@ -2,6 +2,11 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 
 import { selectCartLineCount, useCartHydration, useCartStore } from '@/entities/cart';
+import {
+  selectFavoriteCount,
+  useFavoritesHydration,
+  useFavoritesStore,
+} from '@/features/favorites';
 import { getFocusableElements } from '@/shared/lib';
 import { Container, IconButton } from '@/shared/ui';
 
@@ -73,6 +78,8 @@ function CartGlyph() {
 
 const NAV_ITEMS = [
   { label: 'Каталог', to: '/catalog' },
+  { label: 'Услуги', to: '/services' },
+  { label: 'Доставка', to: '/delivery' },
   { label: 'Контакты', to: '/contacts' },
 ] as const;
 
@@ -190,6 +197,24 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
               [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
             }
             onClick={onClose}
+            to="/favorites"
+          >
+            Избранное
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
+            }
+            onClick={onClose}
+            to="/login"
+          >
+            Профиль
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
+            }
+            onClick={onClose}
             to="/cart"
           >
             Корзина
@@ -202,7 +227,9 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
 
 export function Header() {
   useCartHydration();
+  useFavoritesHydration();
   const cartLineCount = useCartStore(selectCartLineCount);
+  const favoriteCount = useFavoritesStore(selectFavoriteCount);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const drawerId = useId();
@@ -255,14 +282,27 @@ export function Header() {
         </div>
 
         <div className={styles.actions}>
-          <span
-            aria-label="Личный кабинет — скоро"
-            className={styles.accountStub}
-            role="img"
-            title="Личный кабинет появится в следующем релизе"
+          <NavLink
+            aria-label="Избранное"
+            className={styles.actionLink ?? ''}
+            title="Избранное"
+            to="/favorites"
+          >
+            <span aria-hidden="true" className={styles.favoriteGlyph}>
+              ♡
+            </span>
+            {favoriteCount > 0 ? (
+              <span className={styles.cartBadge}>{favoriteCount > 99 ? '99+' : favoriteCount}</span>
+            ) : null}
+          </NavLink>
+          <NavLink
+            aria-label="Профиль"
+            className={styles.actionLink ?? ''}
+            title="Профиль"
+            to="/login"
           >
             <UserIcon />
-          </span>
+          </NavLink>
           <NavLink
             aria-label={cartLabel}
             className={({ isActive }) =>

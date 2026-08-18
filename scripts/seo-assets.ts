@@ -1,5 +1,19 @@
 const INDEXABLE_STATIC_ROUTES = ['/', '/catalog'] as const;
-const DISALLOWED_PATHS = ['/cart', '/contacts', '/privacy', '/terms', '/ui-preview'] as const;
+const DISALLOWED_PATHS = [
+  '/about',
+  '/cart',
+  '/contacts',
+  '/delivery',
+  '/favorites',
+  '/login',
+  '/privacy',
+  '/selection-help',
+  '/services',
+  '/support',
+  '/terms',
+  '/ui-preview',
+  '/wholesale',
+] as const;
 
 function escapeXml(value: string): string {
   return value.replace(/[<>&'"]/g, (character) => {

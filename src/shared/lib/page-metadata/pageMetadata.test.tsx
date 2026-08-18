@@ -25,17 +25,17 @@ describe('page metadata', () => {
       openGraph: {
         description: 'Напорная труба ПНД для водоснабжения.',
         imageUrl: 'https://shop.example/images/truba.webp',
-        title: 'Труба ПНД — ПромМатериалы',
+        title: 'Труба ПНД — BELT',
         type: 'product',
         url: 'https://shop.example/product/truba-pnd',
       },
       robots: 'index, follow',
-      title: 'Труба ПНД — ПромМатериалы',
+      title: 'Труба ПНД — BELT',
       twitter: {
         card: 'summary_large_image',
         description: 'Напорная труба ПНД для водоснабжения.',
         imageUrl: 'https://shop.example/images/truba.webp',
-        title: 'Труба ПНД — ПромМатериалы',
+        title: 'Труба ПНД — BELT',
       },
     });
   });
@@ -85,7 +85,7 @@ describe('page metadata', () => {
     );
     const { rerender } = render(<PageMetadata metadata={initialMetadata} />);
 
-    expect(document.title).toBe('Труба ПНД — ПромМатериалы');
+    expect(document.title).toBe('Труба ПНД — BELT');
     expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
       'content',
       'Описание товара',
@@ -130,7 +130,7 @@ describe('page metadata', () => {
 
     const markup = renderToStaticMarkup(<PageMetadata metadata={metadata} />);
 
-    expect(markup).toContain('<title>Каталог — ПромМатериалы</title>');
+    expect(markup).toContain('<title>Каталог — BELT</title>');
     expect(markup).toContain('name="description"');
     expect(markup).toContain('rel="canonical"');
     expect(markup).toContain('name="robots"');

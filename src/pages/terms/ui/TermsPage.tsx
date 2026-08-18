@@ -5,7 +5,7 @@ import { Placeholder } from '@/shared/ui/placeholder';
 const termsMetadata = createPageMetadata(
   {
     canonicalPath: '/terms',
-    description: 'Пользовательское соглашение магазина ПромМатериалы.',
+    description: 'Пользовательское соглашение магазина BELT.',
     indexable: false,
     title: 'Пользовательское соглашение',
   },

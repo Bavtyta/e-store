@@ -1,0 +1,47 @@
+.page {
+  padding-block: var(--section-padding-block);
+}
+
+.header {
+  max-width: 42rem;
+  margin-bottom: var(--space-8);
+}
+
+.header h1 {
+  margin: 0 0 var(--space-3);
+  font-size: clamp(var(--font-size-2xl), 4vw, 3rem);
+  letter-spacing: -0.035em;
+}
+
+.header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2) !important;
+  color: var(--color-accent-active) !important;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-4);
+}
+
+.catalogLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-md);
+  padding-inline: var(--space-5);
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}

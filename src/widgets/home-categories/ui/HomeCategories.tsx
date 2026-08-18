@@ -12,6 +12,13 @@ const CATEGORY_DESCRIPTIONS: Readonly<Record<string, string>> = {
   truby: 'ПНД, ПВХ, полипропиленовые и металлические',
 };
 
+const CATEGORY_IMAGES: Readonly<Record<string, string>> = {
+  kamery: '/images/home/categories/kamery.jpg',
+  'fitingi-i-soedineniya': '/images/home/categories/fitingi.jpg',
+  'rezinotehnicheskie-izdeliya': '/images/home/categories/rti.jpg',
+  truby: '/images/home/categories/truby.jpg',
+};
+
 export function HomeCategories() {
   const query = useCategoriesQuery();
 
@@ -52,11 +59,18 @@ export function HomeCategories() {
         <div className={styles.categoriesGrid}>
           {categories.map((category) => (
             <Link className={styles.categoryCard} key={category.id} to={category.path}>
-              <span
-                aria-hidden="true"
-                className={styles.categoryVisual}
-                data-category={category.slug}
-              />
+              <span aria-hidden="true" className={styles.categoryVisual}>
+                {CATEGORY_IMAGES[category.slug] === undefined ? null : (
+                  <img
+                    alt=""
+                    decoding="async"
+                    height="640"
+                    loading="lazy"
+                    src={CATEGORY_IMAGES[category.slug]}
+                    width="960"
+                  />
+                )}
+              </span>
               <span className={styles.categoryContent}>
                 <span className={styles.categoryName}>{category.name}</span>
                 <span className={styles.categoryDescription}>

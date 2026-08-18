@@ -9,6 +9,7 @@ import styles from './product-card.module.css';
 
 export interface ProductCardProps {
   action?: ReactNode;
+  overlayAction?: ReactNode;
   product: ProductListItem;
 }
 
@@ -45,13 +46,16 @@ function getAvailabilityInfo(
   }
 }
 
-export function ProductCard({ action, product }: ProductCardProps) {
+export function ProductCard({ action, overlayAction, product }: ProductCardProps) {
   const price = formatProductPrice(
     product.priceFrom,
     product.priceFrom === null ? 'on_request' : product.priceTo === null ? 'fixed' : 'from',
   );
 
-  const availability = getAvailabilityInfo(product.availability.status, product.availability.message);
+  const availability = getAvailabilityInfo(
+    product.availability.status,
+    product.availability.message,
+  );
 
   return (
     <Card className={styles.root} padding="compact" variant="outlined">
@@ -66,6 +70,9 @@ export function ProductCard({ action, product }: ProductCardProps) {
             <Badge>{product.badges[0]}</Badge>
           </span>
         ) : null}
+        {overlayAction === undefined ? null : (
+          <span className={styles.overlayAction}>{overlayAction}</span>
+        )}
         {product.thumbnail === null ? (
           <div className={styles.imagePlaceholder}>
             <svg

@@ -4,7 +4,12 @@ import { useLocation, useSearchParams } from 'react-router';
 import { productSortSchema, ProductCard, useProductsQuery } from '@/entities/product';
 import type { ProductSort } from '@/entities/product';
 import { ProductCardAddToCartButton } from '@/features/add-to-cart';
-import { createProductFilterParams, parseCatalogFilterState, removeCatalogFilterParams } from '@/features/catalog-filter';
+import { FavoriteToggleButton } from '@/features/favorites';
+import {
+  createProductFilterParams,
+  parseCatalogFilterState,
+  removeCatalogFilterParams,
+} from '@/features/catalog-filter';
 import { ProductSearch } from '@/features/product-search';
 import { ProductSorting } from '@/features/product-sorting';
 import { Button, EmptyState, ErrorState, Pagination, Skeleton } from '@/shared/ui';
@@ -145,6 +150,7 @@ export function CatalogContent({ categoryPath, onQueryErrorChange }: CatalogCont
               <ProductCard
                 action={<ProductCardAddToCartButton product={product} />}
                 key={product.id}
+                overlayAction={<FavoriteToggleButton product={product} />}
                 product={product}
               />
             ))}

@@ -67,67 +67,18 @@
     transform 300ms ease;
 }
 
+.categoryVisual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .categoryVisual::after {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgb(249 249 255 / 4%), rgb(249 249 255 / 96%) 88%);
   content: '';
-}
-
-.categoryVisual[data-category='truby'] {
-  background:
-    radial-gradient(
-      ellipse at 15% 115%,
-      transparent 0 25%,
-      rgb(20 27 43 / 68%) 26% 32%,
-      transparent 33%
-    ),
-    repeating-linear-gradient(
-      14deg,
-      transparent 0 1.8rem,
-      rgb(20 27 43 / 56%) 1.9rem 2.55rem,
-      transparent 2.65rem 4.2rem
-    ),
-    linear-gradient(135deg, var(--color-surface-container), var(--color-surface-subtle));
-}
-
-.categoryVisual[data-category='fitingi-i-soedineniya'] {
-  background:
-    radial-gradient(
-      circle at 23% 36%,
-      transparent 0 1.1rem,
-      rgb(250 204 21 / 62%) 1.18rem 1.5rem,
-      transparent 1.56rem
-    ),
-    radial-gradient(
-      circle at 66% 62%,
-      transparent 0 1.35rem,
-      rgb(41 48 64 / 46%) 1.42rem 1.85rem,
-      transparent 1.91rem
-    ),
-    linear-gradient(135deg, var(--color-surface-subtle), var(--color-surface-container));
-}
-
-.categoryVisual[data-category='rezinotehnicheskie-izdeliya'] {
-  background:
-    repeating-radial-gradient(
-      ellipse at 42% 48%,
-      transparent 0 1.5rem,
-      rgb(20 27 43 / 58%) 1.56rem 1.9rem,
-      transparent 1.96rem 3rem
-    ),
-    linear-gradient(135deg, var(--color-surface-container), var(--color-surface-subtle));
-}
-
-.categoryVisual[data-category='kamery'] {
-  background:
-    radial-gradient(
-      circle at 69% 45%,
-      transparent 0 1.4rem,
-      rgb(41 48 64 / 62%) 1.45rem 2.45rem,
-      transparent 2.5rem
-    ),
-    linear-gradient(130deg, var(--color-surface-container), var(--color-surface-subtle));
 }
 
 .categoryCard:hover .categoryVisual {

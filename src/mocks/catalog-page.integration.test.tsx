@@ -76,7 +76,7 @@ describe('CatalogPage integration', () => {
     renderCatalogPage();
 
     expect(await screen.findByText(/Найдено товаров: \d+/)).toHaveAttribute('aria-live', 'polite');
-    expect(document.title).toBe('Каталог строительных материалов — ПромМатериалы');
+    expect(document.title).toBe('Каталог строительных материалов — BELT');
   });
 
   it('shows an accessible empty search state and resets the query', async () => {

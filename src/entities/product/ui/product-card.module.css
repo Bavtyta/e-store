@@ -50,6 +50,13 @@
   z-index: 1;
 }
 
+.overlayAction {
+  position: absolute;
+  z-index: 2;
+  top: var(--space-2);
+  left: var(--space-2);
+}
+
 .imagePlaceholder {
   display: flex;
   align-items: center;

@@ -21,11 +21,17 @@ export function Footer() {
 
           <div className={styles.col}>
             <h2 className={styles.heading}>Компания</h2>
-            <Link className={styles.link} to="/contacts">
+            <Link className={styles.link} to="/about">
               О компании
             </Link>
             <Link className={styles.link} to="/contacts">
               Контакты и адреса
+            </Link>
+            <Link className={styles.link} to="/services">
+              Услуги
+            </Link>
+            <Link className={styles.link} to="/delivery">
+              Доставка
             </Link>
           </div>
           <div className={styles.col}>
@@ -36,10 +42,10 @@ export function Footer() {
             <Link className={styles.link} to="/cart">
               Корзина
             </Link>
-            <Link className={styles.link} to="/contacts">
+            <Link className={styles.link} to="/wholesale">
               Оптовые заказы
             </Link>
-            <Link className={styles.link} to="/contacts">
+            <Link className={styles.link} to="/support">
               Служба поддержки
             </Link>
           </div>

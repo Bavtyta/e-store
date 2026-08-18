@@ -1,4 +1,4 @@
-const DEFAULT_BRAND_NAME = 'ПромМатериалы';
+const DEFAULT_BRAND_NAME = 'BELT';
 const MAX_DESCRIPTION_LENGTH = 160;
 
 export type OpenGraphType = 'product' | 'website';

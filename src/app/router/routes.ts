@@ -52,11 +52,68 @@ export const appRoutes = [
         },
       },
       {
+        path: '/favorites',
+        lazy: async () => {
+          const { FavoritesPage } = await import('@/pages/favorites');
+
+          return { Component: FavoritesPage };
+        },
+      },
+      {
+        path: '/login',
+        lazy: async () => {
+          const { LoginPage } = await import('@/pages/demo-forms');
+          return { Component: LoginPage };
+        },
+      },
+      {
+        path: '/selection-help',
+        lazy: async () => {
+          const { SelectionHelpPage } = await import('@/pages/demo-forms');
+          return { Component: SelectionHelpPage };
+        },
+      },
+      {
         path: '/contacts',
         lazy: async () => {
-          const { ContactsPage } = await import('@/pages/contacts');
+          const { ContactsPage } = await import('@/pages/information');
 
           return { Component: ContactsPage };
+        },
+      },
+      {
+        path: '/about',
+        lazy: async () => {
+          const { AboutPage } = await import('@/pages/information');
+          return { Component: AboutPage };
+        },
+      },
+      {
+        path: '/services',
+        lazy: async () => {
+          const { ServicesPage } = await import('@/pages/information');
+          return { Component: ServicesPage };
+        },
+      },
+      {
+        path: '/delivery',
+        lazy: async () => {
+          const { DeliveryPage } = await import('@/pages/information');
+          return { Component: DeliveryPage };
+        },
+      },
+      {
+        path: '/wholesale',
+        lazy: async () => {
+          const { WholesalePage } = await import('@/pages/information');
+          return { Component: WholesalePage };
+        },
+      },
+      {
+        path: '/support',
+        lazy: async () => {
+          const { SupportPage } = await import('@/pages/information');
+          return { Component: SupportPage };
         },
       },
       {

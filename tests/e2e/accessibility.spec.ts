@@ -26,6 +26,22 @@ const pagesToAudit = [
     heading: 'Контакты',
     path: '/contacts',
   },
+  {
+    heading: 'Избранное',
+    path: '/favorites',
+  },
+  {
+    heading: 'Вход',
+    path: '/login',
+  },
+  {
+    heading: 'Помощь с подбором',
+    path: '/selection-help',
+  },
+  {
+    heading: 'Услуги',
+    path: '/services',
+  },
 ] as const;
 
 for (const pageCase of pagesToAudit) {

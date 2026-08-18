@@ -276,7 +276,7 @@ test('applies indexable metadata to public storefront pages', async ({ page }) =
 
   await page.goto('/catalog/truby/pnd');
   await expect(page.getByRole('heading', { level: 1, name: 'ПНД' })).toBeVisible();
-  await expect(page).toHaveTitle('ПНД — ПромМатериалы');
+  await expect(page).toHaveTitle('ПНД — BELT');
   await expectMetadataTag(
     page,
     'link[rel="canonical"]',
@@ -291,7 +291,7 @@ test('applies indexable metadata to public storefront pages', async ({ page }) =
       name: 'Труба ПНД PE100 питьевая',
     }),
   ).toBeVisible();
-  await expect(page).toHaveTitle('Труба ПНД PE100 питьевая — ПромМатериалы');
+  await expect(page).toHaveTitle('Труба ПНД PE100 питьевая — BELT');
   await expectMetadataTag(page, 'meta[property="og:type"]', 'content', 'product');
   await expectMetadataTag(
     page,
