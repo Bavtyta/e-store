@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { MapPinIcon } from '@/shared/ui';
+
 import {
   AVAILABLE_CITIES,
   LOCATION_SESSION_DISMISSED_KEY,
@@ -87,7 +89,12 @@ export function CityChoicePopover({
         ref={triggerRef}
         type="button"
       >
-        <span className={styles.cityPrefix}>Ваш город:</span> {city}
+        <span className={styles.cityLabel}>
+          <MapPinIcon size={18} />
+          <span>
+            <span className={styles.cityPrefix}>Ваш город:</span> {city}
+          </span>
+        </span>
       </button>
       {isOpen ? (
         <div aria-labelledby={titleId} className={styles.popover} id={panelId} role="dialog">

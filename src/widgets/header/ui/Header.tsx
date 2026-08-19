@@ -8,7 +8,7 @@ import {
   useFavoritesStore,
 } from '@/features/favorites';
 import { getFocusableElements } from '@/shared/lib';
-import { Container, IconButton } from '@/shared/ui';
+import { Container, Grid2x2Icon, IconButton, PhoneIcon, TruckIcon, WrenchIcon } from '@/shared/ui';
 
 import { HeaderSearch } from './HeaderSearch';
 import styles from './header.module.css';
@@ -77,10 +77,10 @@ function CartGlyph() {
 }
 
 const NAV_ITEMS = [
-  { label: 'Каталог', to: '/catalog' },
-  { label: 'Услуги', to: '/services' },
-  { label: 'Доставка', to: '/delivery' },
-  { label: 'Контакты', to: '/contacts' },
+  { icon: Grid2x2Icon, label: 'Каталог', to: '/catalog' },
+  { icon: WrenchIcon, label: 'Услуги', to: '/services' },
+  { icon: TruckIcon, label: 'Доставка', to: '/delivery' },
+  { icon: PhoneIcon, label: 'Контакты', to: '/contacts' },
 ] as const;
 
 interface MobileMenuProps {
@@ -188,7 +188,8 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
               onClick={onClose}
               to={item.to}
             >
-              {item.label}
+              <item.icon size={20} />
+              <span>{item.label}</span>
             </NavLink>
           ))}
 
@@ -272,7 +273,8 @@ export function Header() {
               key={item.to}
               to={item.to}
             >
-              {item.label}
+              <item.icon size={18} />
+              <span>{item.label}</span>
             </NavLink>
           ))}
         </nav>

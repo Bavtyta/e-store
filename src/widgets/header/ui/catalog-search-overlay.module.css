@@ -50,6 +50,10 @@
 }
 
 .allResults {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   min-height: var(--control-height-sm);
   padding-inline: var(--space-5);
   color: var(--color-on-accent);
@@ -57,6 +61,7 @@
   border: 1px solid var(--color-primary-action);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .allResults:hover {
@@ -95,15 +100,30 @@
 }
 
 .catalogLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-sm);
+  padding-inline: var(--space-2);
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);
-  text-decoration-color: var(--color-navigation-accent);
-  text-decoration-thickness: 2px;
+  background: transparent;
+  border-bottom: 2px solid var(--color-navigation-accent);
+  text-decoration: none;
 }
 
 .catalogLink:hover {
   color: var(--color-navigation-hover-text);
   background: var(--color-navigation-hover-surface);
+}
+
+.allResultsArrow {
+  flex: 0 0 auto;
+  transition: transform var(--transition-fast);
+}
+
+.allResults:hover .allResultsArrow {
+  transform: translateX(0.125rem);
 }
 
 .categoryGrid {
@@ -259,23 +279,41 @@
   }
 
   .mobileToolbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
     min-height: var(--control-height-md);
     padding-inline: var(--space-4);
     border-bottom: 1px solid var(--color-border);
   }
 
   .mobileToolbar button {
-    width: var(--control-height-md);
-    height: var(--control-height-md);
-    padding: 0;
+    display: inline-flex;
+    min-width: var(--control-height-md);
+    min-height: var(--control-height-md);
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-2) 0 0;
     color: var(--color-text-primary);
     background: transparent;
     border: 0;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
+    justify-self: start;
+  }
+
+  .mobileToolbar button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .mobileToolbar strong {
+    grid-column: 2;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .initial,
@@ -314,5 +352,13 @@
   .categoryOption,
   .allResults {
     transition: none;
+  }
+
+  .allResultsArrow {
+    transition: none;
+  }
+
+  .allResults:hover .allResultsArrow {
+    transform: none;
   }
 }

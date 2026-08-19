@@ -64,6 +64,30 @@ test('closes attached catalog search from the backdrop and restores focus', asyn
   await expect(searchInput).toBeFocused();
 });
 
+test('keeps search shell geometry stable when the clear action appears', async ({ page }) => {
+  await page.setViewportSize({ height: 900, width: 1024 });
+  await page.goto('/');
+
+  const input = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  const submit = page.getByRole('button', { name: 'Найти' });
+  await input.click();
+
+  const emptyInputBounds = await input.boundingBox();
+  const emptySubmitBounds = await submit.boundingBox();
+  await input.fill('очень длинный поисковый запрос для проверки геометрии поля');
+  await expect(page.getByRole('button', { name: 'Очистить поиск' })).toBeVisible();
+  await expect(
+    page.getByRole('dialog', { name: 'Поиск по каталогу' }).getByRole('status'),
+  ).toContainText('Ищем товары');
+
+  expect(await input.boundingBox()).toEqual(emptyInputBounds);
+  expect(await submit.boundingBox()).toEqual(emptySubmitBounds);
+
+  await page.getByRole('button', { name: 'Очистить поиск' }).click();
+  await expect(input).toHaveValue('');
+  await expect(input).toBeFocused();
+});
+
 test('filters the catalog live by material and diameter and resets filters', async ({ page }) => {
   await openCatalog(page);
 
@@ -93,6 +117,50 @@ test('adds a product to the cart directly from its card', async ({ page }) => {
   await expect(page.getByLabel('В корзине позиций: 1')).toBeVisible();
 });
 
+test('keeps primary navigation labels accessible with decorative outline icons', async ({
+  page,
+}) => {
+  await page.setViewportSize({ height: 900, width: 1440 });
+  await page.goto('/');
+
+  const navigation = page.getByRole('navigation', { name: 'Основная навигация' });
+  const headerHeight = await page.locator('header').evaluate((header) => header.clientHeight);
+
+  for (const item of [
+    { label: 'Каталог', path: '/catalog' },
+    { label: 'Услуги', path: '/services' },
+    { label: 'Доставка', path: '/delivery' },
+    { label: 'Контакты', path: '/contacts' },
+  ]) {
+    const link = navigation.getByRole('link', { name: item.label });
+    await expect(link).toHaveAttribute('href', item.path);
+    await expect(link.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+    await expect(link.locator('svg')).toHaveAttribute('fill', 'none');
+    await expect(link.locator('svg')).toHaveAttribute('stroke', 'currentColor');
+    await expect(link.locator('svg')).toHaveAttribute('width', '18');
+    expect(
+      await link.evaluate((element) => element.scrollHeight <= element.clientHeight),
+    ).toBeTruthy();
+  }
+
+  const catalogLink = navigation.getByRole('link', { name: 'Каталог' });
+  await catalogLink.focus();
+  await expect(catalogLink).toBeFocused();
+  expect(await catalogLink.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe(
+    'none',
+  );
+  await catalogLink.hover();
+  expect(await page.locator('header').evaluate((header) => header.clientHeight)).toBe(headerHeight);
+
+  await page.goto('/catalog');
+  const activeCatalogLink = page
+    .getByRole('navigation', { name: 'Основная навигация' })
+    .getByRole('link', { name: 'Каталог' });
+  expect(
+    await activeCatalogLink.evaluate((element) => getComputedStyle(element).borderBottomColor),
+  ).not.toBe('rgba(0, 0, 0, 0)');
+});
+
 test('keeps mobile menu focus trapped and restores focus to the opener', async ({ page }) => {
   await page.setViewportSize({ height: 812, width: 375 });
   await page.goto('/');
@@ -108,6 +176,7 @@ test('keeps mobile menu focus trapped and restores focus to the opener', async (
 
   await expect(dialog).toBeVisible();
   await expect(closeButton).toBeFocused();
+  await expect(dialog.getByRole('link', { name: 'Каталог' }).locator('svg')).toHaveCount(1);
 
   await page.keyboard.press('Shift+Tab');
   await expect(cartLink).toBeFocused();
@@ -119,6 +188,20 @@ test('keeps mobile menu focus trapped and restores focus to the opener', async (
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('uses the existing menu pattern for navigation at 1024px', async ({ page }) => {
+  await page.setViewportSize({ height: 900, width: 1024 });
+  await page.goto('/');
+
+  await expect(page.getByRole('navigation', { name: 'Основная навигация' })).toBeHidden();
+  const opener = page.getByRole('button', { name: 'Открыть меню' });
+  await expect(opener).toBeVisible();
+  await opener.click();
+
+  const dialog = page.getByRole('dialog', { name: 'BELT' });
+  await expect(dialog.getByRole('link', { name: 'Каталог' })).toBeVisible();
+  await expect(dialog.getByRole('link', { name: 'Контакты' })).toBeVisible();
 });
 
 // 720px also covers the effective CSS viewport of a 1440px screen at 200% zoom.
