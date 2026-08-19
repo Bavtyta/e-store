@@ -110,6 +110,13 @@ export const appRoutes = [
         },
       },
       {
+        path: '/offers',
+        lazy: async () => {
+          const { OffersPage } = await import('@/pages/information');
+          return { Component: OffersPage };
+        },
+      },
+      {
         path: '/support',
         lazy: async () => {
           const { SupportPage } = await import('@/pages/information');

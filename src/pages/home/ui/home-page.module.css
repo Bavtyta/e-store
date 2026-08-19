@@ -5,6 +5,88 @@
   background: var(--color-background);
 }
 
+/* Service navigation */
+.serviceBar {
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.serviceBarContent {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.serviceBarLink,
+.serviceBarButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding-inline: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.serviceBarLink:first-child {
+  padding-left: 0;
+}
+
+.serviceBarPromo {
+  color: var(--color-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.serviceBarContent > * + * {
+  border-left: 1px solid var(--color-border);
+}
+
+.serviceBarLink:hover,
+.serviceBarLink:focus-visible,
+.serviceBarButton:hover,
+.serviceBarButton:focus-visible {
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-hover);
+}
+
+.serviceBarPromo:hover,
+.serviceBarPromo:focus-visible {
+  color: var(--color-secondary);
+}
+
+.serviceBarLink:active,
+.serviceBarButton:active {
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-active);
+}
+
+.serviceBarPromo:active {
+  color: var(--color-secondary);
+}
+
+.serviceBarButton {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.serviceBarCity {
+  margin-left: auto;
+}
+
+.serviceBarLabelMobile {
+  display: none;
+}
+
 /* Hero */
 .hero {
   position: relative;
@@ -311,6 +393,20 @@
 
   .heroMedia img {
     object-position: center bottom;
+  }
+
+  .serviceBarLink,
+  .serviceBarButton {
+    padding-inline: var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+
+  .serviceBarLabelDesktop {
+    display: none;
+  }
+
+  .serviceBarLabelMobile {
+    display: inline;
   }
 
   .heroTitle {

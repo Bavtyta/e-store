@@ -143,7 +143,7 @@
 
 .backLink {
   width: fit-content;
-  color: var(--color-accent-active);
+  color: var(--color-link);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   text-decoration: none;
@@ -151,7 +151,9 @@
 }
 
 .backLink:hover {
+  color: var(--color-interactive-text-hover);
   text-decoration: underline;
+  text-decoration-color: var(--color-interactive-accent);
 }
 
 @media (max-width: 30rem) {

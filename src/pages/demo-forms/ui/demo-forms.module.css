@@ -16,7 +16,7 @@
 }
 .eyebrow {
   margin: 0 0 var(--space-2);
-  color: var(--color-accent-active);
+  color: var(--color-accent-text);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.08em;
@@ -81,7 +81,7 @@
   color: var(--color-text-secondary);
 }
 .success a {
-  color: var(--color-accent-active);
+  color: var(--color-link);
   font-weight: var(--font-weight-semibold);
 }
 @media (min-width: 40rem) {

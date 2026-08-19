@@ -21,7 +21,7 @@
 
 .eyebrow {
   margin-bottom: var(--space-2) !important;
-  color: var(--color-accent-active) !important;
+  color: var(--color-accent-text) !important;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.06em;

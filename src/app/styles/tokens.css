@@ -6,7 +6,7 @@
   /* BELT palette (из референса) */
   --color-accent: #facc15;
   --color-accent-hover: #eec200;
-  --color-accent-active: #735c00;
+  --color-accent-text: #735c00;
   --color-on-accent: #231b00;
   --color-secondary: #bb0112;
   --color-secondary-hover: #e02928;
@@ -29,9 +29,15 @@
   --color-error: #ba1a1a;
   --color-error-hover: #9a3412;
   --color-error-surface: #ffdad6;
-  --color-focus: #735c00;
-  --color-link: #735c00;
-  --color-link-hover: #574500;
+  /* Interactive yellow stays a visual accent; readable copy remains dark on light surfaces. */
+  --color-interactive-text-hover: var(--color-text-primary);
+  --color-interactive-accent: var(--color-accent);
+  --color-interactive-accent-hover: var(--color-accent-hover);
+  --color-interactive-surface-hover: var(--color-accent);
+  --color-interactive-surface-active: var(--color-accent-hover);
+  --color-focus: var(--color-text-primary);
+  --color-link: var(--color-accent-text);
+  --color-link-hover: var(--color-interactive-text-hover);
   --color-overlay: rgb(20 27 43 / 68%);
   --color-info-surface: #e8f0fe;
   --color-info-text: #174ea6;

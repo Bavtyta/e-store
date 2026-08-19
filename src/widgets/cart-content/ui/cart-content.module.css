@@ -65,7 +65,10 @@
 }
 
 .heading h2 a:hover {
-  color: var(--color-accent-active);
+  color: var(--color-interactive-text-hover);
+  text-decoration: underline;
+  text-decoration-color: var(--color-interactive-accent);
+  text-decoration-thickness: 2px;
 }
 
 .heading p {

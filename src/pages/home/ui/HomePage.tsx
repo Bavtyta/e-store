@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 
+import { CityChoicePopover } from '@/features/location-choice';
 import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata, StructuredData } from '@/shared/lib';
 import { Container } from '@/shared/ui';
@@ -93,11 +94,35 @@ function HeroSection() {
   );
 }
 
+function HomeServiceBar() {
+  return (
+    <div className={styles.serviceBar}>
+      <Container size="wide">
+        <nav aria-label="Предложения и регион работы" className={styles.serviceBarContent}>
+          <Link className={[styles.serviceBarLink, styles.serviceBarPromo].join(' ')} to="/offers">
+            <span className={styles.serviceBarLabelDesktop}>Акции и спецпредложения</span>
+            <span className={styles.serviceBarLabelMobile}>Акции</span>
+          </Link>
+          <Link className={styles.serviceBarLink} to="/wholesale">
+            <span className={styles.serviceBarLabelDesktop}>Оптовым покупателям</span>
+            <span className={styles.serviceBarLabelMobile}>Опт</span>
+          </Link>
+          <CityChoicePopover
+            buttonClassName={styles.serviceBarButton}
+            className={styles.serviceBarCity}
+          />
+        </nav>
+      </Container>
+    </div>
+  );
+}
+
 export function HomePage() {
   return (
     <div className={styles.page}>
       <PageMetadata metadata={homeMetadata} />
       <StructuredData data={homeStructuredData} />
+      <HomeServiceBar />
       <HeroSection />
       <HomeCategories />
       <HomeFeaturedProducts />

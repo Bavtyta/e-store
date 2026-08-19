@@ -4,7 +4,28 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => {
     localStorage.removeItem('storefront-favorites-v1');
+    localStorage.removeItem('storefront-location-v1');
+    sessionStorage.removeItem('storefront-location-prompt-dismissed');
   });
+});
+
+test('confirms the city locally and does not prompt again after reload', async ({ page }) => {
+  await page.reload();
+
+  const cityPopover = page.getByRole('dialog', { name: 'Выберите город' });
+  await expect(cityPopover).toBeVisible();
+  await cityPopover.getByLabel('Город').selectOption('Самара');
+  await cityPopover.getByRole('button', { name: 'Подтвердить' }).click();
+
+  await expect(page.getByRole('button', { name: 'Ваш город: Самара' })).toBeVisible();
+  await expect(cityPopover).toBeHidden();
+  await expect
+    .poll(() => page.evaluate(() => localStorage.getItem('storefront-location-v1')))
+    .toContain('Самара');
+
+  await page.reload();
+  await expect(page.getByRole('button', { name: 'Ваш город: Самара' })).toBeVisible();
+  await expect(cityPopover).toBeHidden();
 });
 
 test('saves a catalog product locally and removes it from favorites', async ({ page }) => {

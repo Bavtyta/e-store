@@ -2,6 +2,7 @@ export {
   AboutPage,
   ContactsPage,
   DeliveryPage,
+  OffersPage,
   ServicesPage,
   SupportPage,
   WholesalePage,

@@ -20,8 +20,8 @@
 
 .root:hover,
 .active {
-  color: var(--color-accent-active);
-  background: var(--color-surface);
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-hover);
 }
 
 .root:active {

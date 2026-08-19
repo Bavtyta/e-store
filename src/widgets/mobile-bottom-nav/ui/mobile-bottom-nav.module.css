@@ -49,7 +49,7 @@
   }
 
   .linkActive {
-    color: var(--color-accent-active);
+    color: var(--color-text-primary);
   }
 
   .linkActive .iconWrap {
@@ -65,7 +65,9 @@
     width: 2.5rem;
     height: 1.5rem;
     border-radius: var(--radius-pill);
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
   }
 
   .label {

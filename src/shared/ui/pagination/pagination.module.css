@@ -21,7 +21,8 @@
 }
 
 .root a:hover {
-  border-color: var(--color-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+  color: var(--color-interactive-text-hover);
 }
 
 .root a[aria-current='page'] {

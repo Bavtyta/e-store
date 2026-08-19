@@ -6,6 +6,7 @@ const DISALLOWED_PATHS = [
   '/delivery',
   '/favorites',
   '/login',
+  '/offers',
   '/privacy',
   '/selection-help',
   '/services',

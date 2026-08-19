@@ -42,6 +42,10 @@ const pagesToAudit = [
     heading: 'Услуги',
     path: '/services',
   },
+  {
+    heading: 'Акции и спецпредложения',
+    path: '/offers',
+  },
 ] as const;
 
 for (const pageCase of pagesToAudit) {
@@ -68,3 +72,22 @@ for (const pageCase of pagesToAudit) {
     ).toEqual([]);
   });
 }
+
+test('has no axe violations in catalog search results', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('searchbox', { name: 'Поиск по каталогу' }).click();
+
+  const dialog = page.getByRole('dialog', { name: 'Поиск по каталогу' });
+  const input = dialog.getByRole('searchbox', {
+    name: 'Товар, категория или характеристика',
+  });
+  await input.fill('PE100');
+  await expect(dialog.getByText('Труба ПНД PE100 питьевая')).toBeVisible();
+
+  const results = await new AxeBuilder({ page })
+    .include('dialog')
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+});
