@@ -13,10 +13,8 @@ test('navigates to a filtered catalog from the header search', async ({ page }) 
   const searchTrigger = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
   await searchTrigger.click();
 
-  const searchDialog = page.getByRole('dialog', { name: 'Поиск по каталогу' });
-  const searchInput = searchDialog.getByRole('searchbox', {
-    name: 'Товар, категория или характеристика',
-  });
+  const searchInput = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  await expect(page.getByRole('searchbox')).toHaveCount(1);
 
   await expect(searchInput).toBeFocused();
   await searchInput.fill('ПВХ');
@@ -37,9 +35,8 @@ test('supports keyboard result selection and restores focus after closing search
   await searchTrigger.click();
 
   const searchDialog = page.getByRole('dialog', { name: 'Поиск по каталогу' });
-  const searchInput = searchDialog.getByRole('searchbox', {
-    name: 'Товар, категория или характеристика',
-  });
+  const searchInput = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  await expect(page.getByRole('searchbox')).toHaveCount(1);
 
   await searchInput.fill('PE100');
   await expect(searchDialog.getByText('Труба ПНД PE100 питьевая')).toBeVisible();
@@ -52,6 +49,19 @@ test('supports keyboard result selection and restores focus after closing search
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Поиск по каталогу' })).toBeHidden();
   await expect(page.getByRole('searchbox', { name: 'Поиск по каталогу' })).toBeFocused();
+});
+
+test('closes attached catalog search from the backdrop and restores focus', async ({ page }) => {
+  await page.goto('/');
+
+  const searchInput = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  await searchInput.click();
+
+  await expect(page.getByRole('dialog', { name: 'Поиск по каталогу' })).toBeVisible();
+  await page.getByRole('button', { name: 'Закрыть поиск' }).click();
+
+  await expect(page.getByRole('dialog', { name: 'Поиск по каталогу' })).toBeHidden();
+  await expect(searchInput).toBeFocused();
 });
 
 test('filters the catalog live by material and diameter and resets filters', async ({ page }) => {
@@ -111,30 +121,42 @@ test('keeps mobile menu focus trapped and restores focus to the opener', async (
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
 });
 
-for (const width of [320, 375, 768, 1024, 1440]) {
+// 720px also covers the effective CSS viewport of a 1440px screen at 200% zoom.
+for (const width of [320, 375, 720, 768, 1024, 1440]) {
   test(`keeps catalog search usable without overflow at ${String(width)}px`, async ({ page }) => {
     await page.setViewportSize({ height: 812, width });
     await page.goto('/');
     await page.getByRole('searchbox', { name: 'Поиск по каталогу' }).click();
 
     const dialog = page.getByRole('dialog', { name: 'Поиск по каталогу' });
-    const input = dialog.getByRole('searchbox', {
-      name: 'Товар, категория или характеристика',
-    });
+    const input = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+    await expect(page.getByRole('searchbox')).toHaveCount(1);
     await input.fill('PE100');
     await expect(dialog.getByText('Труба ПНД PE100 питьевая')).toBeVisible();
 
     const bounds = await dialog.boundingBox();
+    const inputBounds = await input.boundingBox();
     expect(bounds).not.toBeNull();
+    expect(inputBounds).not.toBeNull();
     expect(bounds?.x ?? -1).toBeGreaterThanOrEqual(0);
     expect((bounds?.x ?? 0) + (bounds?.width ?? width)).toBeLessThanOrEqual(width);
+
+    if (width >= 768) {
+      expect(Math.abs((bounds?.x ?? 0) - (inputBounds?.x ?? 0))).toBeLessThanOrEqual(2);
+      expect(
+        Math.abs(
+          (bounds?.y ?? 0) - (inputBounds === null ? 0 : inputBounds.y + inputBounds.height),
+        ),
+      ).toBeLessThanOrEqual(2);
+    }
     await expect
       .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
       .toBeLessThanOrEqual(width);
 
     if (width <= 375) {
       expect(bounds?.width).toBe(width);
-      expect(bounds?.height).toBe(812);
+      expect(bounds?.y ?? 0).toBeGreaterThan(0);
+      expect((bounds?.y ?? 0) + (bounds?.height ?? 0)).toBeLessThanOrEqual(812);
     }
   });
 }

@@ -61,23 +61,52 @@
 
 .searchForm {
   position: relative;
-  display: flex;
-  align-items: center;
+  z-index: 2;
   width: 100%;
   max-width: 24rem;
 }
 
+.searchRoot {
+  position: relative;
+  width: 100%;
+}
+
+.searchShell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  height: var(--control-height-md);
+  overflow: visible;
+  background: var(--color-surface);
+  border: 2px solid var(--color-control-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast);
+}
+
+.searchShell:hover {
+  border-color: var(--color-control-border-hover);
+}
+
+.searchShell:focus-within {
+  border-color: var(--color-primary-action);
+  outline: 0;
+  box-shadow: inset 0 0 0 1px var(--color-primary-action);
+}
+
+.searchShellOpen {
+  border-bottom-color: var(--color-border);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
 .searchInput {
   width: 100%;
-  height: var(--control-height-sm);
+  height: 100%;
   padding: var(--space-1) var(--space-10) var(--space-1) var(--space-3);
   color: var(--color-text-primary);
   background: var(--color-surface);
-  border: 2px solid var(--color-interactive-accent);
-  border-radius: var(--radius-md);
-  transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+  border: 0;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  outline: 0;
 }
 
 .searchInput::placeholder {
@@ -86,17 +115,20 @@
 }
 
 .searchInput:hover {
-  border-color: var(--color-interactive-accent-hover);
+  border-color: transparent;
 }
 
 .searchInput:focus-visible {
-  border-color: var(--color-interactive-accent);
-  outline-color: var(--color-focus);
+  outline: 0;
+}
+
+.searchInput::-webkit-search-cancel-button {
+  appearance: none;
 }
 
 .searchClear {
   position: absolute;
-  right: var(--space-9);
+  right: 4.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -113,6 +145,24 @@
   transition:
     color var(--transition-fast),
     background-color var(--transition-fast);
+}
+
+.searchSubmit {
+  min-width: 4.5rem;
+  height: 100%;
+  padding-inline: var(--space-3);
+  color: var(--color-on-accent);
+  background: var(--color-primary-action);
+  border: 0;
+  border-left: 1px solid var(--color-primary-action-hover);
+  border-radius: 0 calc(var(--radius-md) - 2px) calc(var(--radius-md) - 2px) 0;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.searchSubmit:hover {
+  background: var(--color-primary-action-hover);
 }
 
 .searchClear:hover {
@@ -140,8 +190,9 @@
 }
 
 .searchButton:hover {
-  color: var(--color-on-accent);
-  background: var(--color-accent);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
 }
 
 /* Brand */
@@ -185,9 +236,9 @@
 }
 
 .navLink:hover {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
-  border-bottom-color: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  border-bottom-color: var(--color-navigation-accent);
 }
 
 .navLink:active {
@@ -228,8 +279,9 @@
 }
 
 .actionLink:hover {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
 }
 
 .actionLink:active {
@@ -237,8 +289,9 @@
 }
 
 .actionLinkActive {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-active-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
 }
 
 .cartBadge {
@@ -332,7 +385,8 @@
 }
 
 .drawerLink:hover {
-  background: var(--color-interactive-surface-hover);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 3px 0 var(--color-navigation-accent);
 }
 
 .drawerLink:active {

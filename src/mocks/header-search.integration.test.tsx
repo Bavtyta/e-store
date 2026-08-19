@@ -48,9 +48,9 @@ describe('HeaderSearch overlay', () => {
     fireEvent.click(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }));
 
     const dialog = screen.getByRole('dialog', { name: 'Поиск по каталогу' });
-    const input = screen.getByRole('searchbox', {
-      name: 'Товар, категория или характеристика',
-    });
+    const input = screen.getByRole('searchbox', { name: 'Поиск по каталогу' });
+
+    expect(screen.getAllByRole('searchbox')).toHaveLength(1);
 
     expect(dialog).toBeInTheDocument();
     await waitFor(() => {
@@ -64,9 +64,7 @@ describe('HeaderSearch overlay', () => {
     renderSearch();
     fireEvent.click(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }));
 
-    const input = screen.getByRole('searchbox', {
-      name: 'Товар, категория или характеристика',
-    });
+    const input = screen.getByRole('searchbox', { name: 'Поиск по каталогу' });
     fireEvent.change(input, { target: { value: 'P' } });
     fireEvent.change(input, { target: { value: 'PE' } });
     fireEvent.change(input, { target: { value: 'PE100' } });
@@ -78,10 +76,9 @@ describe('HeaderSearch overlay', () => {
   it('shows empty and retryable error states', async () => {
     const { unmount } = renderSearch();
     fireEvent.click(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }));
-    fireEvent.change(
-      screen.getByRole('searchbox', { name: 'Товар, категория или характеристика' }),
-      { target: { value: 'несуществующий товар' } },
-    );
+    fireEvent.change(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }), {
+      target: { value: 'несуществующий товар' },
+    });
 
     expect(await screen.findByText(/ничего не найдено/i)).toBeInTheDocument();
     unmount();
@@ -90,10 +87,9 @@ describe('HeaderSearch overlay', () => {
     apiClient.defaults.headers.common['x-msw-scenario'] = 'server-error';
     renderSearch();
     fireEvent.click(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }));
-    fireEvent.change(
-      screen.getByRole('searchbox', { name: 'Товар, категория или характеристика' }),
-      { target: { value: 'труба' } },
-    );
+    fireEvent.change(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }), {
+      target: { value: 'труба' },
+    });
 
     expect(await screen.findByRole('alert', undefined, { timeout: 6_000 })).toHaveTextContent(
       'Не удалось выполнить поиск.',

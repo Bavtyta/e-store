@@ -1,5 +1,4 @@
-import { useId, useState } from 'react';
-import type { SubmitEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router';
 
 import { CatalogSearchOverlay } from './CatalogSearchOverlay';
@@ -10,65 +9,52 @@ function isCatalogPath(pathname: string): boolean {
 }
 
 export function HeaderSearch() {
-  const inputId = useId();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [geometry, setGeometry] = useState({ backdropTop: 0, left: 0, top: 0 });
+  const rootRef = useRef<HTMLDivElement>(null);
   const activeQuery = isCatalogPath(location.pathname) ? (searchParams.get('search') ?? '') : '';
 
+  function updateOverlayTop(): void {
+    const root = rootRef.current;
+    const header = root?.closest('header');
+    const rootBounds = root?.getBoundingClientRect();
+    setGeometry({
+      backdropTop: header?.getBoundingClientRect().bottom ?? 0,
+      left: rootBounds?.left ?? 0,
+      top: rootBounds?.bottom ?? 0,
+    });
+  }
+
   function openSearch(): void {
+    updateOverlayTop();
     setIsOpen(true);
   }
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>): void {
-    event.preventDefault();
-    openSearch();
-  }
+  useEffect(() => {
+    if (!isOpen) return;
+
+    window.addEventListener('resize', updateOverlayTop);
+    return () => {
+      window.removeEventListener('resize', updateOverlayTop);
+    };
+  }, [isOpen]);
 
   return (
-    <>
-      <form className={styles.searchForm} onSubmit={handleSubmit} role="search">
-        <label className={styles.visuallyHidden} htmlFor={inputId}>
-          Поиск по каталогу
-        </label>
-        <input
-          aria-haspopup="dialog"
-          className={styles.searchInput}
-          id={inputId}
-          onClick={openSearch}
-          placeholder="Поиск по каталогу"
-          readOnly
-          type="search"
-          value={activeQuery}
-        />
-        <button
-          aria-label="Открыть поиск по каталогу"
-          className={styles.searchButton}
-          type="submit"
-        >
-          <svg
-            aria-hidden="true"
-            fill="none"
-            height="18"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            width="18"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5" strokeLinecap="round" />
-          </svg>
-        </button>
-      </form>
-      {isOpen ? (
-        <CatalogSearchOverlay
-          initialQuery={activeQuery}
-          onClose={() => {
-            setIsOpen(false);
-          }}
-          open
-        />
-      ) : null}
-    </>
+    <div className={styles.searchRoot} ref={rootRef}>
+      <CatalogSearchOverlay
+        initialQuery={activeQuery}
+        key={activeQuery}
+        backdropTop={geometry.backdropTop}
+        leftOffset={geometry.left}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        onOpen={openSearch}
+        open={isOpen}
+        topOffset={geometry.top}
+      />
+    </div>
   );
 }

@@ -78,14 +78,12 @@ test('has no axe violations in catalog search results', async ({ page }) => {
   await page.getByRole('searchbox', { name: 'Поиск по каталогу' }).click();
 
   const dialog = page.getByRole('dialog', { name: 'Поиск по каталогу' });
-  const input = dialog.getByRole('searchbox', {
-    name: 'Товар, категория или характеристика',
-  });
+  const input = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
   await input.fill('PE100');
   await expect(dialog.getByText('Труба ПНД PE100 питьевая')).toBeVisible();
 
   const results = await new AxeBuilder({ page })
-    .include('dialog')
+    .include('[role="dialog"]')
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze();
 
