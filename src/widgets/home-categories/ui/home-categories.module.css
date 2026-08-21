@@ -1,38 +1,157 @@
-.root {
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-card);
+.section {
+  padding-block: var(--section-padding-block);
+  background: var(--color-background);
 }
-.heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
+
+.container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
 }
-.heading h2 {
+
+.sectionTitle {
+  margin: 0 0 var(--space-8);
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+}
+
+.sectionText {
   margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
 }
-.root ul {
+
+/* Categories grid */
+.categoriesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: var(--space-3);
-  margin: var(--space-5) 0 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
 }
-.root li {
+
+.categoryCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-height: 10rem;
+  padding: var(--space-4);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-surface-container);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-}
-.root li a {
-  display: block;
-  padding: var(--space-4);
-  color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
   text-decoration: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
-.root li a:hover {
-  background: var(--color-warning-surface);
+
+.categoryCard:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-0.125rem);
+}
+
+.categoryVisual {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.76;
+  transition:
+    opacity var(--transition-fast),
+    transform 300ms ease;
+}
+
+.categoryVisual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoryVisual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(249 249 255 / 4%), rgb(249 249 255 / 96%) 88%);
+  content: '';
+}
+
+.categoryCard:hover .categoryVisual {
+  opacity: 1;
+  transform: scale(1.035);
+}
+
+.categoryContent {
+  display: grid;
+  gap: var(--space-1);
+  max-width: calc(100% - 2rem);
+}
+
+.categoryName {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.categoryDescription {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+.categoryArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: var(--color-text-secondary);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.categoryCard:hover .categoryArrow,
+.categoryCard:focus-visible .categoryArrow {
+  color: var(--color-on-accent);
+  background: var(--color-interactive-accent);
+  transform: translateX(var(--space-1));
+}
+
+/* Responsive */
+@media (min-width: 36rem) {
+  .categoriesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .categoryCard {
+    min-height: 12rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .categoriesGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .categoryCard {
+    min-height: 13rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .categoryCard:hover,
+  .categoryCard:hover .categoryVisual,
+  .categoryCard:hover .categoryArrow,
+  .categoryCard:focus-visible .categoryArrow {
+    transform: none;
+  }
 }

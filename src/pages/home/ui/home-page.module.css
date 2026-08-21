@@ -1,46 +1,466 @@
 .page {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-background);
 }
-.hero {
-  padding: var(--space-12) 0;
-  background: var(--color-dark-surface);
-  color: var(--color-surface);
-}
-.hero h1 {
-  max-width: 48rem;
-  margin: var(--space-3) 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-}
-.hero p:last-child {
-  max-width: 42rem;
-  margin: 0;
-  color: #d9dee3;
-  font-size: var(--font-size-lg);
-}
-.eyebrow {
-  margin: 0;
-  color: var(--color-accent);
-  font-weight: var(--font-weight-semibold);
-}
-.content {
-  display: grid;
-  gap: var(--space-8);
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-12);
-}
-.benefits {
-  padding: var(--space-6);
-  border-left: 0.35rem solid var(--color-accent);
+
+/* Service navigation */
+.serviceBar {
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
-.benefits h2 {
-  margin-bottom: var(--space-4);
+
+.serviceBarContent {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
 }
-.benefits ul {
+
+.serviceBarLink,
+.serviceBarButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding-inline: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.serviceBarLink:first-child {
+  padding-left: 0;
+}
+
+.serviceBarPromo {
+  color: var(--color-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.serviceBarContent > * + * {
+  border-left: 1px solid var(--color-border);
+}
+
+.serviceBarLink:hover,
+.serviceBarLink:focus-visible,
+.serviceBarButton:hover,
+.serviceBarButton:focus-visible {
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-hover);
+}
+
+.serviceBarPromo:hover,
+.serviceBarPromo:focus-visible {
+  color: var(--color-secondary);
+}
+
+.serviceBarLink:active,
+.serviceBarButton:active {
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-active);
+}
+
+.serviceBarPromo:active {
+  color: var(--color-secondary);
+}
+
+.serviceBarButton {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.serviceBarCity {
+  margin-left: auto;
+}
+
+.serviceBarLabelMobile {
+  display: none;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 30rem;
+  background-color: var(--color-dark-surface);
+  color: var(--color-surface);
+  overflow: hidden;
+}
+
+.hero::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(11 15 24 / 96%) 0%,
+    rgb(11 15 24 / 88%) 48%,
+    transparent 78%
+  );
+  content: '';
+}
+
+.heroMedia,
+.heroMedia img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.heroMedia img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.heroContainer {
+  position: relative;
+  z-index: 1;
+}
+
+.heroLayout {
   display: grid;
-  gap: var(--space-2);
+  align-items: center;
+  min-height: 30rem;
+}
+
+.heroContent {
+  max-width: 56rem;
+  padding-block: clamp(var(--space-12), 7vw, 5.5rem);
+}
+
+.heroTitle {
+  max-width: 54rem;
+  margin: 0 0 var(--space-6);
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  color: var(--color-surface);
+  overflow-wrap: anywhere;
+}
+
+.heroText {
+  margin: 0 0 var(--space-8);
+  font-size: clamp(var(--font-size-md), 1.4vw, 1.125rem);
+  line-height: 1.6;
+  color: var(--color-surface-subtle);
+  max-width: 40rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height-sm);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.heroCta:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.heroCta:active {
+  transform: translateY(0.0625rem);
+}
+
+.heroSecondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height-sm);
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid rgb(255 255 255 / 48%);
+  border-radius: var(--radius-sm);
+  color: var(--color-surface);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.heroSecondaryCta:hover {
+  border-color: var(--color-surface);
+  background: rgb(255 255 255 / 10%);
+  color: var(--color-surface);
+}
+
+.taskSelection {
+  background: var(--color-background);
+}
+
+.taskSelectionContent {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--section-padding-block);
+}
+
+.taskSelection h2 {
+  margin: 0 0 var(--space-3);
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+.taskSelectionIntro p,
+.selectionCta p {
+  max-width: 42rem;
   margin: 0;
-  padding-left: var(--space-5);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+}
+
+.taskList {
+  display: grid;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.taskLink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 7rem;
+  padding: var(--space-5) var(--space-4);
+  color: var(--color-text-primary);
+  border-top: 1px solid var(--color-border);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.taskLink:hover,
+.taskLink:focus-visible {
+  color: var(--color-text-primary);
+  background: var(--color-surface-subtle);
+}
+
+.taskCopy {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.taskTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.taskDescription {
+  max-width: 34rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.taskArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height-md);
+  height: var(--control-height-md);
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xl);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.taskLink:hover .taskArrow,
+.taskLink:focus-visible .taskArrow {
+  background: var(--color-accent-hover);
+  transform: translateX(var(--space-1));
+}
+
+.selectionCta {
+  display: grid;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border-left: 0.25rem solid var(--color-accent);
+  background: var(--color-surface);
+}
+
+.selectionCta h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+
+.selectionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.selectionPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height-md);
+  padding-inline: var(--space-5);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.selectionPrimary {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.selectionPrimary:hover {
+  color: var(--color-on-accent);
+  background: var(--color-accent-hover);
+}
+
+.serviceArea {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.serviceAreaContent {
+  display: grid;
+  align-items: center;
+  gap: var(--space-6);
+  padding-block: var(--section-padding-block-compact);
+}
+
+.serviceArea h2 {
+  max-width: 48rem;
+  margin: 0 0 var(--space-3);
+  font-size: clamp(var(--font-size-xl), 2.5vw, var(--font-size-2xl));
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+.serviceArea p {
+  max-width: 52rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Responsive */
+@media (max-width: 47.9375rem) {
+  .hero {
+    min-height: 36rem;
+  }
+
+  .hero::after {
+    background: linear-gradient(
+      180deg,
+      rgb(11 15 24 / 98%) 0%,
+      rgb(11 15 24 / 90%) 56%,
+      rgb(11 15 24 / 34%) 78%,
+      rgb(11 15 24 / 92%) 100%
+    );
+  }
+
+  .heroMedia img {
+    object-position: center bottom;
+  }
+
+  .serviceBarLink,
+  .serviceBarButton {
+    padding-inline: var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+
+  .serviceBarLabelDesktop {
+    display: none;
+  }
+
+  .serviceBarLabelMobile {
+    display: inline;
+  }
+
+  .heroTitle {
+    margin-bottom: var(--space-5);
+    font-size: clamp(2rem, 9.2vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .heroText {
+    font-size: var(--font-size-sm);
+  }
+
+  .heroContent {
+    padding-block: var(--space-12);
+  }
+
+  .heroActions {
+    display: grid;
+  }
+
+  .heroActions > * {
+    width: 100%;
+  }
+
+  .selectionActions > * {
+    flex: 1 1 100%;
+  }
+
+  .taskLink {
+    align-items: start;
+    gap: var(--space-4);
+  }
+}
+
+@media (min-width: 48rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 0.58fr) minmax(20rem, 0.42fr);
+  }
+
+  .taskSelectionContent {
+    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+    column-gap: clamp(var(--space-8), 6vw, var(--space-16));
+  }
+
+  .selectionCta {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taskLink:hover .taskArrow,
+  .taskLink:focus-visible .taskArrow {
+    transform: none;
+  }
 }

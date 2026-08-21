@@ -1,0 +1,449 @@
+<!DOCTYPE html><html class="light" lang="ru"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Мои заказы - BELT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#a0efff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#e02928",
+                        "on-secondary-container": "#fffbff",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#eec200",
+                        "inverse-on-surface": "#edf0ff",
+                        "tertiary-fixed-dim": "#15daf4",
+                        "surface-container": "#e9edff",
+                        "on-tertiary-fixed": "#001f25",
+                        "background": "#f9f9ff",
+                        "surface-tint": "#735c00",
+                        "outline-variant": "#d1c6ab",
+                        "outline": "#7f7660",
+                        "on-surface-variant": "#4d4632",
+                        "primary": "#735c00",
+                        "on-tertiary-fixed-variant": "#004e59",
+                        "primary-container": "#facc15",
+                        "on-primary-fixed": "#231b00",
+                        "surface-container-high": "#e1e8fd",
+                        "surface-bright": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#006270",
+                        "on-background": "#141b2b",
+                        "on-error": "#ffffff",
+                        "tertiary": "#006876",
+                        "on-surface": "#141b2b",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#eec200",
+                        "surface-variant": "#dce2f7",
+                        "surface-container-low": "#f1f3ff",
+                        "on-primary-fixed-variant": "#574500",
+                        "tertiary-container": "#33e4ff",
+                        "secondary-fixed": "#ffdad6",
+                        "surface-dim": "#d3daef",
+                        "primary-fixed": "#ffe083",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "secondary": "#bb0112",
+                        "error-container": "#ffdad6",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#293040",
+                        "on-primary-container": "#6c5700",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#410002",
+                        "surface-container-highest": "#dce2f7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "display-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "code": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-md": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "code": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex flex-col md:flex-row">
+<!-- Mobile Top Navigation Bar -->
+<header class="md:hidden flex justify-between items-center w-full px-lg sticky top-0 z-50 bg-surface border-b border-outline-variant h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary font-bold" data-icon="precision_manufacturing">precision_manufacturing</span>
+
+</div>
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-xs">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-xs">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-outline-variant bg-surface sticky top-0 overflow-y-auto shrink-0">
+<div class="p-lg flex flex-col gap-sm border-b border-outline-variant">
+<div class="flex items-center gap-md mb-xs">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Логотип организации" class="w-full h-full object-cover" data-alt="A minimal geometric logo for an industrial company, featuring sharp, precise lines and a metallic aesthetic, rendered in dark slate and vibrant yellow on a pure white background. The design is clean, corporate, and modern." src="https://lh3.googleusercontent.com/aida/AP1WRLvLCyPfE_Pjt0qsueYAI9NSvMtdSMtrESbqvDlo5THJclhTOdiKXds0QGNuCcG2y4CtdR01llSh8N4Ui5fgkZ17AzhK66OIsoMXlvEa-6EZWKtMC6bwPTiGjFhtT3pjOEnC9bM_GtflUuatw8WX0wOXvv0CZEFFKC7lwj6_3N6MMzIW3mjlcw-uHQKds8kvajzR62YPfKkmGx6dN-dmIvL35jrOFxQZEJKbQsxqWScnqbqkyBOmci4y4x8">
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg font-bold text-primary">BELT</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">ID: 774829-01</div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-fixed font-label-md text-label-md py-sm px-md rounded hover:opacity-90 transition-all flex items-center justify-center gap-xs mt-sm">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
+                Новый заказ
+            </button>
+</div>
+<nav class="flex-1 py-md flex flex-col gap-xs px-sm">
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Дашборд</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface font-bold border-r-4 border-primary bg-surface-container-low opacity-90 transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="package_2" style="font-variation-settings: 'FILL' 1;">package_2</span>
+<span class="font-label-md text-label-md">Мои заказы</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-label-md text-label-md">Каталог оборудования</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="description">description</span>
+<span class="font-label-md text-label-md">Спецификации</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Аналитика</span>
+</a>
+</nav>
+<div class="border-t border-outline-variant p-sm flex flex-col gap-xs mt-auto">
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Настройки профиля</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Выйти</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar (Desktop) -->
+<header class="hidden md:flex justify-between items-center w-full px-lg sticky top-0 z-50 bg-surface border-b border-outline-variant h-16 shrink-0">
+<div class="flex items-center gap-lg">
+
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-DEFAULT py-xs pl-[36px] pr-sm font-body-sm text-body-sm text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Поиск по порталу..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<nav class="hidden lg:flex items-center gap-md">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Поддержка</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">База знаний</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">FAQ</a>
+</nav>
+<div class="flex items-center gap-sm border-l border-outline-variant pl-lg">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-container-high relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary-container rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<button class="ml-xs bg-surface border border-outline-variant text-on-surface font-label-md text-label-md py-xs px-sm rounded-DEFAULT hover:bg-surface-container-lowest transition-colors flex items-center gap-xs">
+                        Создать запрос
+                    </button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high ml-xs overflow-hidden border border-outline-variant shrink-0 cursor-pointer hover:ring-2 hover:ring-primary transition-all">
+<img alt="Аватар закупщика" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate procurement manager in a sharp grey suit against a subtle modern office background, well-lit and conveying confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApQbtEZ1lu_iSxUt45hqPhGwS57uP1K57uXgoHvLQlSDX3aGGgG2iHvE-__7ARTajMkOrLxzuQPQxfVprFWZQ_-qQ68gimnKRYlHLa34AL9UH6ugAs8egsFJm4CAZJVpgWs_Cax032xCn3QRKfwWlN97HBzM6kFJxddDjKTsSTE-1EAZsl_3-F9ULPT8SXdtewkKKrlmGK_jFmG_WEJF6gElxOVUJEudIEKfTrH5UykhwGOP0Qym4N">
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-md md:p-lg lg:p-xl w-full max-w-container-max mx-auto flex-1 flex flex-col gap-lg">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-display-md text-display-md text-on-background mb-xs">Мои заказы</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Управление текущими и завершенными заказами оборудования.</p>
+</div>
+</div>
+<!-- Toolbar / Filters -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col lg:flex-row gap-md items-start lg:items-center justify-between shadow-sm">
+<!-- Search -->
+<div class="w-full lg:w-96 relative shrink-0">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="search">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-DEFAULT py-sm pl-[36px] pr-sm font-body-sm text-body-sm text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Поиск по номеру заказа..." type="text">
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-sm w-full lg:w-auto">
+<div class="flex items-center border border-outline-variant rounded-DEFAULT bg-surface overflow-hidden">
+<span class="bg-surface-container-low px-sm py-sm border-r border-outline-variant text-on-surface-variant font-body-sm text-body-sm flex items-center">
+<span class="material-symbols-outlined text-[18px] mr-xs" data-icon="calendar_today">calendar_today</span>
+                            Период
+                        </span>
+<select class="bg-transparent border-none font-body-sm text-body-sm text-on-surface py-sm px-sm pr-lg focus:ring-0 cursor-pointer min-w-[140px]">
+<option>За последние 30 дней</option>
+<option>За последние 90 дней</option>
+<option>Текущий год</option>
+<option>Прошлый год</option>
+<option>Все время</option>
+</select>
+</div>
+<div class="flex items-center border border-outline-variant rounded-DEFAULT bg-surface overflow-hidden">
+<span class="bg-surface-container-low px-sm py-sm border-r border-outline-variant text-on-surface-variant font-body-sm text-body-sm flex items-center">
+<span class="material-symbols-outlined text-[18px] mr-xs" data-icon="filter_list">filter_list</span>
+                            Статус
+                        </span>
+<select class="bg-transparent border-none font-body-sm text-body-sm text-on-surface py-sm px-sm pr-lg focus:ring-0 cursor-pointer min-w-[140px]">
+<option>Все статусы</option>
+<option>В обработке</option>
+<option>Отгружен</option>
+<option>Доставлен</option>
+<option>Отменен</option>
+</select>
+</div>
+<button class="bg-surface border border-outline-variant text-on-surface hover:bg-surface-container-low font-label-md text-label-md px-md py-sm rounded-DEFAULT transition-colors flex items-center justify-center gap-xs shrink-0">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+                        Экспорт CSV
+                    </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-x-auto shadow-sm">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-sm px-md font-label-md text-label-md text-on-surface-variant w-48">Номер заказа</th>
+<th class="py-sm px-md font-label-md text-label-md text-on-surface-variant">Дата</th>
+<th class="py-sm px-md font-label-md text-label-md text-on-surface-variant text-right">Сумма (₽)</th>
+<th class="py-sm px-md font-label-md text-label-md text-on-surface-variant">Статус</th>
+<th class="py-sm px-md font-label-md text-label-md text-on-surface-variant">Документы</th>
+<th class="py-sm px-sm w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface-container-lowest">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors h-[40px] group cursor-pointer">
+<td class="py-sm px-md font-code text-code text-on-surface font-semibold">ORD-2023-8941</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface-variant">12 Окт 2023</td>
+<td class="py-sm px-md font-code text-code text-on-surface font-bold text-right">1 450 000.00</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs bg-surface-container-high text-on-surface-variant border border-outline-variant px-2 py-0.5 rounded-full font-label-md text-[11px] uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                                    В обработке
+                                </span>
+</td>
+<td class="py-sm px-md">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="Счет">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt_long">receipt_long</span>
+                                        Счет
+                                    </button>
+</div>
+</td>
+<td class="py-sm px-sm text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors h-[40px] group cursor-pointer">
+<td class="py-sm px-md font-code text-code text-on-surface font-semibold">ORD-2023-8902</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface-variant">05 Окт 2023</td>
+<td class="py-sm px-md font-code text-code text-on-surface font-bold text-right">3 200 500.00</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs bg-surface-container-high text-on-surface-variant border border-outline-variant px-2 py-0.5 rounded-full font-label-md text-[11px] uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Отгружен
+                                </span>
+</td>
+<td class="py-sm px-md">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="Счет">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt_long">receipt_long</span>
+                                        Счет
+                                    </button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="УПД">
+<span class="material-symbols-outlined text-[16px]" data-icon="file_present">file_present</span>
+                                        УПД
+                                    </button>
+</div>
+</td>
+<td class="py-sm px-sm text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors h-[40px] group cursor-pointer">
+<td class="py-sm px-md font-code text-code text-on-surface font-semibold">ORD-2023-8755</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface-variant">28 Сен 2023</td>
+<td class="py-sm px-md font-code text-code text-on-surface font-bold text-right">850 000.00</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs bg-[#f0fdf4] text-[#166534] border border-[#bbf7d0] px-2 py-0.5 rounded-full font-label-md text-[11px] uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#166534]"></span>
+                                    Доставлен
+                                </span>
+</td>
+<td class="py-sm px-md">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="Счет">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt_long">receipt_long</span>
+                                        Счет
+                                    </button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="УПД">
+<span class="material-symbols-outlined text-[16px]" data-icon="file_present">file_present</span>
+                                        УПД
+                                    </button>
+</div>
+</td>
+<td class="py-sm px-sm text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors h-[40px] group cursor-pointer bg-surface-container-lowest opacity-75">
+<td class="py-sm px-md font-code text-code text-on-surface-variant font-semibold">ORD-2023-8612</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface-variant">15 Сен 2023</td>
+<td class="py-sm px-md font-code text-code text-on-surface-variant font-bold text-right">125 000.00</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs bg-error-container text-on-error-container border border-secondary-fixed-dim px-2 py-0.5 rounded-full font-label-md text-[11px] uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                    Отменен
+                                </span>
+</td>
+<td class="py-sm px-md">
+<span class="font-body-sm text-body-sm text-on-surface-variant italic text-[12px]">Нет документов</span>
+</td>
+<td class="py-sm px-sm text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors h-[40px] group cursor-pointer">
+<td class="py-sm px-md font-code text-code text-on-surface font-semibold">ORD-2023-8599</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface-variant">02 Сен 2023</td>
+<td class="py-sm px-md font-code text-code text-on-surface font-bold text-right">5 600 000.00</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center gap-xs bg-[#f0fdf4] text-[#166534] border border-[#bbf7d0] px-2 py-0.5 rounded-full font-label-md text-[11px] uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#166534]"></span>
+                                    Доставлен
+                                </span>
+</td>
+<td class="py-sm px-md">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="Счет">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt_long">receipt_long</span>
+                                        Счет
+                                    </button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs font-body-sm text-body-sm" title="УПД">
+<span class="material-symbols-outlined text-[16px]" data-icon="file_present">file_present</span>
+                                        УПД
+                                    </button>
+</div>
+</td>
+<td class="py-sm px-sm text-right">
+<button class="text-on-surface-variant hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="border-t border-outline-variant bg-surface-container-lowest p-sm flex items-center justify-between">
+<div class="font-body-sm text-body-sm text-on-surface-variant pl-sm">
+                        Показано 1 - 5 из 42
+                    </div>
+<div class="flex items-center gap-xs pr-sm">
+<button class="text-on-surface-variant hover:text-primary p-xs disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT bg-primary-container text-on-primary-fixed font-label-md text-label-md border border-primary">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface hover:bg-surface-container-low font-label-md text-label-md border border-transparent">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface hover:bg-surface-container-low font-label-md text-label-md border border-transparent">3</button>
+<span class="text-on-surface-variant px-xs">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-DEFAULT text-on-surface hover:bg-surface-container-low font-label-md text-label-md border border-transparent">9</button>
+<button class="text-on-surface-variant hover:text-primary p-xs">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Nav Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-around items-center h-16 pb-safe z-50">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium leading-none">Дашборд</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full bg-primary-container text-on-primary-container" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="package_2" style="font-variation-settings: 'FILL' 1;">package_2</span>
+<span class="text-[10px] font-bold leading-none">Заказы</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="text-[10px] font-medium leading-none">Каталог</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="more_horiz">more_horiz</span>
+<span class="text-[10px] font-medium leading-none">Еще</span>
+</a>
+</nav>
+
+
+</body></html>

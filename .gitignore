@@ -4,6 +4,9 @@ coverage/
 playwright-report/
 test-results/
 
+# MSW автогенерация — обновляется командой msw init
+public/mockServiceWorker.js
+
 .env
 .env.*
 !.env.example

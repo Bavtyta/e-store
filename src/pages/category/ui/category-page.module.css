@@ -1,9 +1,7 @@
 .page {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+  min-width: 0;
 }
 .content {
   padding-top: var(--space-6);
-  padding-bottom: var(--space-12);
+  padding-bottom: clamp(var(--space-10), 6vw, var(--space-16));
 }

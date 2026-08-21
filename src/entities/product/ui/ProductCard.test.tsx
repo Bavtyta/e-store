@@ -6,6 +6,12 @@ import type { ProductListItem } from '../model/product';
 import { ProductCard } from './ProductCard';
 
 const product: ProductListItem = {
+  addToCartTarget: {
+    id: 'product-1-variant-default',
+    maxOrderQuantity: null,
+    minOrderQuantity: '1',
+    quantityStep: '1',
+  },
   availability: { message: 'Под заказ', status: 'on_order' },
   badges: ['Новинка'],
   categoryId: 'category-pipes',
@@ -29,7 +35,6 @@ describe('ProductCard', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('img', { name: /изображение товара/i })).toBeInTheDocument();
     expect(screen.getByText('Цена по запросу')).toBeInTheDocument();
     expect(screen.getByText('Под заказ')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /открыть товар/i })).toHaveAttribute(

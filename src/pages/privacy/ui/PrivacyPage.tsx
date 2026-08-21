@@ -5,7 +5,7 @@ import { Placeholder } from '@/shared/ui/placeholder';
 const privacyMetadata = createPageMetadata(
   {
     canonicalPath: '/privacy',
-    description: 'Политика конфиденциальности магазина ПромМатериалы.',
+    description: 'Политика конфиденциальности магазина BELT.',
     indexable: false,
     title: 'Политика конфиденциальности',
   },

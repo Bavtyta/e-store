@@ -1,6 +1,8 @@
 export { classNames } from './classNames';
+export { getFocusableElements } from './focusUtils';
 export { createDefaultObservabilityAdapter, Observability } from './observability';
 export { createPageMetadata, PageMetadata } from './page-metadata';
+export { StructuredData } from './structured-data';
 export type {
   ObservabilityAdapter,
   UnexpectedErrorContext,
@@ -16,3 +18,4 @@ export type {
   RobotsDirective,
   TwitterCardType,
 } from './page-metadata';
+export type { StructuredDataProps, StructuredDataValue } from './structured-data';

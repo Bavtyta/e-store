@@ -18,7 +18,7 @@
 }
 
 .success {
-  color: var(--color-success);
+  color: var(--color-success-text);
   background: var(--color-success-surface);
   border-color: currentColor;
 }
@@ -32,5 +32,17 @@
 .error {
   color: var(--color-error);
   background: var(--color-error-surface);
+  border-color: currentColor;
+}
+
+.accent {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-color: var(--color-accent-hover);
+}
+
+.info {
+  color: var(--color-info-text);
+  background: var(--color-info-surface);
   border-color: currentColor;
 }

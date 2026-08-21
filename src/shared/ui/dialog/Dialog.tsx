@@ -1,22 +1,9 @@
 import { useEffect, useId, useRef } from 'react';
-import type { KeyboardEvent, ReactNode, SyntheticEvent } from 'react';
+import type { KeyboardEvent, MouseEvent, ReactNode, RefObject, SyntheticEvent } from 'react';
+
+import { getFocusableElements } from '@/shared/lib';
 
 import styles from './dialog.module.css';
-
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',');
-
-function getFocusableElements(dialog: HTMLDialogElement): HTMLElement[] {
-  return Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
-    (element) => element.getAttribute('aria-hidden') !== 'true',
-  );
-}
 
 function showDialog(dialog: HTMLDialogElement): void {
   if (typeof dialog.showModal === 'function') {
@@ -41,8 +28,12 @@ export interface DialogProps {
   closeLabel?: string;
   description?: string;
   footer?: ReactNode;
+  initialFocusRef?: RefObject<HTMLElement | null>;
+  mobileFullscreen?: boolean;
   onClose: () => void;
   open: boolean;
+  placement?: 'center' | 'top';
+  size?: 'medium' | 'wide';
   title: string;
 }
 
@@ -51,8 +42,12 @@ export function Dialog({
   closeLabel = 'Закрыть диалог',
   description,
   footer,
+  initialFocusRef,
+  mobileFullscreen = false,
   onClose,
   open,
+  placement = 'center',
+  size = 'medium',
   title,
 }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -76,14 +71,14 @@ export function Dialog({
     openerRef.current = activeElement instanceof HTMLElement ? activeElement : null;
 
     showDialog(dialog);
-    closeButtonRef.current?.focus();
+    (initialFocusRef?.current ?? closeButtonRef.current)?.focus();
 
     return () => {
       hideDialog(dialog);
       openerRef.current?.focus();
       openerRef.current = null;
     };
-  }, [open]);
+  }, [initialFocusRef, open]);
 
   if (!open) {
     return null;
@@ -130,12 +125,24 @@ export function Dialog({
     onClose();
   }
 
+  function handleBackdropClick(event: MouseEvent<HTMLDialogElement>): void {
+    if (event.target === event.currentTarget) onClose();
+  }
+
   return (
     <dialog
       aria-describedby={description === undefined ? undefined : descriptionId}
       aria-labelledby={titleId}
       aria-modal="true"
-      className={styles.dialog}
+      className={[
+        styles.dialog,
+        size === 'wide' ? styles.wide : '',
+        placement === 'top' ? styles.top : '',
+        mobileFullscreen ? styles.mobileFullscreen : '',
+      ]
+        .join(' ')
+        .trim()}
+      onClick={handleBackdropClick}
       onCancel={handleCancel}
       onKeyDown={handleKeyDown}
       ref={dialogRef}

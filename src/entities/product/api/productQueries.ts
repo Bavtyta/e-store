@@ -15,8 +15,16 @@ export const productQueryKeys = {
   list: (params: ProductListParams = {}) => [...productQueryKeys.all, 'list', params] as const,
 };
 
-export function useProductsQuery(params: ProductListParams = {}) {
+interface ProductsQueryOptions {
+  enabled?: boolean;
+}
+
+export function useProductsQuery(
+  params: ProductListParams = {},
+  options: ProductsQueryOptions = {},
+) {
   return useQuery({
+    ...options,
     gcTime: PRODUCT_GC_TIME,
     queryFn: ({ signal }) => getProducts(params, signal),
     queryKey: productQueryKeys.list(params),

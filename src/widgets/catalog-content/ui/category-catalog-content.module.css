@@ -28,5 +28,6 @@
   text-decoration: none;
 }
 .children a:hover {
-  background: var(--color-warning-surface);
+  color: var(--color-on-accent);
+  background: var(--color-interactive-surface-hover);
 }

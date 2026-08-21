@@ -5,12 +5,15 @@ import { Button } from '@/shared/ui/button';
 
 import styles from './error-state.module.css';
 
+export type ErrorStateVariant = 'page' | 'inline';
+
 export interface ErrorStateProps {
   action?: ReactNode;
   description?: string;
   onRetry?: () => void;
   retryLabel?: string;
   title: string;
+  variant?: ErrorStateVariant;
 }
 
 export function ErrorState({
@@ -19,11 +22,16 @@ export function ErrorState({
   onRetry,
   retryLabel = 'Повторить',
   title,
+  variant = 'page',
 }: ErrorStateProps) {
   const titleId = useId();
 
   return (
-    <section aria-labelledby={titleId} className={styles.root} role="alert">
+    <section
+      aria-labelledby={titleId}
+      className={[styles.root, styles[variant]].join(' ').trim()}
+      role="alert"
+    >
       <span aria-hidden="true" className={styles.icon}>
         !
       </span>

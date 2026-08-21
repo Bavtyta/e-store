@@ -6,9 +6,9 @@ interface PlaceholderProps {
 
 export function Placeholder({ title }: PlaceholderProps) {
   return (
-    <main className={styles.root} id="main-content" tabIndex={-1}>
+    <section className={styles.root}>
       <h1>{title}</h1>
       <p>Маршрут подключён. Содержимое появится на следующем этапе.</p>
-    </main>
+    </section>
   );
 }

@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 
-import { rm } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import type { ServerResponse } from 'node:http';
 import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
@@ -8,9 +9,58 @@ import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import type { Plugin } from 'vite';
 
+import { createRobotsTxt, createSitemapXml, resolveSiteOrigin } from './scripts/seo-assets.ts';
 import { parseEnvironment } from './src/shared/config/parseEnvironment.ts';
 
 const projectDirectory = fileURLToPath(new URL('.', import.meta.url));
+
+function createSeoAssetsPlugin(siteUrl: string): Plugin {
+  let isBuild = false;
+  let outputDirectory = '';
+  const siteOrigin = resolveSiteOrigin(siteUrl);
+
+  function respondWithAsset(response: ServerResponse, contentType: string, body: string) {
+    response.statusCode = 200;
+    response.setHeader('Content-Type', contentType);
+    response.end(body);
+  }
+
+  return {
+    name: 'generate-seo-assets',
+    configureServer(server) {
+      server.middlewares.use((request, response, next) => {
+        const pathname = request.url?.split('?')[0];
+
+        if (pathname === '/robots.txt') {
+          respondWithAsset(response, 'text/plain; charset=utf-8', createRobotsTxt(siteOrigin));
+          return;
+        }
+
+        if (pathname === '/sitemap.xml') {
+          respondWithAsset(response, 'application/xml; charset=utf-8', createSitemapXml(siteOrigin));
+          return;
+        }
+
+        next();
+      });
+    },
+    configResolved(config) {
+      isBuild = config.command === 'build';
+      outputDirectory = resolve(config.root, config.build.outDir);
+    },
+    async closeBundle() {
+      if (!isBuild) {
+        return;
+      }
+
+      await mkdir(outputDirectory, { recursive: true });
+      await Promise.all([
+        writeFile(resolve(outputDirectory, 'robots.txt'), createRobotsTxt(siteOrigin), 'utf8'),
+        writeFile(resolve(outputDirectory, 'sitemap.xml'), createSitemapXml(siteOrigin), 'utf8'),
+      ]);
+    },
+  };
+}
 
 function omitMswWorkerFromProduction(): Plugin {
   let outputDirectory = '';
@@ -30,6 +80,8 @@ function omitMswWorkerFromProduction(): Plugin {
 }
 
 export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, projectDirectory, 'VITE_');
+  const publicSiteUrl = process.env.VITE_PUBLIC_SITE_URL ?? env.VITE_PUBLIC_SITE_URL ?? 'http://localhost:5173';
   const isDevelopmentServer = command === 'serve' && mode !== 'production';
 
   if (command === 'build') {
@@ -55,7 +107,7 @@ export default defineConfig(({ command, mode }) => {
     define: {
       __DEV_SERVER__: JSON.stringify(isDevelopmentServer),
     },
-    plugins: [react(), omitMswWorkerFromProduction()],
+    plugins: [react(), createSeoAssetsPlugin(publicSiteUrl), omitMswWorkerFromProduction()],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -76,6 +128,7 @@ export default defineConfig(({ command, mode }) => {
       include: ['src/**/*.{test,spec}.{ts,tsx}'],
       restoreMocks: true,
       setupFiles: ['./src/shared/lib/testing/setupTests.ts'],
+      testTimeout: 10000,
     },
   };
 });

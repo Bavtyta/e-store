@@ -1,15 +1,25 @@
 import { Link } from 'react-router';
 
 import { useResolvedCart } from '@/features/resolve-cart';
+import { ClearCartButton } from '@/features/clear-cart';
 import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata } from '@/shared/lib';
 import { Container, EmptyState, ErrorState, Skeleton } from '@/shared/ui';
 import { CartContent } from '@/widgets/cart-content';
 import { CartSummary } from '@/widgets/cart-summary';
-import { Footer } from '@/widgets/footer';
-import { Header } from '@/widgets/header';
 
 import styles from './cart-page.module.css';
+
+function formatCountLabel(count: number): string {
+  const lastTwoDigits = count % 100;
+  const lastDigit = count % 10;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'товаров';
+  if (lastDigit === 1) return 'товар';
+  if (lastDigit >= 2 && lastDigit <= 4) return 'товара';
+
+  return 'товаров';
+}
 
 const cartMetadata = createPageMetadata(
   {
@@ -50,9 +60,7 @@ export function CartPage() {
   return (
     <div className={styles.page}>
       <PageMetadata metadata={cartMetadata} />
-      <Header />
-      <main id="main-content" tabIndex={-1}>
-        <Container className={styles.content}>
+      <Container className={styles.content}>
           {isLoading ? (
             <CartPageSkeleton />
           ) : isError ? (
@@ -70,7 +78,15 @@ export function CartPage() {
             />
           ) : (
             <>
-              <h1>Корзина</h1>
+              <div className={styles.headerRow}>
+                <div>
+                  <h1 className={styles.heading}>Корзина</h1>
+                  <p className={styles.caption}>
+                    {cart.lineCount} {formatCountLabel(cart.lineCount)} в корзине
+                  </p>
+                </div>
+                <ClearCartButton />
+              </div>
               <p
                 aria-atomic="true"
                 aria-live="polite"
@@ -89,9 +105,7 @@ export function CartPage() {
               </div>
             </>
           )}
-        </Container>
-      </main>
-      <Footer />
+      </Container>
     </div>
   );
 }

@@ -29,19 +29,19 @@ const DEFAULT_LIMIT = 20;
 const MOCK_DELAY_MS = 600;
 const IMAGE_THEMES = [
   {
-    accent: '#d97706',
-    background: '#fff7ed',
-    foreground: '#7c2d12',
+    accent: '#facc15',
+    background: '#eef1ff',
+    foreground: '#141b2b',
   },
   {
-    accent: '#2563eb',
-    background: '#eff6ff',
-    foreground: '#1e3a8a',
+    accent: '#d1c6ab',
+    background: '#f9f9ff',
+    foreground: '#293040',
   },
   {
-    accent: '#059669',
-    background: '#ecfdf5',
-    foreground: '#064e3b',
+    accent: '#ffe083',
+    background: '#e9edff',
+    foreground: '#141b2b',
   },
 ] as const;
 
@@ -155,6 +155,28 @@ function parseFilters(searchParams: URLSearchParams): Map<string, string> | null
   return filters;
 }
 
+function parsePriceParam(searchParams: URLSearchParams, name: string): number | null {
+  const value = searchParams.get(name);
+
+  if (value === null) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+
+  return Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : null;
+}
+
+function parsePriceRange(searchParams: URLSearchParams): {
+  min: number | null;
+  max: number | null;
+} {
+  return {
+    min: parsePriceParam(searchParams, 'price_min'),
+    max: parsePriceParam(searchParams, 'price_max'),
+  };
+}
+
 function normalizeText(value: string | number | boolean): string {
   return String(value).trim().toLocaleLowerCase('ru-RU');
 }
@@ -189,12 +211,48 @@ function matchesFilters(
     ...fixture.details.attributes,
     ...fixture.details.variants.flatMap((variant) => variant.attributes),
   ];
+  const normalizedAttributes = attributes.map((attribute) => ({
+    code: attribute.code,
+    value: normalizeText(attribute.value),
+  }));
 
-  return [...filters.entries()].every(([code, expectedValue]) =>
-    attributes.some(
-      (attribute) =>
-        attribute.code === code && normalizeText(attribute.value) === normalizeText(expectedValue),
-    ),
+  return [...filters.entries()].every(([code, rawValue]) => {
+    const expectedValues = rawValue
+      .split(',')
+      .map((value) => normalizeText(value))
+      .filter((value) => value.length > 0);
+
+    return (
+      expectedValues.length > 0 &&
+      expectedValues.some((expectedValue) =>
+        normalizedAttributes.some(
+          (attribute) => attribute.code === code && attribute.value === expectedValue,
+        ),
+      )
+    );
+  });
+}
+
+function matchesPriceRange(
+  fixture: (typeof storefrontProductFixtures)[number],
+  priceRange: { min: number | null; max: number | null },
+): boolean {
+  if (priceRange.min === null && priceRange.max === null) {
+    return true;
+  }
+
+  const priceFromMinor = fixture.listItem.priceFrom?.amountMinor ?? null;
+
+  if (priceFromMinor === null) {
+    return false;
+  }
+
+  const minimumMinor = priceRange.min === null ? null : priceRange.min * 100;
+  const maximumMinor = priceRange.max === null ? null : priceRange.max * 100;
+
+  return (
+    (minimumMinor === null || priceFromMinor >= minimumMinor) &&
+    (maximumMinor === null || priceFromMinor <= maximumMinor)
   );
 }
 
@@ -253,23 +311,34 @@ function getPathParameter(value: string | readonly string[] | undefined): string
   return typeof value === 'string' ? value : '';
 }
 
+function createFileSeed(fileName: string): number {
+  let seed = 0;
+
+  for (const character of fileName) {
+    seed += character.codePointAt(0) ?? 0;
+  }
+
+  return seed;
+}
+
 function createProductImageFixture(fileName: string): string {
   const parsedImageNumber = Number(/-(\d+)\.webp$/.exec(fileName)?.[1] ?? '1');
   const imageNumber =
     Number.isInteger(parsedImageNumber) && parsedImageNumber > 0 ? parsedImageNumber : 1;
-  const theme = IMAGE_THEMES[(imageNumber - 1) % IMAGE_THEMES.length] ?? IMAGE_THEMES[0];
+  const fileSeed = createFileSeed(fileName);
+  const theme = IMAGE_THEMES[(fileSeed + imageNumber - 1) % IMAGE_THEMES.length] ?? IMAGE_THEMES[0];
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800">
   <rect width="1000" height="800" fill="${theme.background}"/>
-  <circle cx="790" cy="150" r="210" fill="${theme.accent}" opacity=".12"/>
-  <circle cx="180" cy="700" r="260" fill="${theme.accent}" opacity=".1"/>
+  <circle cx="790" cy="150" r="210" fill="${theme.accent}" opacity=".32"/>
+  <circle cx="180" cy="700" r="260" fill="${theme.accent}" opacity=".2"/>
   <g fill="none" stroke="${theme.foreground}" stroke-linecap="round" stroke-width="34">
     <path d="M180 510h430c92 0 166-74 166-166V220"/>
     <path d="M180 610h430c147 0 266-119 266-266V220" opacity=".45"/>
   </g>
-  <rect x="122" y="438" width="160" height="244" rx="28" fill="${theme.accent}"/>
+  <rect x="122" y="438" width="160" height="244" rx="12" fill="${theme.accent}"/>
   <text x="500" y="118" fill="${theme.foreground}" font-family="Arial, sans-serif"
-    font-size="44" font-weight="700" text-anchor="middle">DEMO ${String(imageNumber).padStart(2, '0')}</text>
+    font-size="32" font-weight="700" letter-spacing="6" text-anchor="middle">BELT / ${String(imageNumber).padStart(2, '0')}</text>
 </svg>`;
 }
 
@@ -394,6 +463,7 @@ const productHandlers = [
     }
 
     const search = url.searchParams.get('search') ?? '';
+    const priceRange = parsePriceRange(url.searchParams);
     const filteredFixtures =
       scenario === 'empty'
         ? []
@@ -401,7 +471,8 @@ const productHandlers = [
             (fixture) =>
               (categoryIds === null || categoryIds.has(fixture.listItem.categoryId)) &&
               matchesSearch(fixture, search) &&
-              matchesFilters(fixture, filters),
+              matchesFilters(fixture, filters) &&
+              matchesPriceRange(fixture, priceRange),
           );
     const sortedFixtures = sortProductFixtures(filteredFixtures, sort);
     const startIndex = (pagination.data.page - 1) * pagination.data.limit;

@@ -127,6 +127,12 @@ function createProductDetailsDto(): ProductDetails {
 
 function createProductListItemDto(): ProductListItem {
   return {
+    addToCartTarget: {
+      id: 'product-1-variant-default',
+      maxOrderQuantity: null,
+      minOrderQuantity: '1',
+      quantityStep: '1',
+    },
     availability: createAvailability(),
     badges: [],
     categoryId: 'category-1',

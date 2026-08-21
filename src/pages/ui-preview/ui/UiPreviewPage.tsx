@@ -46,7 +46,7 @@ export function UiPreviewPage() {
   return (
     <>
       <PageMetadata metadata={previewMetadata} />
-      <main className={styles.page} id="main-content" tabIndex={-1}>
+      <section className={styles.page}>
         <Container>
           <section className={styles.hero}>
             <p className={styles.eyebrow}>Development only</p>
@@ -239,7 +239,7 @@ export function UiPreviewPage() {
             После закрытия фокус вернётся на кнопку, которая открыла этот диалог.
           </p>
         </Dialog>
-      </main>
+      </section>
     </>
   );
 }

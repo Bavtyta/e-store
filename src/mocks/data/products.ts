@@ -293,6 +293,12 @@ function createProductFixture(seed: ProductSeed): ProductFixture {
       variants,
     },
     listItem: {
+      addToCartTarget: {
+        id: primaryVariant.id,
+        maxOrderQuantity: primaryVariant.maxOrderQuantity,
+        minOrderQuantity: primaryVariant.minOrderQuantity,
+        quantityStep: primaryVariant.quantityStep,
+      },
       availability: primaryVariant.availability,
       badges: [...(seed.badges ?? [])],
       categoryId: seed.categoryId,

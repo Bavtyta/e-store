@@ -1,41 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
 :root {
   color-scheme: light;
 
-  --color-accent: #f6c600;
-  --color-accent-hover: #ddaf00;
-  --color-dark-surface: #1f2933;
-  --color-text-primary: #111827;
-  --color-text-secondary: #667085;
-  --color-background: #f7f7f5;
+  /* BELT palette (из референса) */
+  --color-accent: #facc15;
+  --color-accent-hover: #eec200;
+  --color-accent-text: #735c00;
+  --color-on-accent: #231b00;
+  --color-secondary: #bb0112;
+  --color-secondary-hover: #e02928;
+  --color-dark-surface: #293040;
+  --color-text-primary: #141b2b;
+  --color-text-secondary: #4d4632;
+  --color-background: #f9f9ff;
   --color-surface: #ffffff;
-  --color-surface-subtle: #f2f4f7;
-  --color-border: #d9dee3;
-  --color-border-strong: #98a2b3;
-  --color-success: #15803d;
-  --color-success-surface: #ecfdf3;
-  --color-warning: #7a5100;
+  --color-surface-subtle: #f1f3ff;
+  --color-surface-container: #e9edff;
+  --color-surface-container-low: #f1f3ff;
+  --color-border: #d1c6ab;
+  --color-border-strong: #7f7660;
+  --color-success: #16a34a;
+  --color-success-surface: #e6f4ea;
+  --color-success-text: #137333;
+  --color-warning: #ea580c;
   --color-warning-surface: #fff8db;
-  --color-error: #c2410c;
+  --color-info: #2563eb;
+  --color-error: #ba1a1a;
   --color-error-hover: #9a3412;
-  --color-error-surface: #fff4ed;
-  --color-focus: #005fcc;
-  --color-overlay: rgb(17 24 39 / 68%);
+  --color-error-surface: #ffdad6;
+  /* Interactive yellow stays a visual accent; readable copy remains dark on light surfaces. */
+  --color-interactive-text-hover: var(--color-text-primary);
+  --color-interactive-accent: var(--color-accent);
+  --color-interactive-accent-hover: var(--color-accent-hover);
+  --color-interactive-surface-hover: var(--color-accent);
+  --color-interactive-surface-active: var(--color-accent-hover);
+  --color-focus: var(--color-text-primary);
+  --color-link: var(--color-accent-text);
+  --color-link-hover: var(--color-interactive-text-hover);
+  --color-overlay: rgb(20 27 43 / 68%);
+  --color-info-surface: #e8f0fe;
+  --color-info-text: #174ea6;
 
-  --font-family-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.5rem;
-  --font-size-2xl: 2rem;
+  /* Референсные поверхности (belt_ru_N code.html) */
+  --color-outline-variant: #d1c6ab;
+  --color-outline: #7f7660;
+  --color-primary-fixed: #ffe083;
+  --color-on-primary-fixed: #231b00;
+
+  /* Типографика */
+  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-code: 'JetBrains Mono', ui-monospace, monospace;
+
+  --font-size-xs: 0.75rem; /* 12px body-sm */
+  --font-size-sm: 0.875rem; /* 14px body-md */
+  --font-size-md: 1rem; /* 16px body-lg */
+  --font-size-lg: 1.25rem; /* 20px headline-sm */
+  --font-size-xl: 1.5rem; /* 24px headline-lg */
+  --font-size-2xl: 1.875rem; /* 30px display-md */
+  --font-size-3xl: 2.25rem; /* 36px display-lg */
+  --font-size-code: 0.8125rem; /* 13px code */
+
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-black: 900;
+
   --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
+  --line-height-heading: 1.33;
+  --line-height-normal: 1.43;
   --line-height-relaxed: 1.65;
 
+  /* Отступы (из референса: xs 4 / sm 8 / md 16 / lg 24 / xl 32) */
   --space-0: 0;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -48,34 +85,57 @@
   --space-12: 3rem;
   --space-16: 4rem;
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-pill: 999rem;
+  /* Semantic page rhythm: 48/64px for major sections, 40/48px for compact sections. */
+  --section-padding-block: clamp(var(--space-12), 5vw, var(--space-16));
+  --section-padding-block-compact: clamp(var(--space-10), 4vw, var(--space-12));
 
-  --shadow-card: 0 0.25rem 1rem rgb(31 41 51 / 8%);
-  --shadow-dialog: 0 1.5rem 4rem rgb(17 24 39 / 24%);
+  /* Радиусы (референс: DEFAULT 2px, lg 4px, xl 8px, full 12px) */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-pill: 0.75rem;
+  --radius-full: 999rem;
 
-  --container-content-width: 75rem;
-  --container-wide-width: 90rem;
-  --container-gutter: 1rem;
+  /* Тени */
+  --shadow-card: 0 0.25rem 1rem rgb(20 27 43 / 8%);
+  --shadow-card-hover: 0 0.5rem 1.5rem rgb(20 27 43 / 12%);
+  --shadow-dialog: 0 1.5rem 4rem rgb(20 27 43 / 24%);
+
+  /* Контейнеры (референс: container-max 1280px) */
+  --container-content-width: 80rem;
+  --container-wide-width: 80rem;
+  --container-gutter: 1.5rem;
 
   --breakpoint-mobile: 20rem;
   --breakpoint-tablet: 48rem;
   --breakpoint-desktop: 64rem;
   --breakpoint-wide: 80rem;
 
-  --control-height-sm: 2.5rem;
+  --control-height-sm: 2.75rem;
   --control-height-md: 2.75rem;
   --focus-ring-width: 0.1875rem;
-  --focus-ring-offset: 0.1875rem;
+  --focus-ring-offset: 0.125rem;
   --disabled-opacity: 0.55;
   --transition-fast: 150ms ease;
+  --z-index-header: 50;
+  --z-index-drawer: 60;
   --z-index-dialog: 1000;
+  --bottom-nav-height: 4rem;
+}
+
+/* Паддинг под нижнюю мобильную навигацию */
+:root {
+  --bottom-nav-inset: 0rem;
+}
+
+@media (max-width: 47.9375rem) {
+  :root {
+    --bottom-nav-inset: var(--bottom-nav-height);
+  }
 }
 
 @media (min-width: 48rem) {
   :root {
-    --container-gutter: 2rem;
+    --container-gutter: 1.5rem;
   }
 }

@@ -54,8 +54,8 @@
 
 .input:checked + .content {
   background: var(--color-warning-surface);
-  border-color: var(--color-accent-hover);
-  box-shadow: inset 0 0 0 1px var(--color-accent-hover);
+  border-color: var(--color-interactive-accent-hover);
+  box-shadow: inset 0 0 0 1px var(--color-interactive-accent-hover);
 }
 
 .input:focus-visible + .content {

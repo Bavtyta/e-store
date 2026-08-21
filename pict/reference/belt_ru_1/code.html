@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Каталог - BELT Промышленные поставки</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#574500",
+                        "secondary": "#bb0112",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "tertiary-container": "#33e4ff",
+                        "surface-variant": "#dce2f7",
+                        "on-surface": "#141b2b",
+                        "error-container": "#ffdad6",
+                        "on-background": "#141b2b",
+                        "surface": "#f9f9ff",
+                        "primary-fixed-dim": "#eec200",
+                        "on-primary-fixed": "#231b00",
+                        "tertiary": "#006876",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d3daef",
+                        "on-tertiary-fixed-variant": "#004e59",
+                        "surface-container-highest": "#dce2f7",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdad6",
+                        "inverse-on-surface": "#edf0ff",
+                        "primary-container": "#facc15",
+                        "secondary-container": "#e02928",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#eec200",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e9edff",
+                        "on-surface-variant": "#4d4632",
+                        "outline-variant": "#d1c6ab",
+                        "on-tertiary-container": "#006270",
+                        "inverse-surface": "#293040",
+                        "surface-container-low": "#f1f3ff",
+                        "primary-fixed": "#ffe083",
+                        "primary": "#735c00",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "surface-bright": "#f9f9ff",
+                        "surface-tint": "#735c00",
+                        "on-tertiary-fixed": "#001f25",
+                        "on-secondary-fixed": "#410002",
+                        "surface-container-high": "#e1e8fd",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "outline": "#7f7660",
+                        "on-primary-container": "#6c5700",
+                        "tertiary-fixed": "#a0efff",
+                        "tertiary-fixed-dim": "#15daf4",
+                        "status-success": "#16a34a",
+                        "status-warning": "#ea580c",
+                        "status-info": "#2563eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "display-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code": ["jetbrainsMono"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "display-md": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-inverse-surface w-full top-0 sticky border-b border-outline-variant dark:border-outline z-50">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-lg h-20">
+<div class="flex items-center gap-xl">
+<a class="font-display-md text-display-md font-black text-on-surface dark:text-inverse-on-surface" href="#">BELT</a>
+<!-- Search Bar Placeholder -->
+<div class="hidden md:flex items-center bg-surface-container rounded border border-outline-variant focus-within:border-primary px-3 py-2 w-64">
+<span class="material-symbols-outlined text-outline text-sm mr-2">search</span>
+<input class="bg-transparent border-none outline-none w-full text-body-sm font-body-sm text-on-surface placeholder:text-outline p-0 focus:ring-0" placeholder="Поиск по каталогу..." type="text"/>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary h-20 flex items-center font-body-md text-body-md hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Каталог</a>
+<a class="text-on-surface-variant dark:text-surface-variant h-20 flex items-center font-body-md text-body-md hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Бренды</a>
+<a class="text-on-surface-variant dark:text-surface-variant h-20 flex items-center font-body-md text-body-md hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Запросы</a>
+<a class="text-on-surface-variant dark:text-surface-variant h-20 flex items-center font-body-md text-body-md hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Отслеживание</a>
+<a class="text-on-surface-variant dark:text-surface-variant h-20 flex items-center font-body-md text-body-md hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Поддержка</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow max-w-container-max mx-auto w-full px-lg py-lg grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Sidebar Navigation & Filters -->
+<aside class="col-span-1 md:col-span-3 lg:col-span-2 hidden md:block">
+<nav aria-label="Breadcrumb" class="mb-lg">
+<ol class="flex items-center space-x-2 text-body-sm font-body-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Главная</a></li>
+<li><span class="material-symbols-outlined text-sm">chevron_right</span></li>
+<li class="font-semibold text-on-surface">Каталог</li>
+</ol>
+</nav>
+<h1 class="font-headline-lg text-headline-lg mb-lg">Каталог товаров</h1>
+<div class="space-y-md">
+<h3 class="font-label-md text-label-md text-outline tracking-wider uppercase">КАТЕГОРИИ</h3>
+<ul class="space-y-sm">
+<li>
+<a class="block px-3 py-2 bg-primary-container text-on-primary-container rounded font-label-md text-label-md" href="#">Все товары</a>
+</li>
+<li>
+<div class="px-3 py-2 font-body-md text-body-md text-on-surface">Трубы</div>
+<ul class="pl-md space-y-1 mt-1 border-l border-outline-variant ml-3">
+<li><a class="block px-2 py-1 text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">ПНД</a></li>
+<li><a class="block px-2 py-1 text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">ПВХ</a></li>
+<li><a class="block px-2 py-1 text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Полипропиленовые</a></li>
+<li><a class="block px-2 py-1 text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Металлические</a></li>
+</ul>
+</li>
+<li>
+<div class="px-3 py-2 font-body-md text-body-md text-on-surface">Фитинги</div>
+</li>
+<li>
+<div class="px-3 py-2 font-body-md text-body-md text-on-surface">РТИ</div>
+</li>
+<li>
+<div class="px-3 py-2 font-body-md text-body-md text-on-surface">Оборудование</div>
+</li>
+</ul>
+<h3 class="font-label-md text-label-md text-outline tracking-wider uppercase mt-lg border-t border-outline-variant pt-md">ФИЛЬТРЫ</h3>
+<div class="mt-sm">
+<label class="block text-body-sm font-semibold mb-1">Цена, ₽</label>
+<div class="flex items-center gap-2">
+<input class="w-full border border-outline-variant rounded px-2 py-1 text-body-sm" placeholder="От" type="number"/>
+<span>-</span>
+<input class="w-full border border-outline-variant rounded px-2 py-1 text-body-sm" placeholder="До" type="number"/>
+</div>
+</div>
+<div class="mt-md">
+<label class="block text-body-sm font-semibold mb-1">Диаметр, мм</label>
+<div class="space-y-1">
+<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/><span class="text-body-sm">25</span></label>
+<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/><span class="text-body-sm">32</span></label>
+<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/><span class="text-body-sm">50</span></label>
+<label class="flex items-center gap-2"><input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox"/><span class="text-body-sm">110</span></label>
+</div>
+</div>
+<div class="mt-md">
+<label class="block text-body-sm font-semibold mb-1">Материал</label>
+<select class="w-full border border-outline-variant rounded px-2 py-1 text-body-sm">
+<option>Любой</option>
+<option>ПНД (PE100)</option>
+<option>ПВХ</option>
+<option>Сталь</option>
+</select>
+</div>
+</div>
+</aside>
+<!-- Product Grid Canvas -->
+<section class="col-span-1 md:col-span-9 lg:col-span-10">
+<!-- Toolbar -->
+<div class="flex justify-between items-center mb-md pb-md border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant">20 товаров</span>
+<select class="bg-surface border border-outline-variant rounded px-3 py-1 font-body-sm text-body-sm text-on-surface focus:border-primary focus:ring-0">
+<option>По умолчанию</option>
+<option>Сначала дешевые</option>
+<option>Сначала дорогие</option>
+</select>
+</div>
+<!-- Bento-style Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col hover:shadow-md transition-shadow group">
+<div class="relative aspect-square bg-surface-container flex items-center justify-center p-md">
+<span class="absolute top-sm right-sm bg-status-success text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">В наличии</span>
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A highly detailed industrial product shot of a black high-density polyethylene (HDPE) pipe segment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwEt5I9y_3pbzbuakG3I8mKjSbi-p31TIgY7J3_UCj-IOjJ_C7PKuSIayQgayDZhvYDxvUHpc897ST1nk5rDKO8p1AqxTv6HjqmLe8hLYhJEkIo-lT6Qy7X4KFLghhEHCEUA8GYUskhpT28aRg27lMkSQ-E6_WM-saPBiIMTrQoJqA3onSuvnA4e4rSyoezWwwwX4R8OwiU6jw4jUIAUaL1UbWsYg6KZSsOQn7s_RFiFJDu6ZZmCgG"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors line-clamp-2">Труба ПНД 32мм</h4>
+</div>
+<span class="text-[10px] font-code text-outline mb-2 block">SKU: BLT-PIPE-32-PE100</span>
+<div class="text-[11px] text-on-surface-variant mb-md grid grid-cols-2 gap-y-1 gap-x-2">
+<span class="text-outline">Материал:</span><span class="font-medium text-on-surface">ПНД (PE100)</span>
+<span class="text-outline">SDR:</span><span class="font-medium text-on-surface">11</span>
+<span class="text-outline">Диаметр:</span><span class="font-medium text-on-surface">32 мм</span>
+</div>
+<div class="mt-auto pt-sm border-t border-surface-variant flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm text-on-surface">Цена по запросу</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col hover:shadow-md transition-shadow group">
+<div class="relative aspect-square bg-surface-container flex items-center justify-center p-md">
+<span class="absolute top-sm right-sm bg-status-success text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">В наличии</span>
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="A professional product photograph of a 25mm industrial HDPE pipe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMQabGzn-nfoZdZi_Xylx38L-2T-39kM6xZ0lpFjPMxYybdt4FKPOF0oOHyViTQAgjo3w9G52oWkvQvvPDwvibkPWkgykcsEXd3TsI2QR-njGkayfi65YwOyQUaTmx72pGxa_zNDBAcPV2dIQPp7Lv_8y5_KIwAgWfilKBAiYfUO3Egkfp0BG5OHH51UD1XDnUPTABb8ojtr6dfMygZgDjkPiSp-PBt8JBojIn6s1UgamngoGVEsh8"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface mb-xs group-hover:text-primary transition-colors line-clamp-2">Труба ПНД 25мм SDR11</h4>
+<span class="text-[10px] font-code text-outline mb-2 block">SKU: BLT-PIPE-25-SDR11</span>
+<div class="text-[11px] text-on-surface-variant mb-md grid grid-cols-2 gap-y-1 gap-x-2">
+<span class="text-outline">Материал:</span><span class="font-medium text-on-surface">ПНД</span>
+<span class="text-outline">SDR:</span><span class="font-medium text-on-surface">11</span>
+<span class="text-outline">Диаметр:</span><span class="font-medium text-on-surface">25 мм</span>
+</div>
+<div class="mt-auto pt-sm border-t border-surface-variant flex justify-between items-end">
+<div>
+<span class="text-[10px] text-on-surface-variant block">за м</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">80 ₽</span>
+</div>
+<button aria-label="В корзину" class="bg-primary-container text-on-primary-container hover:bg-primary-fixed hover:text-on-primary-fixed p-2 rounded transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 (Out of Stock / Warning) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col hover:shadow-md transition-shadow group">
+<div class="relative aspect-square bg-surface-container flex items-center justify-center p-md">
+<span class="absolute top-sm right-sm bg-status-warning text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Заканчивается</span>
+<div class="w-16 h-16 border-2 border-dashed border-outline-variant rounded flex items-center justify-center text-outline-variant">
+<span class="material-symbols-outlined text-3xl">image_not_supported</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface mb-xs group-hover:text-primary transition-colors line-clamp-2">Труба ПНД 50мм SDR17</h4>
+<span class="text-[10px] font-code text-outline mb-2 block">SKU: BLT-PIPE-50-SDR17</span>
+<div class="text-[11px] text-on-surface-variant mb-md grid grid-cols-2 gap-y-1 gap-x-2">
+<span class="text-outline">Материал:</span><span class="font-medium text-on-surface">ПНД</span>
+<span class="text-outline">SDR:</span><span class="font-medium text-on-surface">17</span>
+<span class="text-outline">Диаметр:</span><span class="font-medium text-on-surface">50 мм</span>
+</div>
+<div class="mt-auto pt-sm border-t border-surface-variant flex justify-between items-end">
+<div>
+<span class="text-[10px] text-on-surface-variant block">за м</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">200 ₽</span>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-fixed hover:text-on-primary-fixed p-2 rounded transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded flex flex-col hover:shadow-md transition-shadow group">
+<div class="relative aspect-square bg-surface-container flex items-center justify-center p-md">
+<span class="absolute top-sm right-sm bg-status-info text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Под заказ</span>
+<img class="w-full h-full object-contain mix-blend-multiply" data-alt="High-resolution macro shot of a 110mm industrial pipe fitting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-eM24GRIiLvb4AETrqx0rccl1wDJXaAGrEEMdD2up-D8L5uyiqwvTdKW1xh304_ZiXa77kkjKL5VIUiXxiqt5SkziIer1ppXSr3Py-HXwX8acFhUdbZ5xFyEZgSgsyM6ZcVpQ-9xThwnhWOaoX2ZVgUX-l8Ts_q3fXvu2Z0miQhcnV43RwCrSJp3mZ80dKnP8_ToskFtPik51hZ-B4WsygvS9lBV8CxxoV9dkJCtUEJsscTi0J2da"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface mb-xs group-hover:text-primary transition-colors line-clamp-2">Муфта ПНД 110мм соединительная</h4>
+<span class="text-[10px] font-code text-outline mb-2 block">SKU: BLT-FIT-110-CPL</span>
+<div class="text-[11px] text-on-surface-variant mb-md grid grid-cols-2 gap-y-1 gap-x-2">
+<span class="text-outline">Материал:</span><span class="font-medium text-on-surface">ПНД</span>
+<span class="text-outline">PN:</span><span class="font-medium text-on-surface">10</span>
+<span class="text-outline">Диаметр:</span><span class="font-medium text-on-surface">110 мм</span>
+</div>
+<div class="mt-auto pt-sm border-t border-surface-variant flex justify-between items-end">
+<div>
+<span class="text-[10px] text-on-surface-variant block">за шт</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">450 ₽</span>
+</div>
+<button aria-label="В корзину" class="bg-primary-container text-on-primary-container hover:bg-primary-fixed hover:text-on-primary-fixed p-2 rounded transition-colors">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest w-full mt-xl">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-lg max-w-container-max mx-auto px-lg py-xl">
+<div class="col-span-2 md:col-span-1">
+<div class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest dark:text-on-surface mb-4">BELT</div>
+<p class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant">© 2024 BELT Промышленные поставки. Все права защищены.</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">О компании</a>
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Пользовательское соглашение</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Политика конфиденциальности</a>
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Служба поддержки</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Оптовые заказы</a>
+<a class="font-body-sm text-body-sm text-surface-variant dark:text-on-surface-variant hover:underline transition-all" href="#">Контакты и адреса</a>
+</div>
+</div>
+</footer>
+</body></html>

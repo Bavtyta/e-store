@@ -59,3 +59,6 @@ jobs:
 
       - name: Run E2E smoke test
         run: npm run test:e2e
+
+      - name: Run axe accessibility audit
+        run: npm run test:a11y

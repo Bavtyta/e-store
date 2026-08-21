@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Корзина - BELT Industrial Procurement</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#574500",
+                        "secondary": "#bb0112",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "tertiary-container": "#33e4ff",
+                        "surface-variant": "#dce2f7",
+                        "on-surface": "#141b2b",
+                        "error-container": "#ffdad6",
+                        "on-background": "#141b2b",
+                        "surface": "#f9f9ff",
+                        "primary-fixed-dim": "#eec200",
+                        "on-primary-fixed": "#231b00",
+                        "tertiary": "#006876",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d3daef",
+                        "on-tertiary-fixed-variant": "#004e59",
+                        "surface-container-highest": "#dce2f7",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdad6",
+                        "inverse-on-surface": "#edf0ff",
+                        "primary-container": "#facc15",
+                        "secondary-container": "#e02928",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#eec200",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e9edff",
+                        "on-surface-variant": "#4d4632",
+                        "outline-variant": "#d1c6ab",
+                        "on-tertiary-container": "#006270",
+                        "inverse-surface": "#293040",
+                        "surface-container-low": "#f1f3ff",
+                        "primary-fixed": "#ffe083",
+                        "primary": "#735c00",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "surface-bright": "#f9f9ff",
+                        "surface-tint": "#735c00",
+                        "on-tertiary-fixed": "#001f25",
+                        "on-secondary-fixed": "#410002",
+                        "surface-container-high": "#e1e8fd",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "outline": "#7f7660",
+                        "on-primary-container": "#6c5700",
+                        "tertiary-fixed": "#a0efff",
+                        "tertiary-fixed-dim": "#15daf4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "lg": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "display-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code": ["jetbrainsMono"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "display-md": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md">
+<!-- Top Navigation Bar -->
+<nav class="bg-surface dark:bg-inverse-surface w-full top-0 sticky border-b border-outline-variant dark:border-outline z-50">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-lg h-20">
+<!-- Brand Logo -->
+<a class="font-display-md text-display-md font-black text-on-surface dark:text-inverse-on-surface" href="#">BELT</a>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex space-x-lg items-center">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Каталог</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Бренды</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Котировки</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Отслеживание</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Поддержка</a>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center space-x-md text-primary dark:text-inverse-primary">
+<button class="hover:text-primary dark:hover:text-inverse-primary transition-colors opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="hover:text-primary dark:hover:text-inverse-primary transition-colors opacity-80 transition-opacity relative">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="absolute -top-1 -right-1 bg-primary-container text-on-primary-container text-[10px] font-bold px-1.5 py-0.5 rounded-full">8</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow max-w-container-max mx-auto px-lg py-xl w-full">
+<!-- Breadcrumbs & Header -->
+<div class="mb-lg">
+<div class="flex items-center text-on-surface-variant font-body-sm mb-sm space-x-sm">
+<a class="hover:underline" href="#">Главная</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-bold text-on-surface">Корзина</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant pb-md">
+<div>
+<h1 class="font-display-lg text-display-lg font-bold text-on-surface m-0">Корзина</h1>
+<p class="font-body-md text-on-surface-variant mt-sm">8 товаров в корзине</p>
+</div>
+<button class="px-md py-sm border border-outline text-on-surface font-label-md rounded bg-surface hover:bg-surface-container transition-colors">
+                    Очистить корзину
+                </button>
+</div>
+</div>
+<!-- Cart Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Cart Items List (Left Column) -->
+<div class="lg:col-span-8 flex flex-col gap-md">
+<!-- Cart Item Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col md:flex-row items-center gap-md">
+<div class="w-24 h-24 bg-surface-container rounded flex-shrink-0 relative border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-[40px]">manufacturing</span>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Труба ПНД 25мм SDR11</h3>
+<p class="font-body-sm text-on-surface-variant mt-xs">Категория: Трубы | Артикул: PIP-25-20MM</p>
+<span class="inline-block bg-[#e8f5e9] text-[#2e7d32] font-label-md text-[10px] px-2 py-1 rounded-full mt-sm">В наличии</span>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between self-stretch py-sm">
+<div class="text-right mb-md">
+<span class="font-body-sm text-on-surface-variant block mb-xs">80.00 ₽ × 8</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">640.00 ₽</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center border border-outline-variant rounded h-10">
+<button aria-label="Уменьшить количество" class="px-3 py-1 hover:bg-surface-container text-on-surface transition-colors border-r border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<input aria-label="Количество" class="w-16 text-center font-label-md text-on-surface border-none bg-transparent focus:ring-0" type="number" value="8"/>
+<button aria-label="Увеличить количество" class="px-3 py-1 hover:bg-surface-container text-on-surface transition-colors border-l border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs text-sm">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+<span class="hidden md:inline font-label-md">Удалить</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Another Cart Item -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex flex-col md:flex-row items-center gap-md">
+<div class="w-24 h-24 bg-surface-container rounded flex-shrink-0 relative border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-[40px]">precision_manufacturing</span>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Промышленный клапан V-400</h3>
+<p class="font-body-sm text-on-surface-variant mt-xs">Категория: Клапаны | Артикул: VLV-400-IND</p>
+<span class="inline-block bg-[#fff8e1] text-[#f57f17] font-label-md text-[10px] px-2 py-1 rounded-full mt-sm">Отгрузка через 3 дня</span>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between self-stretch py-sm">
+<div class="text-right mb-md">
+<span class="font-body-sm text-on-surface-variant block mb-xs">120.50 ₽ × 2</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">241.00 ₽</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center border border-outline-variant rounded h-10">
+<button class="px-3 py-1 hover:bg-surface-container text-on-surface transition-colors border-r border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<input class="w-16 text-center font-label-md text-on-surface border-none bg-transparent focus:ring-0" type="number" value="2"/>
+<button class="px-3 py-1 hover:bg-surface-container text-on-surface transition-colors border-l border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs text-sm">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+<span class="hidden md:inline font-label-md">Удалить</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary (Right Column) -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg sticky top-[104px]">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-md">Детали заказа</h2>
+<div class="space-y-sm mb-md border-b border-outline-variant pb-md">
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span>Сумма заказа (8 товаров)</span>
+<span class="text-on-surface">881.00 ₽</span>
+</div>
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span>НДС (включен)</span>
+<span class="text-on-surface">88.10 ₽</span>
+</div>
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span>Доставка</span>
+<span class="text-on-surface">Рассчитывается на кассе</span>
+</div>
+</div>
+<div class="flex justify-between items-end mb-lg">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Итого</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">969.10 ₽</span>
+</div>
+<p class="font-body-sm text-on-surface-variant text-center mb-md">
+                        Цены указаны ориентировочно. Итоговая стоимость может варьироваться в зависимости от места доставки и оптовых скидок.
+                    </p>
+<button class="w-full bg-primary-container text-on-primary-container font-label-md py-md rounded hover:bg-primary-fixed transition-colors shadow-sm flex items-center justify-center gap-sm">
+<span>Оформить заказ</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<button class="w-full mt-sm bg-transparent border border-outline text-on-surface font-label-md py-sm rounded hover:bg-surface-container transition-colors">
+                        Запросить коммерческое предложение
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest w-full mt-xl text-surface-variant dark:text-on-surface-variant font-body-sm py-xl border-t-4 border-primary">
+<div class="max-w-container-max mx-auto px-lg grid grid-cols-2 md:grid-cols-4 gap-lg">
+<div>
+<a class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest dark:text-on-surface block mb-md" href="#">BELT</a>
+<p class="mb-sm">Промышленные решения для закупок и оптовая дистрибуция.</p>
+<p>© 2024 BELT Industrial Procurement. Все права защищены.</p>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary-fixed-dim mb-md uppercase tracking-wider">Каталог</h4>
+<ul class="space-y-sm">
+<li><a class="hover:underline transition-all" href="#">Все товары</a></li>
+<li><a class="hover:underline transition-all" href="#">Трубы и фитинги</a></li>
+<li><a class="hover:underline transition-all" href="#">Клапаны</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary-fixed-dim mb-md uppercase tracking-wider">Информация</h4>
+<ul class="space-y-sm">
+<li><a class="hover:underline transition-all" href="#">О нас</a></li>
+<li><a class="hover:underline transition-all" href="#">Условия предоставления услуг</a></li>
+<li><a class="hover:underline transition-all" href="#">Политика конфиденциальности</a></li>
+<li><a class="hover:underline transition-all" href="#">Оптовые заказы</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md font-bold text-primary-fixed-dim mb-md uppercase tracking-wider">Контакты</h4>
+<ul class="space-y-sm">
+<li><a class="hover:underline transition-all flex items-center gap-xs" href="#"><span class="material-symbols-outlined text-[16px]">location_on</span> Локации</a></li>
+<li><a class="hover:underline transition-all flex items-center gap-xs" href="#"><span class="material-symbols-outlined text-[16px]">call</span> +1 (800) 555-0199</a></li>
+<li><a class="hover:underline transition-all flex items-center gap-xs" href="#"><span class="material-symbols-outlined text-[16px]">mail</span> Служба поддержки</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

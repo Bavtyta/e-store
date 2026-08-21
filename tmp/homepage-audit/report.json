@@ -1,0 +1,1037 @@
+[
+  {
+    "width": 320,
+    "initial": {
+      "title": "Трубы, фитинги и РТИ в Тольятти — BELT",
+      "h1": [
+        "Трубы, фитинги и РТИ для рабочих задач"
+      ],
+      "h2": [
+        "Выберите город",
+        "Категории",
+        "Рекомендуемые товары",
+        "Подберите материалы под вашу задачу",
+        "Доставка из Тольятти по всей Самарской области",
+        "Компания",
+        "Покупателям",
+        "Документы"
+      ],
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "bodyHeight": 5018,
+      "dialogs": 1,
+      "jsonLd": 1,
+      "links": [
+        {
+          "text": "Перейти к основному содержимому",
+          "href": "#main-content"
+        },
+        {
+          "text": "BELT",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Контакты",
+          "href": "/contacts"
+        },
+        {
+          "text": "♡",
+          "href": "/favorites"
+        },
+        {
+          "text": "Акции и спецпредложенияАкции",
+          "href": "/offers"
+        },
+        {
+          "text": "Оптовым покупателямОпт",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Перейти в каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "ТрубыПНД, ПВХ, полипропиленовые и металлические→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Фитинги и соединенияМуфты, угольники, тройники и переходники→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Резинотехнические изделияУплотнители, манжеты, прокладки и шланги→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "КамерыКамеры и комплектующие→",
+          "href": "/catalog/kamery"
+        },
+        {
+          "text": "Популярный♡",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "Труба ПНД PE100 питьевая",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "Труба ПВХ канализационная 110 мм",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "Труба полипропиленовая армированная",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Труба стальная электросварная",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Открыть весь каталог→",
+          "href": "/catalog"
+        },
+        {
+          "text": "Для трубопроводаПНД, ПВХ, полипропиленовые и металлические трубы.→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Для соединения и монтажаМуфты, угольники, тройники, переходники и заглушки.→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Для герметизации и защитыУплотнители, манжеты, прокладки, шланги и техническая резина.→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "О компании",
+          "href": "/about"
+        },
+        {
+          "text": "Контакты и адреса",
+          "href": "/contacts"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Оптовые заказы",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Служба поддержки",
+          "href": "/support"
+        },
+        {
+          "text": "Политика конфиденциальности",
+          "href": "/privacy"
+        },
+        {
+          "text": "Пользовательское соглашение",
+          "href": "/terms"
+        },
+        {
+          "text": "Главная",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Избранное",
+          "href": "/favorites"
+        }
+      ]
+    },
+    "searchState": {
+      "dialogs": 0,
+      "activeTag": "INPUT",
+      "activeType": "search",
+      "overflow": "visible"
+    },
+    "restored": {
+      "tag": "BUTTON",
+      "type": "submit"
+    },
+    "errors": [
+      "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+    ]
+  },
+  {
+    "width": 375,
+    "initial": {
+      "title": "Трубы, фитинги и РТИ в Тольятти — BELT",
+      "h1": [
+        "Трубы, фитинги и РТИ для рабочих задач"
+      ],
+      "h2": [
+        "Выберите город",
+        "Категории",
+        "Рекомендуемые товары",
+        "Подберите материалы под вашу задачу",
+        "Доставка из Тольятти по всей Самарской области",
+        "Компания",
+        "Покупателям",
+        "Документы"
+      ],
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "bodyHeight": 4880,
+      "dialogs": 1,
+      "jsonLd": 1,
+      "links": [
+        {
+          "text": "Перейти к основному содержимому",
+          "href": "#main-content"
+        },
+        {
+          "text": "BELT",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Контакты",
+          "href": "/contacts"
+        },
+        {
+          "text": "♡",
+          "href": "/favorites"
+        },
+        {
+          "text": "Акции и спецпредложенияАкции",
+          "href": "/offers"
+        },
+        {
+          "text": "Оптовым покупателямОпт",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Перейти в каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "ТрубыПНД, ПВХ, полипропиленовые и металлические→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Фитинги и соединенияМуфты, угольники, тройники и переходники→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Резинотехнические изделияУплотнители, манжеты, прокладки и шланги→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "КамерыКамеры и комплектующие→",
+          "href": "/catalog/kamery"
+        },
+        {
+          "text": "Популярный♡",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "Труба ПНД PE100 питьевая",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "Труба ПВХ канализационная 110 мм",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "Труба полипропиленовая армированная",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Труба стальная электросварная",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Открыть весь каталог→",
+          "href": "/catalog"
+        },
+        {
+          "text": "Для трубопроводаПНД, ПВХ, полипропиленовые и металлические трубы.→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Для соединения и монтажаМуфты, угольники, тройники, переходники и заглушки.→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Для герметизации и защитыУплотнители, манжеты, прокладки, шланги и техническая резина.→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "О компании",
+          "href": "/about"
+        },
+        {
+          "text": "Контакты и адреса",
+          "href": "/contacts"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Оптовые заказы",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Служба поддержки",
+          "href": "/support"
+        },
+        {
+          "text": "Политика конфиденциальности",
+          "href": "/privacy"
+        },
+        {
+          "text": "Пользовательское соглашение",
+          "href": "/terms"
+        },
+        {
+          "text": "Главная",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Избранное",
+          "href": "/favorites"
+        }
+      ]
+    },
+    "searchState": {
+      "dialogs": 0,
+      "activeTag": "INPUT",
+      "activeType": "search",
+      "overflow": "visible"
+    },
+    "restored": {
+      "tag": "BUTTON",
+      "type": "submit"
+    },
+    "errors": [
+      "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+    ]
+  },
+  {
+    "width": 768,
+    "initial": {
+      "title": "Трубы, фитинги и РТИ в Тольятти — BELT",
+      "h1": [
+        "Трубы, фитинги и РТИ для рабочих задач"
+      ],
+      "h2": [
+        "Выберите город",
+        "Категории",
+        "Рекомендуемые товары",
+        "Подберите материалы под вашу задачу",
+        "Доставка из Тольятти по всей Самарской области",
+        "Компания",
+        "Покупателям",
+        "Документы"
+      ],
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "bodyHeight": 3656,
+      "dialogs": 1,
+      "jsonLd": 1,
+      "links": [
+        {
+          "text": "Перейти к основному содержимому",
+          "href": "#main-content"
+        },
+        {
+          "text": "BELT",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Контакты",
+          "href": "/contacts"
+        },
+        {
+          "text": "♡",
+          "href": "/favorites"
+        },
+        {
+          "text": "Акции и спецпредложенияАкции",
+          "href": "/offers"
+        },
+        {
+          "text": "Оптовым покупателямОпт",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Перейти в каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "ТрубыПНД, ПВХ, полипропиленовые и металлические→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Фитинги и соединенияМуфты, угольники, тройники и переходники→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Резинотехнические изделияУплотнители, манжеты, прокладки и шланги→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "КамерыКамеры и комплектующие→",
+          "href": "/catalog/kamery"
+        },
+        {
+          "text": "Популярный♡",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "Труба ПНД PE100 питьевая",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "Труба ПВХ канализационная 110 мм",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "Труба полипропиленовая армированная",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Труба стальная электросварная",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Открыть весь каталог→",
+          "href": "/catalog"
+        },
+        {
+          "text": "Для трубопроводаПНД, ПВХ, полипропиленовые и металлические трубы.→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Для соединения и монтажаМуфты, угольники, тройники, переходники и заглушки.→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Для герметизации и защитыУплотнители, манжеты, прокладки, шланги и техническая резина.→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "О компании",
+          "href": "/about"
+        },
+        {
+          "text": "Контакты и адреса",
+          "href": "/contacts"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Оптовые заказы",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Служба поддержки",
+          "href": "/support"
+        },
+        {
+          "text": "Политика конфиденциальности",
+          "href": "/privacy"
+        },
+        {
+          "text": "Пользовательское соглашение",
+          "href": "/terms"
+        },
+        {
+          "text": "Главная",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Избранное",
+          "href": "/favorites"
+        }
+      ]
+    },
+    "searchState": {
+      "dialogs": 0,
+      "activeTag": "INPUT",
+      "activeType": "search",
+      "overflow": "visible"
+    },
+    "restored": {
+      "tag": "BUTTON",
+      "type": "submit"
+    },
+    "errors": [
+      "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+    ]
+  },
+  {
+    "width": 1024,
+    "initial": {
+      "title": "Трубы, фитинги и РТИ в Тольятти — BELT",
+      "h1": [
+        "Трубы, фитинги и РТИ для рабочих задач"
+      ],
+      "h2": [
+        "Выберите город",
+        "Категории",
+        "Рекомендуемые товары",
+        "Подберите материалы под вашу задачу",
+        "Доставка из Тольятти по всей Самарской области",
+        "Компания",
+        "Покупателям",
+        "Документы"
+      ],
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "bodyHeight": 2765,
+      "dialogs": 1,
+      "jsonLd": 1,
+      "links": [
+        {
+          "text": "Перейти к основному содержимому",
+          "href": "#main-content"
+        },
+        {
+          "text": "BELT",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Контакты",
+          "href": "/contacts"
+        },
+        {
+          "text": "♡",
+          "href": "/favorites"
+        },
+        {
+          "text": "Акции и спецпредложенияАкции",
+          "href": "/offers"
+        },
+        {
+          "text": "Оптовым покупателямОпт",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Перейти в каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "ТрубыПНД, ПВХ, полипропиленовые и металлические→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Фитинги и соединенияМуфты, угольники, тройники и переходники→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Резинотехнические изделияУплотнители, манжеты, прокладки и шланги→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "КамерыКамеры и комплектующие→",
+          "href": "/catalog/kamery"
+        },
+        {
+          "text": "Популярный♡",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "Труба ПНД PE100 питьевая",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "Труба ПВХ канализационная 110 мм",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "Труба полипропиленовая армированная",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Труба стальная электросварная",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Открыть весь каталог→",
+          "href": "/catalog"
+        },
+        {
+          "text": "Для трубопроводаПНД, ПВХ, полипропиленовые и металлические трубы.→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Для соединения и монтажаМуфты, угольники, тройники, переходники и заглушки.→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Для герметизации и защитыУплотнители, манжеты, прокладки, шланги и техническая резина.→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "О компании",
+          "href": "/about"
+        },
+        {
+          "text": "Контакты и адреса",
+          "href": "/contacts"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Оптовые заказы",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Служба поддержки",
+          "href": "/support"
+        },
+        {
+          "text": "Политика конфиденциальности",
+          "href": "/privacy"
+        },
+        {
+          "text": "Пользовательское соглашение",
+          "href": "/terms"
+        },
+        {
+          "text": "Главная",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Избранное",
+          "href": "/favorites"
+        }
+      ]
+    },
+    "searchState": {
+      "dialogs": 0,
+      "activeTag": "INPUT",
+      "activeType": "search",
+      "overflow": "visible"
+    },
+    "restored": {
+      "tag": "BUTTON",
+      "type": "submit"
+    },
+    "errors": [
+      "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+    ]
+  },
+  {
+    "width": 1440,
+    "initial": {
+      "title": "Трубы, фитинги и РТИ в Тольятти — BELT",
+      "h1": [
+        "Трубы, фитинги и РТИ для рабочих задач"
+      ],
+      "h2": [
+        "Выберите город",
+        "Категории",
+        "Рекомендуемые товары",
+        "Подберите материалы под вашу задачу",
+        "Доставка из Тольятти по всей Самарской области",
+        "Компания",
+        "Покупателям",
+        "Документы"
+      ],
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "bodyHeight": 2898,
+      "dialogs": 1,
+      "jsonLd": 1,
+      "links": [
+        {
+          "text": "Перейти к основному содержимому",
+          "href": "#main-content"
+        },
+        {
+          "text": "BELT",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Контакты",
+          "href": "/contacts"
+        },
+        {
+          "text": "♡",
+          "href": "/favorites"
+        },
+        {
+          "text": "Акции и спецпредложенияАкции",
+          "href": "/offers"
+        },
+        {
+          "text": "Оптовым покупателямОпт",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Перейти в каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "ТрубыПНД, ПВХ, полипропиленовые и металлические→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Фитинги и соединенияМуфты, угольники, тройники и переходники→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Резинотехнические изделияУплотнители, манжеты, прокладки и шланги→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "КамерыКамеры и комплектующие→",
+          "href": "/catalog/kamery"
+        },
+        {
+          "text": "Популярный♡",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "Труба ПНД PE100 питьевая",
+          "href": "/product/truba-pnd-pe100-pitevaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "Труба ПВХ канализационная 110 мм",
+          "href": "/product/truba-pvh-kanalizacionnaya-110"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "Труба полипропиленовая армированная",
+          "href": "/product/truba-polipropilenovaya-armirovannaya"
+        },
+        {
+          "text": "♡",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Труба стальная электросварная",
+          "href": "/product/truba-stalnaya-elektrosvarnaya"
+        },
+        {
+          "text": "Открыть весь каталог→",
+          "href": "/catalog"
+        },
+        {
+          "text": "Для трубопроводаПНД, ПВХ, полипропиленовые и металлические трубы.→",
+          "href": "/catalog/truby"
+        },
+        {
+          "text": "Для соединения и монтажаМуфты, угольники, тройники, переходники и заглушки.→",
+          "href": "/catalog/fitingi-i-soedineniya"
+        },
+        {
+          "text": "Для герметизации и защитыУплотнители, манжеты, прокладки, шланги и техническая резина.→",
+          "href": "/catalog/rezinotehnicheskie-izdeliya"
+        },
+        {
+          "text": "Помощь с подбором",
+          "href": "/selection-help"
+        },
+        {
+          "text": "О компании",
+          "href": "/about"
+        },
+        {
+          "text": "Контакты и адреса",
+          "href": "/contacts"
+        },
+        {
+          "text": "Услуги",
+          "href": "/services"
+        },
+        {
+          "text": "Доставка",
+          "href": "/delivery"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Оптовые заказы",
+          "href": "/wholesale"
+        },
+        {
+          "text": "Служба поддержки",
+          "href": "/support"
+        },
+        {
+          "text": "Политика конфиденциальности",
+          "href": "/privacy"
+        },
+        {
+          "text": "Пользовательское соглашение",
+          "href": "/terms"
+        },
+        {
+          "text": "Главная",
+          "href": "/"
+        },
+        {
+          "text": "Каталог",
+          "href": "/catalog"
+        },
+        {
+          "text": "Корзина",
+          "href": "/cart"
+        },
+        {
+          "text": "Избранное",
+          "href": "/favorites"
+        }
+      ]
+    },
+    "searchState": {
+      "dialogs": 0,
+      "activeTag": "INPUT",
+      "activeType": "search",
+      "overflow": "visible"
+    },
+    "restored": {
+      "tag": "BUTTON",
+      "type": "submit"
+    },
+    "errors": [
+      "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+    ]
+  }
+]

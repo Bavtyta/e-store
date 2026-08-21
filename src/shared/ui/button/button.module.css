@@ -19,6 +19,10 @@
   outline-color: var(--color-focus);
 }
 
+.root:active:not(:disabled) {
+  transform: translateY(0.0625rem);
+}
+
 .root:disabled {
   opacity: var(--disabled-opacity);
 }

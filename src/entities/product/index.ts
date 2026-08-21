@@ -36,6 +36,7 @@ export {
   mapProductVariantDto,
 } from './model/mapProductDto';
 export {
+  addToCartTargetSchema,
   attributeSchema,
   attributeValueSchema,
   availabilitySchema,
@@ -54,6 +55,7 @@ export {
   variantOptionValueSchema,
 } from './model/product';
 export type {
+  AddToCartTarget,
   Attribute,
   AttributeValue,
   Availability,

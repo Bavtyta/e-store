@@ -87,7 +87,7 @@ describe('CategoryPage integration', () => {
       'href',
       '/catalog/truby',
     );
-    expect(document.title).toBe('ПНД — ПромМатериалы');
+    expect(document.title).toBe('ПНД — BELT');
     expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute(
       'href',
       'http://localhost:4173/catalog/truby/pnd',

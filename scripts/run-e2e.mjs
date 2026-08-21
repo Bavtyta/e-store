@@ -24,10 +24,14 @@ const playwrightCliPath = fileURLToPath(
 
 function runPlaywright() {
   return new Promise((resolve, reject) => {
-    const processHandle = spawn(process.execPath, [playwrightCliPath, 'test'], {
-      env: testEnvironment,
-      stdio: 'inherit',
-    });
+    const processHandle = spawn(
+      process.execPath,
+      [playwrightCliPath, 'test', ...process.argv.slice(2)],
+      {
+        env: testEnvironment,
+        stdio: 'inherit',
+      },
+    );
 
     processHandle.once('error', reject);
     processHandle.once('exit', (exitCode, signal) => {

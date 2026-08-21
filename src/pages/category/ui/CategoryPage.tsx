@@ -10,8 +10,6 @@ import { createPageMetadata, PageMetadata } from '@/shared/lib';
 import type { PageMetadataDescriptor } from '@/shared/lib';
 import { Container, EmptyState, ErrorState, Skeleton } from '@/shared/ui';
 import { CategoryCatalogContent } from '@/widgets/catalog-content';
-import { Footer } from '@/widgets/footer';
-import { Header } from '@/widgets/header';
 
 import styles from './category-page.module.css';
 
@@ -73,11 +71,7 @@ function CategoryPageFrame({ children, metadata }: CategoryPageFrameProps) {
   return (
     <div className={styles.page}>
       <PageMetadata metadata={metadata} />
-      <Header />
-      <main id="main-content" tabIndex={-1}>
-        <Container className={styles.content}>{children}</Container>
-      </main>
-      <Footer />
+      <Container className={styles.content}>{children}</Container>
     </div>
   );
 }

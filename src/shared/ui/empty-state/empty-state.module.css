@@ -3,12 +3,32 @@
   justify-items: center;
   gap: var(--space-4);
   width: 100%;
-  padding: var(--space-8);
   color: var(--color-text-primary);
   background: var(--color-surface);
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-lg);
   text-align: center;
+}
+
+.page {
+  padding: var(--space-8);
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.inline {
+  justify-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-left: 4px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.inline .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--font-size-md);
 }
 
 .icon {
@@ -34,6 +54,11 @@
   margin: 0;
 }
 
+.copy h2 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
 .copy p {
   color: var(--color-text-secondary);
 }
@@ -43,4 +68,8 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-2);
+}
+
+.inline .action {
+  justify-content: flex-start;
 }
