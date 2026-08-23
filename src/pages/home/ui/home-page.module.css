@@ -91,7 +91,7 @@
 /* Hero */
 .hero {
   position: relative;
-  min-height: 30rem;
+  min-height: clamp(30rem, 38vw, 34rem);
   background-color: var(--color-dark-surface);
   color: var(--color-surface);
   overflow: hidden;
@@ -103,9 +103,10 @@
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgb(11 15 24 / 96%) 0%,
-    rgb(11 15 24 / 88%) 48%,
-    transparent 78%
+    rgb(11 15 24 / 98%) 0%,
+    rgb(11 15 24 / 92%) 36%,
+    rgb(11 15 24 / 58%) 58%,
+    rgb(11 15 24 / 10%) 78%
   );
   content: '';
 }
@@ -120,7 +121,7 @@
 
 .heroMedia img {
   object-fit: cover;
-  object-position: center;
+  object-position: 62% center;
 }
 
 .heroContainer {
@@ -131,21 +132,21 @@
 .heroLayout {
   display: grid;
   align-items: center;
-  min-height: 30rem;
+  min-height: clamp(30rem, 38vw, 34rem);
 }
 
 .heroContent {
-  max-width: 56rem;
-  padding-block: clamp(var(--space-12), 7vw, 5.5rem);
+  max-width: 42rem;
+  padding-block: clamp(var(--space-10), 6vw, var(--space-16));
 }
 
 .heroTitle {
-  max-width: 54rem;
+  max-width: 41rem;
   margin: 0 0 var(--space-6);
-  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  font-size: clamp(2.5rem, 4.1vw, 3.75rem);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.035em;
-  line-height: 1.08;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
   color: var(--color-surface);
   overflow-wrap: anywhere;
 }
@@ -155,7 +156,7 @@
   font-size: clamp(var(--font-size-md), 1.4vw, 1.125rem);
   line-height: 1.6;
   color: var(--color-surface-subtle);
-  max-width: 40rem;
+  max-width: 36rem;
 }
 
 .heroActions {
@@ -168,7 +169,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--control-height-sm);
+  min-height: var(--control-height-md);
   padding: var(--space-3) var(--space-6);
   background: var(--color-primary-action);
   color: var(--color-on-accent);
@@ -419,7 +420,7 @@
   }
 
   .heroContent {
-    padding-block: var(--space-12);
+    padding-block: var(--space-10) var(--space-12);
   }
 
   .heroActions {
@@ -442,7 +443,7 @@
 
 @media (min-width: 48rem) {
   .heroLayout {
-    grid-template-columns: minmax(0, 0.58fr) minmax(20rem, 0.42fr);
+    grid-template-columns: minmax(0, 0.62fr) minmax(18rem, 0.38fr);
   }
 
   .taskSelectionContent {
