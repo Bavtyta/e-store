@@ -121,8 +121,8 @@
 
 .categoryCard:hover .categoryArrow,
 .categoryCard:focus-visible .categoryArrow {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-accent);
+  color: var(--color-navigation-hover-text);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
   transform: translateX(var(--space-1));
 }
 

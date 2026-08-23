@@ -54,8 +54,9 @@
 .serviceBarLink:focus-visible,
 .serviceBarButton:hover,
 .serviceBarButton:focus-visible {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
 }
 
 .serviceBarPromo:hover,
@@ -65,8 +66,8 @@
 
 .serviceBarLink:active,
 .serviceBarButton:active {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-active);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-active-surface);
 }
 
 .serviceBarPromo:active {
@@ -169,7 +170,7 @@
   justify-content: center;
   min-height: var(--control-height-sm);
   padding: var(--space-3) var(--space-6);
-  background: var(--color-accent);
+  background: var(--color-primary-action);
   color: var(--color-on-accent);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
@@ -181,7 +182,7 @@
 }
 
 .heroCta:hover {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
   color: var(--color-on-accent);
 }
 
@@ -264,7 +265,7 @@
   width: var(--control-height-md);
   height: var(--control-height-md);
   color: var(--color-on-accent);
-  background: var(--color-accent);
+  background: var(--color-primary-action);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xl);
   transition:
@@ -274,7 +275,7 @@
 
 .taskLink:hover .taskArrow,
 .taskLink:focus-visible .taskArrow {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
   transform: translateX(var(--space-1));
 }
 
@@ -315,13 +316,13 @@
 
 .selectionPrimary {
   color: var(--color-on-accent);
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--color-primary-action);
+  border-color: var(--color-primary-action);
 }
 
 .selectionPrimary:hover {
   color: var(--color-on-accent);
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
 }
 
 .serviceArea {

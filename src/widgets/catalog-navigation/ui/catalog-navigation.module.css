@@ -35,13 +35,15 @@
 }
 
 .link:hover {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 3px 0 var(--color-navigation-accent);
 }
 
 .linkActive,
 .linkActive:hover {
-  background: var(--color-accent);
+  background: var(--color-primary-action);
   color: var(--color-on-accent);
   font-weight: var(--font-weight-semibold);
+  box-shadow: none;
 }

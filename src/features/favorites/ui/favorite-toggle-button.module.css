@@ -18,10 +18,16 @@
     transform var(--transition-fast);
 }
 
-.root:hover,
+.root:hover {
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  border-color: var(--color-navigation-accent);
+}
+
 .active {
   color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  background: var(--color-primary-action);
+  border-color: var(--color-primary-action-hover);
 }
 
 .root:active {
