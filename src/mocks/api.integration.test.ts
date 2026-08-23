@@ -90,6 +90,27 @@ describe('Storefront API integration with MSW', () => {
     expect(products.items[0]?.slug).toBe('truba-pnd-pe100-pitevaya');
   });
 
+  it('combines values within a facet by OR and different facets by AND', async () => {
+    const products = await getProducts({
+      filters: {
+        availability: 'in_stock',
+        material: 'ПВХ,ПНД',
+      },
+    });
+
+    expect(products.items.length).toBeGreaterThan(1);
+    expect(products.items.every((item) => item.availability.status === 'in_stock')).toBe(true);
+
+    const materialFacet = products.facets?.find((facet) => facet.code === 'material');
+    const pvcOption = materialFacet?.options?.find((option) => option.value === 'ПВХ');
+    const pndOption = materialFacet?.options?.find((option) => option.value === 'ПНД');
+
+    expect(pvcOption?.selected).toBe(true);
+    expect(pndOption?.selected).toBe(true);
+    expect(pvcOption?.count).toBeGreaterThan(0);
+    expect(pndOption?.count).toBeGreaterThan(0);
+  });
+
   it('sorts products by ascending price with unknown prices last', async () => {
     const products = await getProducts({
       sort: 'price_asc',

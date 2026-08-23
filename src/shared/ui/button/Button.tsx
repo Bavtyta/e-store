@@ -1,8 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react';
 
-import { classNames } from '@/shared/lib';
-
 import styles from './button.module.css';
+import { getButtonClassName } from './buttonStyles';
 
 export type ButtonSize = 'small' | 'medium';
 export type ButtonVariant = 'primary' | 'secondary' | 'danger';
@@ -28,14 +27,13 @@ export function Button({
   return (
     <button
       aria-busy={isLoading || undefined}
-      className={classNames(
-        styles.root,
-        styles[variant],
-        styles[size],
-        isFullWidth && styles.fullWidth,
-        isLoading && styles.loading,
+      className={getButtonClassName({
         className,
-      )}
+        isFullWidth,
+        isLoading,
+        size,
+        variant,
+      })}
       disabled={isLoading ? true : disabled}
       type={type}
       {...buttonProps}

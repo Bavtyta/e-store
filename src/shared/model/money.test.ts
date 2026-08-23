@@ -37,6 +37,15 @@ describe('Money', () => {
     expect(result.success).toBe(false);
   });
 
+  it('rejects a negative monetary amount', () => {
+    expect(
+      mapMoneyDto({
+        amountMinor: -1,
+        currency: 'RUB',
+      }).success,
+    ).toBe(false);
+  });
+
   it('formats kopecks as Russian rubles', () => {
     const formatted = formatMoney({
       amountMinor: 123_456,

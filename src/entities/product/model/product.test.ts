@@ -138,12 +138,18 @@ function createProductListItemDto(): ProductListItem {
     categoryId: 'category-1',
     id: 'product-1',
     name: 'Тестовая модель товара',
+    packagePriceFrom: null,
+    packageQuantity: null,
     priceFrom: createMoney(),
+    priceType: 'fixed',
     priceTo: null,
     primaryUnit: createUnit(),
+    purchaseAction: 'direct',
     shortAttributes: [createAttribute()],
     slug: 'test-product',
     thumbnail: createImage(),
+    variantCount: 1,
+    variantSummary: null,
   };
 }
 
@@ -192,6 +198,114 @@ describe('Product models', () => {
     };
 
     expect(mapProductDetailsDto(invalidDto).success).toBe(false);
+  });
+
+  it('rejects contradictory list purchase actions', () => {
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        addToCartTarget: null,
+        purchaseAction: 'direct',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        addToCartTarget: null,
+        purchaseAction: 'select_variant',
+        variantCount: 3,
+        variantSummary: null,
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        addToCartTarget: null,
+        packagePriceFrom: createMoney(),
+        packageQuantity: '10',
+        purchaseAction: 'select_variant',
+        variantCount: 3,
+        variantSummary: '3 варианта',
+      }).success,
+    ).toBe(false);
+  });
+
+  it('rejects contradictory list availability, price and package semantics', () => {
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        availability: { message: 'Нет в наличии', status: 'out_of_stock' },
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        priceFrom: null,
+        priceType: 'fixed',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        priceType: 'on_request',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        packageQuantity: '0',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        packagePriceFrom: createMoney(),
+        packageQuantity: '10',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        priceFrom: { amountMinor: 20_000, currency: 'RUB' },
+        priceTo: { amountMinor: 10_000, currency: 'RUB' },
+        priceType: 'from',
+      }).success,
+    ).toBe(false);
+    expect(
+      productListItemSchema.safeParse({
+        ...createProductListItemDto(),
+        addToCartTarget: {
+          id: 'product-1-variant-default',
+          maxOrderQuantity: null,
+          minOrderQuantity: '10',
+          quantityStep: '10',
+        },
+        packagePriceFrom: { amountMinor: 999, currency: 'RUB' },
+        packageQuantity: '10',
+      }).success,
+    ).toBe(false);
+  });
+
+  it('rejects contradictory variant price and package semantics', () => {
+    expect(
+      productVariantSchema.safeParse({
+        ...createProductVariantDto(),
+        price: null,
+        priceType: 'fixed',
+      }).success,
+    ).toBe(false);
+    expect(
+      productVariantSchema.safeParse({
+        ...createProductVariantDto(),
+        priceType: 'on_request',
+      }).success,
+    ).toBe(false);
+    expect(
+      productVariantSchema.safeParse({
+        ...createProductVariantDto(),
+        packageQuantity: '10',
+      }).success,
+    ).toBe(false);
   });
 
   it('rejects an unknown CategoryReference field safely', () => {

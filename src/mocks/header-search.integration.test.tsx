@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { setupServer } from 'msw/node';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, useLocation } from 'react-router';
 
 import { apiClient } from '@/shared/api';
+import { AnalyticsProvider } from '@/shared/lib';
+import type { AnalyticsReporter } from '@/shared/lib';
 import { HeaderSearch } from '@/widgets/header';
 
 import { handlers } from './handlers';
@@ -11,7 +13,17 @@ import { handlers } from './handlers';
 const server = setupServer(...handlers);
 let queryClient: QueryClient;
 
-function renderSearch() {
+const noOpAnalyticsReporter: AnalyticsReporter = {
+  trackEvent: () => undefined,
+};
+
+function LocationProbe() {
+  const location = useLocation();
+
+  return <output data-testid="location">{`${location.pathname}${location.search}`}</output>;
+}
+
+function renderSearch(reporter: AnalyticsReporter = noOpAnalyticsReporter) {
   queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -20,9 +32,12 @@ function renderSearch() {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
-        <HeaderSearch />
-      </MemoryRouter>
+      <AnalyticsProvider reporter={reporter}>
+        <MemoryRouter>
+          <HeaderSearch />
+          <LocationProbe />
+        </MemoryRouter>
+      </AnalyticsProvider>
     </QueryClientProvider>,
   );
 }
@@ -88,6 +103,49 @@ describe('HeaderSearch overlay', () => {
     expect(input).toHaveValue('');
     expect(input).toHaveFocus();
     expect(screen.queryByRole('button', { name: 'Очистить поиск' })).not.toBeInTheDocument();
+  });
+
+  it('keeps an explicit from-price for a single-variant product', async () => {
+    renderSearch();
+    fireEvent.click(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }));
+
+    fireEvent.change(screen.getByRole('searchbox', { name: 'Поиск по каталогу' }), {
+      target: { value: 'Ножницы' },
+    });
+
+    expect(await screen.findByText('Ножницы для полимерных труб')).toBeInTheDocument();
+    expect(screen.getByText(/от 1\s?290,00/)).toBeInTheDocument();
+  });
+
+  it('turns recognizable specifications into filters and tracks a privacy-safe submit', async () => {
+    const trackEvent = vi.fn<AnalyticsReporter['trackEvent']>();
+    renderSearch({ trackEvent });
+
+    const input = screen.getByRole('searchbox', { name: 'Поиск по каталогу' });
+    fireEvent.click(input);
+    fireEvent.change(input, { target: { value: 'ПВХ 110 мм' } });
+
+    expect(await screen.findByText('Труба ПВХ канализационная 110 мм')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Найти' }));
+
+    await waitFor(() => {
+      const currentLocation = screen.getByTestId('location').textContent;
+      const url = new URL(currentLocation, 'http://localhost');
+
+      expect(url.pathname).toBe('/catalog');
+      expect(url.searchParams.get('search')).toBeNull();
+      expect(url.searchParams.get('filter[diameter]')).toBe('110');
+      expect(url.searchParams.get('filter[material]')).toBe('ПВХ');
+    });
+    expect(trackEvent).toHaveBeenCalledWith({
+      name: 'catalog_search_submitted',
+      properties: {
+        category_id: 'all',
+        query_length: 10,
+        recognized_filter_count: 2,
+        surface: 'catalog',
+      },
+    });
   });
 
   it('shows empty and retryable error states', async () => {

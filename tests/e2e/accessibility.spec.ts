@@ -89,3 +89,48 @@ test('has no axe violations in catalog search results', async ({ page }) => {
 
   expect(results.violations).toEqual([]);
 });
+
+test('has no axe violations in the mobile catalog filter dialog', async ({ page }) => {
+  await page.setViewportSize({ height: 812, width: 375 });
+  await page.goto('/catalog');
+  await expect(page.getByText(/Найдено товаров:/)).toBeVisible();
+
+  const opener = page.getByRole('button', { name: 'Фильтры и сортировка' });
+  await opener.click();
+  const dialog = page.getByRole('dialog', { name: 'Фильтры и сортировка' });
+  await expect(dialog).toBeVisible();
+
+  const results = await new AxeBuilder({ page })
+    .include('dialog[open]')
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+});
+
+test('has no axe violations in catalog zero results and supports keyboard recovery', async ({
+  page,
+}) => {
+  await page.goto('/catalog');
+  await expect(page.getByText(/Найдено товаров:/)).toBeVisible();
+
+  const search = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  await search.fill('такого товара точно нет');
+  await search.press('Enter');
+  await expect(page.getByRole('heading', { name: 'По запросу ничего не найдено' })).toBeVisible();
+
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze();
+  expect(results.violations).toEqual([]);
+
+  const recovery = page
+    .getByLabel('Товары каталога')
+    .getByRole('button', { name: 'Очистить поиск' });
+  await recovery.focus();
+  await page.keyboard.press('Enter');
+  await expect(search).toHaveValue('');
+});

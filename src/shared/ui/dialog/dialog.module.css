@@ -32,6 +32,7 @@
 
 .header {
   display: flex;
+  flex: 0 0 auto;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-4);
@@ -77,6 +78,8 @@
 }
 
 .content {
+  flex: 1 1 auto;
+  min-height: 0;
   padding: var(--space-6);
   overflow: auto;
   overscroll-behavior: contain;
@@ -84,6 +87,7 @@
 
 .footer {
   display: flex;
+  flex: 0 0 auto;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: var(--space-3);

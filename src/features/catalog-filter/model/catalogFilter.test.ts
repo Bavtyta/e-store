@@ -5,7 +5,10 @@ import {
   catalogFilterKeys,
   createProductFilterParams,
   emptyCatalogFilterState,
+  getCatalogFilterCounts,
   isCatalogFilterActive,
+  parseCatalogAttributeFilters,
+  parseCatalogFacetSelections,
   parseCatalogFilterState,
   removeCatalogFilterParams,
 } from './catalogFilter';
@@ -28,11 +31,40 @@ describe('catalogFilter model', () => {
 
     expect(state).toEqual({
       diameters: ['25', '32'],
-      material: 'ПНД',
+      materials: ['ПНД'],
       priceMax: '15000',
       priceMin: '1000',
     });
     expect(isCatalogFilterActive(state)).toBe(true);
+  });
+
+  it('parses arbitrary attribute filters for the products query', () => {
+    expect(
+      parseCatalogAttributeFilters(
+        new URLSearchParams({
+          'filter[brand]': 'Valtec,Lammin',
+          'filter[material]': 'ПНД',
+          search: 'труба',
+        }),
+      ),
+    ).toEqual({
+      brand: 'Valtec,Lammin',
+      material: 'ПНД',
+    });
+  });
+
+  it('parses selected facet values from the URL as arrays', () => {
+    expect(
+      parseCatalogFacetSelections(
+        new URLSearchParams({
+          'filter[application]': 'Питьевая вода,Отопление',
+          'filter[material]': 'ПНД',
+        }),
+      ),
+    ).toEqual({
+      application: ['Питьевая вода', 'Отопление'],
+      material: ['ПНД'],
+    });
   });
 
   it('ignores blank filter values', () => {
@@ -45,7 +77,7 @@ describe('catalogFilter model', () => {
     );
 
     expect(state.diameters).toEqual(['25', '32']);
-    expect(state.material).toBeNull();
+    expect(state.materials).toEqual([]);
     expect(state.priceMax).toBeNull();
   });
 
@@ -55,7 +87,7 @@ describe('catalogFilter model', () => {
       search: 'труба',
     });
 
-    const next = applyCatalogFilterChanges(source, { material: 'ПВХ' });
+    const next = applyCatalogFilterChanges(source, { materials: ['ПВХ'] });
 
     expect(next.get('search')).toBe('труба');
     expect(next.get('filter[diameter]')).toBe('50');
@@ -68,7 +100,7 @@ describe('catalogFilter model', () => {
       'filter[diameter]': '25',
     });
 
-    const next = applyCatalogFilterChanges(source, { material: null, diameters: [] });
+    const next = applyCatalogFilterChanges(source, { materials: [], diameters: [] });
 
     expect(next.has('filter[material]')).toBe(false);
     expect(next.has('filter[diameter]')).toBe(false);
@@ -101,7 +133,7 @@ describe('catalogFilter model', () => {
     expect(
       createProductFilterParams({
         diameters: ['25', '32'],
-        material: 'ПНД',
+        materials: ['ПНД'],
         priceMax: '15000.5',
         priceMin: '0',
       }),
@@ -119,12 +151,29 @@ describe('catalogFilter model', () => {
     expect(
       createProductFilterParams({
         diameters: [],
-        material: null,
+        materials: [],
         priceMax: 'abc',
         priceMin: '-5',
       }),
     ).toEqual({
       filters: {},
     });
+  });
+
+  it('counts filter groups and values without exposing their contents', () => {
+    expect(
+      getCatalogFilterCounts(
+        {
+          availability: ['in_stock'],
+          material: ['ПНД', 'ПВХ'],
+        },
+        {
+          diameters: [],
+          materials: ['ПНД', 'ПВХ'],
+          priceMax: '1000',
+          priceMin: '100',
+        },
+      ),
+    ).toEqual({ groupCount: 3, valueCount: 5 });
   });
 });

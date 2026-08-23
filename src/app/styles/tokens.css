@@ -23,7 +23,7 @@
   --color-success: #16a34a;
   --color-success-surface: #e6f4ea;
   --color-success-text: #137333;
-  --color-warning: #ea580c;
+  --color-warning: #9a3412;
   --color-warning-surface: #fff8db;
   --color-info: #2563eb;
   --color-error: #ba1a1a;
@@ -38,6 +38,15 @@
   --color-focus: var(--color-text-primary);
   --color-link: var(--color-accent-text);
   --color-link-hover: var(--color-interactive-text-hover);
+  /* Semantic aliases shared by navigation, search, and primary controls. */
+  --color-control-border: var(--color-border);
+  --color-control-border-hover: var(--color-border-strong);
+  --color-primary-action: var(--color-accent);
+  --color-primary-action-hover: var(--color-accent-hover);
+  --color-navigation-accent: var(--color-accent);
+  --color-navigation-active-surface: var(--color-primary-fixed);
+  --color-navigation-hover-surface: var(--color-surface-subtle);
+  --color-navigation-hover-text: var(--color-text-primary);
   --color-overlay: rgb(20 27 43 / 68%);
   --color-info-surface: #e8f0fe;
   --color-info-text: #174ea6;

@@ -38,6 +38,7 @@ export function CategoryCatalogContent({
     .filter((item) => item.parentId === category.id)
     .sort((a, b) => a.sortOrder - b.sortOrder);
   const chain = createCategoryChain(category, categories);
+  const parentCategory = chain.at(-2);
 
   return (
     <>
@@ -52,6 +53,11 @@ export function CategoryCatalogContent({
       <header className={styles.header}>
         <h1>{category.name}</h1>
         {category.description === null ? null : <p>{category.description}</p>}
+        {parentCategory === undefined ? null : (
+          <Link className={styles.parentCategoryLink} to={parentCategory.path}>
+            Смотреть все товары категории «{parentCategory.name}»
+          </Link>
+        )}
       </header>
       {categoriesQuery.isPending ? (
         <Skeleton height="5rem" label="Загрузка структуры категории" variant="rectangle" />
@@ -80,7 +86,21 @@ export function CategoryCatalogContent({
         </section>
       ) : null}
       <CatalogContent
+        analyticsContext={{ categoryId: category.id, surface: 'category' }}
         categoryPath={categoryPath}
+        emptyBrowseTarget={
+          parentCategory === undefined
+            ? {
+                action: 'view_all_catalog',
+                label: 'Смотреть весь каталог',
+                to: '/catalog',
+              }
+            : {
+                action: 'view_parent_category',
+                label: `Смотреть товары категории «${parentCategory.name}»`,
+                to: parentCategory.path,
+              }
+        }
         {...(onProductsErrorChange === undefined
           ? {}
           : { onQueryErrorChange: onProductsErrorChange })}
