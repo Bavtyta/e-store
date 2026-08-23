@@ -26,8 +26,8 @@ export function HomeFeaturedProducts() {
       <Container size="wide">
         <div className={styles.heading}>
           <div>
-            <h2 id="featured-products-title">Рекомендуемые товары</h2>
-            <p>Начните с востребованных позиций из каталога BELT.</p>
+            <h2 id="featured-products-title">Товары из каталога</h2>
+            <p>Посмотрите характеристики и доступные варианты товаров BELT.</p>
           </div>
         </div>
         {productsQuery.isPending ? (

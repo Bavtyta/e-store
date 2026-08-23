@@ -189,29 +189,6 @@
   transform: translateY(0.0625rem);
 }
 
-.heroSecondaryCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--control-height-sm);
-  padding: var(--space-3) var(--space-6);
-  border: 1px solid rgb(255 255 255 / 48%);
-  border-radius: var(--radius-sm);
-  color: var(--color-surface);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  text-decoration: none;
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast);
-}
-
-.heroSecondaryCta:hover {
-  border-color: var(--color-surface);
-  background: rgb(255 255 255 / 10%);
-  color: var(--color-surface);
-}
-
 .taskSelection {
   background: var(--color-background);
 }
@@ -377,6 +354,11 @@
 
 /* Responsive */
 @media (max-width: 47.9375rem) {
+  .serviceBarContent {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
   .hero {
     min-height: 36rem;
   }
@@ -399,6 +381,21 @@
   .serviceBarButton {
     padding-inline: var(--space-2);
     font-size: var(--font-size-xs);
+  }
+
+  .serviceBarLink:first-child {
+    padding-left: var(--space-2);
+  }
+
+  .serviceBarCity {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+
+  .serviceBarCity .serviceBarButton {
+    width: 100%;
   }
 
   .serviceBarLabelDesktop {

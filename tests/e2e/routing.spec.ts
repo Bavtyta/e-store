@@ -5,7 +5,7 @@ const responsiveViewports = [320, 375, 768, 1024, 1440] as const;
 
 const responsivePages = [
   {
-    heading: 'Трубы, фитинги и РТИ для рабочих задач',
+    heading: 'Трубы, фитинги и РТИ для ремонта и монтажа',
     path: '/',
   },
   {
@@ -70,7 +70,7 @@ test('opens a product from the catalog, changes its variant and handles 404', as
   await page.goto('/');
   await expect(
     page.getByRole('heading', {
-      name: 'Трубы, фитинги и РТИ для рабочих задач',
+      name: 'Трубы, фитинги и РТИ для ремонта и монтажа',
     }),
   ).toBeVisible();
 
@@ -261,7 +261,7 @@ test('applies indexable metadata to public storefront pages', async ({ page }) =
   await page.goto('/');
   await expect(
     page.getByRole('heading', {
-      name: 'Трубы, фитинги и РТИ для рабочих задач',
+      name: 'Трубы, фитинги и РТИ для ремонта и монтажа',
     }),
   ).toBeVisible();
   await expect(page).toHaveTitle('Трубы, фитинги и РТИ в Тольятти — BELT');

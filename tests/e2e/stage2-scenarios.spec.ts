@@ -28,6 +28,24 @@ test('confirms the city locally and does not prompt again after reload', async (
   await expect(cityPopover).toBeHidden();
 });
 
+test('keeps the city prompt closed on mobile until the user opens it', async ({ page }) => {
+  await page.setViewportSize({ height: 800, width: 375 });
+  await page.reload();
+
+  const cityPopover = page.getByRole('dialog', { name: 'Выберите город' });
+  await expect(cityPopover).toBeHidden();
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Трубы, фитинги и РТИ для ремонта и монтажа',
+    }),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Оптовым покупателям' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Ваш город: Тольятти' }).click();
+  await expect(cityPopover).toBeVisible();
+});
+
 test('saves a catalog product locally and removes it from favorites', async ({ page }) => {
   await page.goto('/catalog');
   await page.getByTitle('Добавить в избранное').first().click();
