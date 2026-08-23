@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const pagesToAudit = [
   {
-    heading: 'Трубы, фитинги и РТИ для рабочих задач',
+    heading: 'Трубы, фитинги и РТИ для ремонта и монтажа',
     path: '/',
   },
   {

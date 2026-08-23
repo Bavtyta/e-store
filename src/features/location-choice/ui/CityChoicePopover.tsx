@@ -16,6 +16,10 @@ interface CityChoicePopoverProps {
   className?: string | undefined;
 }
 
+function isDesktopViewport(): boolean {
+  return typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 48rem)').matches;
+}
+
 export function CityChoicePopover({
   buttonClassName = '',
   className = '',
@@ -27,7 +31,8 @@ export function CityChoicePopover({
   const [isOpen, setIsOpen] = useState(
     () =>
       initialChoice === null &&
-      window.sessionStorage.getItem(LOCATION_SESSION_DISMISSED_KEY) === null,
+      window.sessionStorage.getItem(LOCATION_SESSION_DISMISSED_KEY) === null &&
+      isDesktopViewport(),
   );
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);

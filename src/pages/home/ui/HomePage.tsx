@@ -74,17 +74,14 @@ function HeroSection() {
       <Container className={styles.heroContainer} size="wide">
         <div className={styles.heroLayout}>
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для рабочих задач</h1>
+            <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для ремонта и монтажа</h1>
             <p className={styles.heroText}>
-              Сравнивайте характеристики, выбирайте подходящий вариант товара и добавляйте нужные
-              позиции в корзину.
+              Найдите нужный материал и размер в каталоге BELT, сравните характеристики и добавьте
+              подходящий вариант в корзину.
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.heroCta} to="/catalog">
-                Перейти в каталог
-              </Link>
-              <Link className={styles.heroSecondaryCta} to="/selection-help">
-                Помощь с подбором
+                Найти товар в каталоге
               </Link>
             </div>
           </div>
@@ -105,7 +102,7 @@ function HomeServiceBar() {
           </Link>
           <Link className={styles.serviceBarLink} to="/wholesale">
             <span className={styles.serviceBarLabelDesktop}>Оптовым покупателям</span>
-            <span className={styles.serviceBarLabelMobile}>Опт</span>
+            <span className={styles.serviceBarLabelMobile}>Оптовым покупателям</span>
           </Link>
           <CityChoicePopover
             buttonClassName={styles.serviceBarButton}

@@ -21,7 +21,7 @@ describe('application smoke test', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: 'Трубы, фитинги и РТИ для рабочих задач',
+        name: 'Трубы, фитинги и РТИ для ремонта и монтажа',
       }),
     ).toBeInTheDocument();
   });
