@@ -13,6 +13,8 @@ test('confirms the city locally and does not prompt again after reload', async (
   await page.reload();
 
   const cityPopover = page.getByRole('dialog', { name: 'Выберите город' });
+  await expect(cityPopover).toBeHidden();
+  await page.getByRole('button', { name: 'Ваш город: Тольятти' }).click();
   await expect(cityPopover).toBeVisible();
   await cityPopover.getByLabel('Город').selectOption('Самара');
   await cityPopover.getByRole('button', { name: 'Подтвердить' }).click();
@@ -44,6 +46,26 @@ test('keeps the city prompt closed on mobile until the user opens it', async ({ 
 
   await page.getByRole('button', { name: 'Ваш город: Тольятти' }).click();
   await expect(cityPopover).toBeVisible();
+});
+
+test('opens the city popover explicitly and restores focus when it closes', async ({ page }) => {
+  await page.reload();
+
+  const cityTrigger = page.getByRole('button', { name: 'Ваш город: Тольятти' });
+  const cityPopover = page.getByRole('dialog', { name: 'Выберите город' });
+
+  await expect(cityPopover).toBeHidden();
+  await cityTrigger.click();
+  await expect(cityPopover).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(cityPopover).toBeHidden();
+  await expect(cityTrigger).toBeFocused();
+
+  await cityTrigger.click();
+  await expect(cityPopover).toBeVisible();
+  await page.getByRole('heading', { level: 1 }).click();
+  await expect(cityPopover).toBeHidden();
+  await expect(cityTrigger).toBeFocused();
 });
 
 test('saves a catalog product locally and removes it from favorites', async ({ page }) => {
