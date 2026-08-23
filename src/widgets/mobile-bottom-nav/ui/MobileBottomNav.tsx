@@ -5,6 +5,7 @@ import { selectCartLineCount, useCartStore } from '@/entities/cart';
 import styles from './mobile-bottom-nav.module.css';
 
 interface NavItem {
+  ariaLabel?: string;
   label: string;
   to: string;
   end?: boolean;
@@ -89,11 +90,13 @@ function FavoritesIcon() {
 
 export function MobileBottomNav() {
   const cartLineCount = useCartStore(selectCartLineCount);
+  const cartLabel = cartLineCount > 0 ? `В корзине позиций: ${String(cartLineCount)}` : 'Корзина';
 
   const items: NavItem[] = [
     { icon: <HomeIcon />, label: 'Главная', to: '/' },
     { icon: <CatalogIcon />, label: 'Каталог', to: '/catalog' },
     {
+      ariaLabel: cartLabel,
       badge: cartLineCount,
       icon: <CartIcon />,
       label: 'Корзина',
@@ -108,6 +111,7 @@ export function MobileBottomNav() {
         {items.map((item) => (
           <li className={styles.item} key={item.to}>
             <NavLink
+              aria-label={item.ariaLabel}
               className={({ isActive }) =>
                 [styles.link, isActive ? styles.linkActive : ''].join(' ').trim()
               }

@@ -1,7 +1,7 @@
 .root {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
 }
 .root ol {
   display: flex;

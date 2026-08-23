@@ -5,6 +5,7 @@ import type {
   PriceType,
   ProductDetails,
   ProductListItem,
+  ProductPurchaseAction,
   ProductUnit,
   ProductUnitCode,
   ProductVariant,
@@ -250,6 +251,135 @@ function getPriceBounds(variants: readonly ProductVariant[]): {
   };
 }
 
+function getListPriceType(
+  variants: readonly ProductVariant[],
+  prices: ReturnType<typeof getPriceBounds>,
+): PriceType {
+  if (prices.priceFrom === null) {
+    return 'on_request';
+  }
+
+  if (
+    prices.priceTo !== null ||
+    variants.some((variant) => variant.priceType !== 'fixed' || variant.price === null)
+  ) {
+    return 'from';
+  }
+
+  return 'fixed';
+}
+
+function getPurchaseAction(variants: readonly ProductVariant[]): ProductPurchaseAction {
+  const hasPurchasableVariant = variants.some(
+    (variant) => variant.availability.status !== 'out_of_stock',
+  );
+
+  if (!hasPurchasableVariant) {
+    return 'unavailable';
+  }
+
+  return variants.length === 1 ? 'direct' : 'select_variant';
+}
+
+function getListAvailability(variants: readonly ProductVariant[]): Availability {
+  const statusPriority: readonly AvailabilityStatus[] = [
+    'in_stock',
+    'low_stock',
+    'on_order',
+    'unknown',
+    'out_of_stock',
+  ];
+
+  for (const status of statusPriority) {
+    const matchingVariant = variants.find((variant) => variant.availability.status === status);
+
+    if (matchingVariant !== undefined) {
+      return matchingVariant.availability;
+    }
+  }
+
+  return getAvailability('unknown', null);
+}
+
+function formatVariantCount(count: number): string {
+  const lastTwoDigits = count % 100;
+  const lastDigit = count % 10;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return `${String(count)} вариантов`;
+  }
+
+  if (lastDigit === 1) {
+    return `${String(count)} вариант`;
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return `${String(count)} варианта`;
+  }
+
+  return `${String(count)} вариантов`;
+}
+
+function createVariantSummary(
+  variants: readonly ProductVariant[],
+  optionGroups: readonly VariantOptionGroup[],
+): string | null {
+  if (variants.length === 1) {
+    return null;
+  }
+
+  const countLabel = formatVariantCount(variants.length);
+  const primaryGroup = optionGroups[0];
+
+  if (primaryGroup === undefined) {
+    return countLabel;
+  }
+
+  const visibleValues = primaryGroup.values.slice(0, 3).map((value) => value.label);
+  const remainingValues = primaryGroup.values.length - visibleValues.length;
+  const valueSuffix = remainingValues > 0 ? ` и ещё ${String(remainingValues)}` : '';
+  const groupSuffix = optionGroups.length > 1 ? ' · есть другие параметры' : '';
+
+  return `${countLabel} · ${primaryGroup.name}: ${visibleValues.join(', ')}${valueSuffix}${groupSuffix}`;
+}
+
+function getPrimaryUnit(variants: readonly ProductVariant[]): ProductUnit {
+  const primaryUnit = variants[0]?.unit;
+
+  if (primaryUnit === undefined) {
+    throw new Error('ProductListItem должен содержать хотя бы одну единицу продажи.');
+  }
+
+  const hasOneUnit = variants.every(
+    (variant) => variant.unit.code === primaryUnit.code && variant.unit.label === primaryUnit.label,
+  );
+
+  if (!hasOneUnit) {
+    throw new Error('Варианты одного ProductListItem должны использовать одну единицу продажи.');
+  }
+
+  return primaryUnit;
+}
+
+function getPackagePrice(variant: ProductVariant, action: ProductPurchaseAction): Money | null {
+  if (action !== 'direct' || variant.packageQuantity === null || variant.price === null) {
+    return null;
+  }
+
+  const packageQuantity = Number(variant.packageQuantity);
+  const amountMinor = variant.price.amountMinor * packageQuantity;
+
+  if (
+    !Number.isFinite(packageQuantity) ||
+    packageQuantity <= 0 ||
+    !Number.isSafeInteger(amountMinor)
+  ) {
+    return null;
+  }
+
+  return createMoney(amountMinor);
+}
+
 function createProductFixture(seed: ProductSeed): ProductFixture {
   const images = createImages(seed);
   const variants = seed.variants.map((variant) => createVariant(seed, variant, images));
@@ -264,7 +394,10 @@ function createProductFixture(seed: ProductSeed): ProductFixture {
     throw new Error(`Fixture ${seed.slug} ссылается на неизвестную категорию.`);
   }
 
+  const optionGroups = createOptionGroups(variants);
   const prices = getPriceBounds(variants);
+  const purchaseAction = getPurchaseAction(variants);
+  const packagePriceFrom = getPackagePrice(primaryVariant, purchaseAction);
 
   return {
     details: {
@@ -280,7 +413,7 @@ function createProductFixture(seed: ProductSeed): ProductFixture {
       id: seed.id,
       images,
       name: seed.name,
-      optionGroups: createOptionGroups(variants),
+      optionGroups,
       seo: {
         canonicalUrl: `/product/${seed.slug}`,
         description: seed.description ?? null,
@@ -293,23 +426,32 @@ function createProductFixture(seed: ProductSeed): ProductFixture {
       variants,
     },
     listItem: {
-      addToCartTarget: {
-        id: primaryVariant.id,
-        maxOrderQuantity: primaryVariant.maxOrderQuantity,
-        minOrderQuantity: primaryVariant.minOrderQuantity,
-        quantityStep: primaryVariant.quantityStep,
-      },
-      availability: primaryVariant.availability,
+      addToCartTarget:
+        purchaseAction === 'direct'
+          ? {
+              id: primaryVariant.id,
+              maxOrderQuantity: primaryVariant.maxOrderQuantity,
+              minOrderQuantity: primaryVariant.minOrderQuantity,
+              quantityStep: primaryVariant.quantityStep,
+            }
+          : null,
+      availability: getListAvailability(variants),
       badges: [...(seed.badges ?? [])],
       categoryId: seed.categoryId,
       id: seed.id,
       name: seed.name,
+      packagePriceFrom,
+      packageQuantity: purchaseAction === 'direct' ? primaryVariant.packageQuantity : null,
       priceFrom: prices.priceFrom,
+      priceType: getListPriceType(variants, prices),
       priceTo: prices.priceTo,
-      primaryUnit: primaryVariant.unit,
+      primaryUnit: getPrimaryUnit(variants),
+      purchaseAction,
       shortAttributes: [...seed.attributes.slice(0, 3)],
       slug: seed.slug,
       thumbnail: images[0] ?? null,
+      variantCount: variants.length,
+      variantSummary: createVariantSummary(variants, optionGroups),
     },
     visibility: seed.visibility ?? 'active',
   };
@@ -503,20 +645,19 @@ const productSeeds: readonly ProductSeed[] = [
     ],
   },
   {
-    attributes: [
-      createAttribute('material', 'Материал', 'ПВХ'),
-      createAttribute('diameter', 'Диаметр', 18, 'мм'),
-    ],
+    attributes: [createAttribute('material', 'Материал', 'ПВХ')],
     categoryId: CATEGORY_IDS.hoses,
     id: 'product-013',
     name: 'Шланг поливочный армированный',
     slug: 'shlang-polivochnyj-armirovannyy',
     variants: [
-      createVariantSeed('18', 'Диаметр 18 мм', 12_000, [], {
+      createVariantSeed('18', 'Диаметр 18 мм', 12_000, [createOption('diameter', '18 мм', '18')], {
+        attributes: [createAttribute('diameter', 'Диаметр', 18, 'мм', 10)],
         priceType: 'from',
         unitCode: 'meter',
       }),
-      createVariantSeed('25', 'Диаметр 25 мм', 18_000, [], {
+      createVariantSeed('25', 'Диаметр 25 мм', 18_000, [createOption('diameter', '25 мм', '25')], {
+        attributes: [createAttribute('diameter', 'Диаметр', 25, 'мм', 10)],
         priceType: 'from',
         unitCode: 'meter',
       }),
@@ -563,7 +704,9 @@ const productSeeds: readonly ProductSeed[] = [
     slug: 'homut-chervyachnyj-nerzhaveyushchij',
     variants: [
       createVariantSeed('20-32', '20–32 мм', 6_500, [], {
+        minOrderQuantity: '10',
         packageQuantity: '10',
+        quantityStep: '10',
       }),
     ],
   },
@@ -587,7 +730,11 @@ const productSeeds: readonly ProductSeed[] = [
     id: 'product-018',
     name: 'Ножницы для полимерных труб',
     slug: 'nozhnicy-dlya-polimernyh-trub',
-    variants: [createVariantSeed('42', 'До 42 мм', 129_000)],
+    variants: [
+      createVariantSeed('42', 'До 42 мм', 129_000, [], {
+        priceType: 'from',
+      }),
+    ],
   },
   {
     attributes: [

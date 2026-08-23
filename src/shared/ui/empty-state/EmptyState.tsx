@@ -8,11 +8,18 @@ export type EmptyStateVariant = 'page' | 'inline';
 export interface EmptyStateProps {
   action?: ReactNode;
   description?: string;
+  icon?: ReactNode | null;
   title: string;
   variant?: EmptyStateVariant;
 }
 
-export function EmptyState({ action, description, title, variant = 'page' }: EmptyStateProps) {
+export function EmptyState({
+  action,
+  description,
+  icon = '—',
+  title,
+  variant = 'page',
+}: EmptyStateProps) {
   const titleId = useId();
 
   return (
@@ -23,9 +30,11 @@ export function EmptyState({ action, description, title, variant = 'page' }: Emp
       className={[styles.root, styles[variant]].join(' ').trim()}
       role="status"
     >
-      <span aria-hidden="true" className={styles.icon}>
-        —
-      </span>
+      {icon === null ? null : (
+        <span aria-hidden="true" className={styles.icon}>
+          {icon}
+        </span>
+      )}
       <div className={styles.copy}>
         <h2 id={titleId}>{title}</h2>
         {description === undefined ? null : <p>{description}</p>}

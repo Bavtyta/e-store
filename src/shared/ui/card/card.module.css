@@ -5,6 +5,10 @@
   border-radius: var(--radius-lg);
 }
 
+.none {
+  padding: 0;
+}
+
 .compact {
   padding: var(--space-4);
 }

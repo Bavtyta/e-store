@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const moneySchema = z.strictObject({
-  amountMinor: z.number().int(),
+  amountMinor: z.number().int().nonnegative(),
   currency: z.literal('RUB'),
 });
 

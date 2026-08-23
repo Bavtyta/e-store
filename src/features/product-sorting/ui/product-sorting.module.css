@@ -1,14 +1,51 @@
 .root {
-  display: grid;
-  gap: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
 }
+
+.root span {
+  white-space: nowrap;
+}
+
 .root select {
   min-height: var(--control-height-md);
-  padding: 0 var(--space-3);
-  border: 1px solid var(--color-border);
+  min-width: 11.5rem;
+  padding: 0 var(--space-2);
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  background: var(--color-surface);
+  background: var(--color-surface-subtle);
   color: var(--color-text-primary);
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.root select:hover {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+}
+
+.root select:focus-visible {
+  border-color: var(--color-focus);
+  outline: var(--focus-ring-width) solid var(--color-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (max-width: 47.9375rem) {
+  .root {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .root select {
+    width: 100%;
+    min-width: 0;
+  }
 }

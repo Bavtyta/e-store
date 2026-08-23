@@ -284,7 +284,7 @@ export function Header() {
         <div className={styles.actions}>
           <NavLink
             aria-label="Избранное"
-            className={styles.actionLink ?? ''}
+            className={[styles.actionLink, styles.mobileRedundantAction].join(' ').trim()}
             title="Избранное"
             to="/favorites"
           >
@@ -306,7 +306,13 @@ export function Header() {
           <NavLink
             aria-label={cartLabel}
             className={({ isActive }) =>
-              [styles.actionLink, isActive ? styles.actionLinkActive : ''].join(' ').trim()
+              [
+                styles.actionLink,
+                styles.mobileRedundantAction,
+                isActive ? styles.actionLinkActive : '',
+              ]
+                .join(' ')
+                .trim()
             }
             title="Корзина"
             to="/cart"

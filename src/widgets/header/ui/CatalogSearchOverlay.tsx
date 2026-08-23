@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router';
 import { useCategoriesQuery } from '@/entities/category';
 import { formatProductPrice, useProductsQuery } from '@/entities/product';
 import type { ProductListItem } from '@/entities/product';
+import { useCatalogAnalytics } from '@/features/catalog-analytics';
+import { interpretProductSearch } from '@/features/product-search';
 import styles from './catalog-search-overlay.module.css';
 import headerStyles from './header.module.css';
 
@@ -29,6 +31,16 @@ export interface CatalogSearchOverlayProps {
 
 function normalize(value: string): string {
   return value.trim().toLocaleLowerCase('ru-RU');
+}
+
+function createProductFilters(
+  facetSelections: Readonly<Record<string, readonly string[]>>,
+): Readonly<Record<string, string>> {
+  return Object.fromEntries(
+    Object.entries(facetSelections)
+      .filter(([, values]) => values.length > 0)
+      .map(([code, values]) => [code, values.join(',')]),
+  );
 }
 
 function formatAttribute(product: ProductListItem): string | null {
@@ -56,6 +68,7 @@ export function CatalogSearchOverlay({
   topOffset,
 }: CatalogSearchOverlayProps) {
   const navigate = useNavigate();
+  const catalogAnalytics = useCatalogAnalytics({ categoryId: null, surface: 'catalog' });
   const inputRef = useRef<HTMLInputElement>(null);
   const skipNextFocusOpenRef = useRef(false);
   const listboxId = useId();
@@ -65,8 +78,25 @@ export function CatalogSearchOverlay({
   const normalizedDraft = normalize(draft);
   const hasQuery = normalizedDraft.length > 0;
   const categoriesQuery = useCategoriesQuery();
+  const facetsQuery = useProductsQuery({ limit: 1 }, { enabled: open });
+  const interpretedDebouncedSearch = useMemo(
+    () => interpretProductSearch(debouncedQuery, facetsQuery.data?.facets),
+    [debouncedQuery, facetsQuery.data?.facets],
+  );
+  const interpretedProductFilters = useMemo(
+    () => createProductFilters(interpretedDebouncedSearch.facetSelections),
+    [interpretedDebouncedSearch.facetSelections],
+  );
   const productsQuery = useProductsQuery(
-    { limit: SEARCH_RESULT_LIMIT, search: debouncedQuery },
+    {
+      ...(Object.keys(interpretedProductFilters).length === 0
+        ? {}
+        : { filters: interpretedProductFilters }),
+      limit: SEARCH_RESULT_LIMIT,
+      ...(interpretedDebouncedSearch.query.length === 0
+        ? {}
+        : { search: interpretedDebouncedSearch.query }),
+    },
     { enabled: debouncedQuery.length > 0 },
   );
 
@@ -118,15 +148,33 @@ export function CatalogSearchOverlay({
 
   function openAllResults(): void {
     const query = draft.trim();
+    const interpretation = interpretProductSearch(
+      query,
+      facetsQuery.data?.facets ?? productsQuery.data?.facets,
+    );
+    const params = new URLSearchParams();
 
-    if (query.length === 0) {
-      onClose();
-      void navigate('/catalog');
-      return;
+    if (interpretation.query.length > 0) {
+      params.set('search', interpretation.query);
     }
 
+    for (const [code, values] of Object.entries(interpretation.facetSelections)) {
+      if (values.length > 0) {
+        params.set(`filter[${code}]`, values.join(','));
+      }
+    }
+
+    catalogAnalytics.trackSearchSubmitted({
+      queryLength: query.length,
+      recognizedFilterCount: Object.values(interpretation.facetSelections).reduce(
+        (total, values) => total + values.length,
+        0,
+      ),
+    });
+
     onClose();
-    void navigate(`/catalog?search=${encodeURIComponent(query)}`);
+    const serializedParams = params.toString();
+    void navigate(serializedParams.length === 0 ? '/catalog' : `/catalog?${serializedParams}`);
   }
 
   const closeAndRestoreFocus = useCallback((): void => {
@@ -396,14 +444,7 @@ export function CatalogSearchOverlay({
                           const index = destinations.findIndex((item) => item.id === destinationId);
                           const destination = destinations[index];
                           const attribute = formatAttribute(product);
-                          const price = formatProductPrice(
-                            product.priceFrom,
-                            product.priceFrom === null
-                              ? 'on_request'
-                              : product.priceTo === null
-                                ? 'fixed'
-                                : 'from',
-                          );
+                          const price = formatProductPrice(product.priceFrom, product.priceType);
 
                           if (destination === undefined) return null;
 

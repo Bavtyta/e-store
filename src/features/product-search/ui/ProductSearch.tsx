@@ -1,43 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Input } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
+
+import styles from './product-search.module.css';
 
 export interface ProductSearchProps {
-  onSearchChange: (value: string) => void;
+  onSearchSubmit: (value: string) => void;
   value: string;
 }
 
-export function ProductSearch({ onSearchChange, value }: ProductSearchProps) {
+export function ProductSearch({ onSearchSubmit, value }: ProductSearchProps) {
   const [draftState, setDraftState] = useState(() => ({
     sourceValue: value,
     value,
   }));
   const inputValue = draftState.sourceValue === value ? draftState.value : value;
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      if (inputValue !== value) {
-        onSearchChange(inputValue);
-      }
-    }, 300);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [inputValue, onSearchChange, value]);
-
   return (
-    <Input
-      label="Поиск товаров"
-      onChange={(event) => {
+    <form
+      aria-label="Поиск товаров в каталоге"
+      className={styles.root}
+      onSubmit={(event) => {
+        event.preventDefault();
         setDraftState({
-          sourceValue: value,
-          value: event.target.value,
+          sourceValue: inputValue,
+          value: inputValue,
         });
+        onSearchSubmit(inputValue);
       }}
-      placeholder="Название, материал или артикул"
-      type="search"
-      value={inputValue}
-    />
+      role="search"
+    >
+      <Input
+        label="Поиск товаров"
+        onChange={(event) => {
+          setDraftState({
+            sourceValue: value,
+            value: event.target.value,
+          });
+        }}
+        placeholder="Название, материал или артикул"
+        type="search"
+        value={inputValue}
+      />
+      <Button type="submit">Найти</Button>
+    </form>
   );
 }

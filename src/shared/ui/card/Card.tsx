@@ -4,7 +4,7 @@ import { classNames } from '@/shared/lib';
 
 import styles from './card.module.css';
 
-export type CardPadding = 'compact' | 'comfortable';
+export type CardPadding = 'none' | 'compact' | 'comfortable';
 export type CardVariant = 'outlined' | 'elevated';
 
 export interface CardProps extends ComponentPropsWithoutRef<'div'> {
