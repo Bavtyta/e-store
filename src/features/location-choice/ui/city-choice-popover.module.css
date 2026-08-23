@@ -3,6 +3,16 @@
   display: flex;
 }
 
+.cityLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cityLabel svg {
+  flex: 0 0 auto;
+}
+
 .cityPrefix {
   color: var(--color-text-primary);
   text-decoration: underline;

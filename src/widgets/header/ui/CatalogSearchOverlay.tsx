@@ -7,6 +7,14 @@ import { formatProductPrice, useProductsQuery } from '@/entities/product';
 import type { ProductListItem } from '@/entities/product';
 import { useCatalogAnalytics } from '@/features/catalog-analytics';
 import { interpretProductSearch } from '@/features/product-search';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CatalogIcon,
+  CloseIcon,
+  SearchIcon,
+  SpinnerIcon,
+} from '@/shared/ui';
 import styles from './catalog-search-overlay.module.css';
 import headerStyles from './header.module.css';
 
@@ -253,6 +261,9 @@ export function CatalogSearchOverlay({
             .join(' ')
             .trim()}
         >
+          <span className={headerStyles.searchLeadingIcon}>
+            {isLoading ? <SpinnerIcon className={headerStyles.searchSpinner} /> : <SearchIcon />}
+          </span>
           <input
             autoComplete="off"
             aria-controls={open ? listboxId : undefined}
@@ -292,7 +303,7 @@ export function CatalogSearchOverlay({
               }}
               type="button"
             >
-              ×
+              <CloseIcon />
             </button>
           ) : null}
           <button
@@ -327,10 +338,11 @@ export function CatalogSearchOverlay({
             }
           >
             <div className={styles.mobileToolbar}>
-              <strong>Поиск по каталогу</strong>
-              <button aria-label="Закрыть поиск" onClick={closeAndRestoreFocus} type="button">
-                ×
+              <button aria-label="Назад" onClick={closeAndRestoreFocus} type="button">
+                <ArrowLeftIcon />
+                <span>Назад</span>
               </button>
+              <strong>Поиск по каталогу</strong>
             </div>
             <div className={styles.dropdownContent}>
               <p aria-live="polite" className={styles.visuallyHidden}>
@@ -343,7 +355,8 @@ export function CatalogSearchOverlay({
                     <div className={styles.sectionHeading}>
                       <h3 id={`${listboxId}-categories`}>Основные категории</h3>
                       <Link className={styles.catalogLink} onClick={onClose} to="/catalog">
-                        Весь каталог
+                        <CatalogIcon />
+                        <span>Перейти в каталог</span>
                       </Link>
                     </div>
                     {categoriesQuery.isPending ? <p role="status">Загружаем категории…</p> : null}
@@ -477,9 +490,14 @@ export function CatalogSearchOverlay({
                   ) : null}
 
                   {!isLoading && !isError && hasResults ? (
-                    <button className={styles.allResults} onClick={openAllResults} type="button">
-                      Показать все результаты
-                    </button>
+                    <Link
+                      className={styles.allResults}
+                      onClick={onClose}
+                      to={`/catalog?search=${encodeURIComponent(draft.trim())}`}
+                    >
+                      <span>Показать все результаты</span>
+                      <ArrowRightIcon className={styles.allResultsArrow} />
+                    </Link>
                   ) : null}
                 </div>
               )}

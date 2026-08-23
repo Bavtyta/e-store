@@ -16,6 +16,20 @@ export { ErrorState } from './error-state';
 export type { ErrorStateProps } from './error-state';
 export { IconButton } from './icon-button';
 export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './icon-button';
+export {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CatalogIcon,
+  CloseIcon,
+  Grid2x2Icon,
+  MapPinIcon,
+  PhoneIcon,
+  SearchIcon,
+  SpinnerIcon,
+  TruckIcon,
+  WrenchIcon,
+} from './icons';
+export type { SearchIconProps } from './icons';
 export { ImagePlaceholder } from './image-placeholder';
 export type { ImagePlaceholderProps, ImagePlaceholderRatio } from './image-placeholder';
 export { Input } from './input';

@@ -85,7 +85,24 @@ describe('HeaderSearch overlay', () => {
     fireEvent.change(input, { target: { value: 'PE100' } });
 
     expect(await screen.findByText('Труба ПНД PE100 питьевая')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Показать все результаты' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Показать все результаты' })).toHaveAttribute(
+      'href',
+      '/catalog?search=PE100',
+    );
+  });
+
+  it('clears the current query without moving focus or changing the field geometry', () => {
+    renderSearch();
+    const input = screen.getByRole('searchbox', { name: 'Поиск по каталогу' });
+
+    fireEvent.change(input, { target: { value: 'длинный запрос для поиска' } });
+    const clearButton = screen.getByRole('button', { name: 'Очистить поиск' });
+
+    fireEvent.click(clearButton);
+
+    expect(input).toHaveValue('');
+    expect(input).toHaveFocus();
+    expect(screen.queryByRole('button', { name: 'Очистить поиск' })).not.toBeInTheDocument();
   });
 
   it('keeps an explicit from-price for a single-variant product', async () => {
