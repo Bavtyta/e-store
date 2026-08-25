@@ -1,7 +1,14 @@
-export { getProduct, getProducts } from './api/productApi';
+export {
+  getProduct,
+  getProducts,
+  PRODUCT_LIST_CONTRACT_HEADER,
+  PRODUCT_LIST_CONTRACT_VERSION,
+} from './api/productApi';
 export {
   mapProductListResponseDto,
   mapResolveVariantsResponseDto,
+  productFacetOptionSchema,
+  productFacetSchema,
   productListResponseSchema,
   productSortSchema,
   resolveVariantsRequestSchema,
@@ -10,6 +17,8 @@ export {
 export type {
   ProductListParams,
   ProductListResponse,
+  ProductFacet,
+  ProductFacetOption,
   ProductSort,
   ResolveVariantsRequest,
   ResolveVariantsResponse,
@@ -27,6 +36,8 @@ export { ProductAttributes, ProductAvailability, ProductCard, ProductPrice } fro
 export type {
   ProductAttributesProps,
   ProductAvailabilityProps,
+  ProductCardOpenEvent,
+  ProductCardOpenTrigger,
   ProductCardProps,
   ProductPriceProps,
 } from './ui';
@@ -47,6 +58,7 @@ export {
   priceTypeSchema,
   productDetailsSchema,
   productListItemSchema,
+  productPurchaseActionSchema,
   productStatusSchema,
   productUnitCodeSchema,
   productUnitSchema,
@@ -66,6 +78,7 @@ export type {
   PriceType,
   ProductDetails,
   ProductListItem,
+  ProductPurchaseAction,
   ProductStatus,
   ProductUnit,
   ProductUnitCode,

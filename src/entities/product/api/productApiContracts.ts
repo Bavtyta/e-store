@@ -12,7 +12,24 @@ export const productSortSchema = z.enum([
   'name_desc',
 ]);
 
+export const productFacetOptionSchema = z.strictObject({
+  count: z.number().int().nonnegative(),
+  label: z.string(),
+  selected: z.boolean(),
+  value: z.string(),
+});
+
+export const productFacetSchema = z.strictObject({
+  code: z.string(),
+  max: z.number().optional(),
+  min: z.number().optional(),
+  name: z.string(),
+  options: z.array(productFacetOptionSchema).optional(),
+  type: z.enum(['checkbox', 'range']),
+});
+
 export const productListResponseSchema = z.strictObject({
+  facets: z.array(productFacetSchema).optional(),
   items: z.array(productListItemSchema),
   pagination: paginationSchema,
 });
@@ -27,6 +44,8 @@ export const resolveVariantsResponseSchema = z.strictObject({
 });
 
 export type ProductSort = z.infer<typeof productSortSchema>;
+export type ProductFacet = z.infer<typeof productFacetSchema>;
+export type ProductFacetOption = z.infer<typeof productFacetOptionSchema>;
 export type ProductListResponse = z.infer<typeof productListResponseSchema>;
 export type ResolveVariantsRequest = z.infer<typeof resolveVariantsRequestSchema>;
 export type ResolveVariantsResponse = z.infer<typeof resolveVariantsResponseSchema>;

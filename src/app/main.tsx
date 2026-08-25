@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { isMswEnabled } from '@/shared/config';
 
 import { App } from './App';
+import { appAnalytics } from './analytics';
 import { BootstrapError } from './bootstrap/BootstrapError';
 import { createAppQueryClient } from './providers';
 import { createAppRouter } from './router';
@@ -45,7 +46,7 @@ async function bootstrap(): Promise<void> {
 
   createRoot(rootElement).render(
     <StrictMode>
-      <App queryClient={queryClient} router={router} />
+      <App analytics={appAnalytics} queryClient={queryClient} router={router} />
     </StrictMode>,
   );
 }

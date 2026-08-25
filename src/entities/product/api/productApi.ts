@@ -6,6 +6,8 @@ import type { ProductListParams, ProductListResponse } from './productApiContrac
 import { mapProductListResponseDto } from './productApiContracts';
 
 const PRODUCT_PATH = '/catalog/products';
+export const PRODUCT_LIST_CONTRACT_HEADER = 'X-Storefront-Contract-Version';
+export const PRODUCT_LIST_CONTRACT_VERSION = '1.3';
 
 function createProductListQuery(params: ProductListParams): Record<string, number | string> {
   const query: Record<string, number | string> = {};
@@ -53,6 +55,9 @@ export async function getProducts(
 ): Promise<ProductListResponse> {
   try {
     const response = await apiClient.get<unknown>(PRODUCT_PATH, {
+      headers: {
+        [PRODUCT_LIST_CONTRACT_HEADER]: PRODUCT_LIST_CONTRACT_VERSION,
+      },
       params: createProductListQuery(params),
       ...(signal === undefined ? {} : { signal }),
     });

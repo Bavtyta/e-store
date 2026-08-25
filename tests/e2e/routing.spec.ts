@@ -78,7 +78,14 @@ test('opens a product from the catalog, changes its variant and handles 404', as
   await expect(page.getByRole('heading', { name: 'Каталог товаров' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
 
-  await page.getByLabel('Поиск товаров').fill('ПВХ');
+  const catalogSearch = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  await catalogSearch.fill('ПВХ');
+  await expect(
+    page
+      .getByRole('dialog', { name: 'Поиск по каталогу' })
+      .getByText('Труба ПВХ канализационная 110 мм'),
+  ).toBeVisible();
+  await catalogSearch.press('Enter');
   await expect(page.getByRole('heading', { name: /ПВХ/i }).first()).toBeVisible();
 
   await page.getByLabel('Сортировка').selectOption('name_asc');
@@ -169,11 +176,14 @@ test('adds a variant, changes quantity and restores the cart after reload', asyn
   await page.getByRole('button', { name: 'В корзину' }).click();
 
   await expect(page.getByText('Товар добавлен в корзину')).toBeVisible();
-  await expect(page.getByLabel('В корзине позиций: 1')).toBeVisible();
+  const mobileCartLink = page
+    .getByRole('navigation', { name: 'Мобильная навигация' })
+    .getByLabel('В корзине позиций: 1');
+  await expect(mobileCartLink).toBeVisible();
   const resolveResponsePromise = page.waitForResponse((response) =>
     response.url().endsWith('/api/v1/catalog/variants/resolve'),
   );
-  await page.getByLabel('В корзине позиций: 1').click();
+  await mobileCartLink.click();
   const resolveResponse = await resolveResponsePromise;
 
   expect(resolveResponse.status()).toBe(200);

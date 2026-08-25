@@ -2,12 +2,15 @@ import { delay, http, HttpResponse } from 'msw';
 
 import {
   productListResponseSchema,
+  PRODUCT_LIST_CONTRACT_HEADER,
+  PRODUCT_LIST_CONTRACT_VERSION,
   productSortSchema,
   resolveVariantsRequestSchema,
   resolveVariantsResponseSchema,
 } from '@/entities/product';
 import type {
   CartResolvedVariant,
+  ProductFacet,
   ProductListResponse,
   ProductSort,
   ResolveVariantsResponse,
@@ -49,6 +52,23 @@ interface ParsedPagination {
   limit: number;
   page: number;
 }
+
+type StorefrontProductFixture = (typeof storefrontProductFixtures)[number];
+
+const FACET_DEFINITIONS = [
+  { code: 'diameter', name: 'Диаметр, мм' },
+  { code: 'material', name: 'Материал' },
+  { code: 'availability', name: 'Наличие' },
+  { code: 'application', name: 'Назначение' },
+] as const;
+
+const AVAILABILITY_LABELS: Readonly<Record<string, string>> = {
+  in_stock: 'В наличии',
+  low_stock: 'Заканчивается',
+  on_order: 'Под заказ',
+  out_of_stock: 'Нет в наличии',
+  unknown: 'Наличие уточняется',
+};
 
 type PaginationParseResult =
   | {
@@ -93,6 +113,8 @@ async function handleCommonScenario(scenario: MockScenario): Promise<Response | 
     case 'changed-price':
     case 'conflict':
     case 'empty':
+    case 'empty-products':
+    case 'facets':
     case 'success':
       return null;
   }
@@ -204,33 +226,39 @@ function matchesSearch(
 }
 
 function matchesFilters(
-  fixture: (typeof storefrontProductFixtures)[number],
+  fixture: StorefrontProductFixture,
   filters: ReadonlyMap<string, string>,
+  excludedCode?: string,
 ): boolean {
-  const attributes = [
-    ...fixture.details.attributes,
-    ...fixture.details.variants.flatMap((variant) => variant.attributes),
-  ];
-  const normalizedAttributes = attributes.map((attribute) => ({
-    code: attribute.code,
-    value: normalizeText(attribute.value),
-  }));
-
   return [...filters.entries()].every(([code, rawValue]) => {
+    if (code === excludedCode) {
+      return true;
+    }
+
     const expectedValues = rawValue
       .split(',')
       .map((value) => normalizeText(value))
       .filter((value) => value.length > 0);
+    const actualValues = getFacetValues(fixture, code).map(normalizeText);
 
     return (
       expectedValues.length > 0 &&
-      expectedValues.some((expectedValue) =>
-        normalizedAttributes.some(
-          (attribute) => attribute.code === code && attribute.value === expectedValue,
-        ),
-      )
+      expectedValues.some((expectedValue) => actualValues.includes(expectedValue))
     );
   });
+}
+
+function getFacetValues(fixture: StorefrontProductFixture, code: string): string[] {
+  if (code === 'availability') {
+    return [fixture.listItem.availability.status];
+  }
+
+  return [
+    ...fixture.details.attributes,
+    ...fixture.details.variants.flatMap((variant) => variant.attributes),
+  ]
+    .filter((attribute) => attribute.code === code)
+    .map((attribute) => String(attribute.value));
 }
 
 function matchesPriceRange(
@@ -254,6 +282,52 @@ function matchesPriceRange(
     (minimumMinor === null || priceFromMinor >= minimumMinor) &&
     (maximumMinor === null || priceFromMinor <= maximumMinor)
   );
+}
+
+function createMockFacets(
+  fixtures: readonly StorefrontProductFixture[],
+  filters: ReadonlyMap<string, string>,
+): ProductFacet[] {
+  return FACET_DEFINITIONS.flatMap((definition) => {
+    const selectedValues = (filters.get(definition.code) ?? '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter((value) => value.length > 0);
+    const optionValues = [
+      ...new Set([
+        ...fixtures.flatMap((fixture) => getFacetValues(fixture, definition.code)),
+        ...selectedValues,
+      ]),
+    ].sort((first, second) => first.localeCompare(second, 'ru-RU', { numeric: true }));
+
+    if (optionValues.length === 0) {
+      return [];
+    }
+
+    const candidates = fixtures.filter((fixture) =>
+      matchesFilters(fixture, filters, definition.code),
+    );
+
+    return [
+      {
+        code: definition.code,
+        name: definition.name,
+        options: optionValues.map((value) => ({
+          count: candidates.filter((fixture) =>
+            getFacetValues(fixture, definition.code)
+              .map(normalizeText)
+              .includes(normalizeText(value)),
+          ).length,
+          label: definition.code === 'availability' ? (AVAILABILITY_LABELS[value] ?? value) : value,
+          selected: selectedValues.some(
+            (selectedValue) => normalizeText(selectedValue) === normalizeText(value),
+          ),
+          value,
+        })),
+        type: 'checkbox' as const,
+      },
+    ];
+  });
 }
 
 function compareNullablePrices(
@@ -434,6 +508,14 @@ const categoryHandlers = [
 
 const productHandlers = [
   http.get(`${API_BASE_PATH}/catalog/products`, async ({ request }) => {
+    if (request.headers.get(PRODUCT_LIST_CONTRACT_HEADER) !== PRODUCT_LIST_CONTRACT_VERSION) {
+      return createErrorResponse(
+        400,
+        'UNSUPPORTED_CONTRACT_VERSION',
+        'Версия контракта списка товаров не поддерживается.',
+      );
+    }
+
     const scenario = getMockScenario(request);
     const earlyResponse = await handleCommonScenario(scenario);
 
@@ -464,16 +546,18 @@ const productHandlers = [
 
     const search = url.searchParams.get('search') ?? '';
     const priceRange = parsePriceRange(url.searchParams);
-    const filteredFixtures =
-      scenario === 'empty'
+    const facetSourceFixtures =
+      scenario === 'empty' || scenario === 'empty-products'
         ? []
         : storefrontProductFixtures.filter(
             (fixture) =>
               (categoryIds === null || categoryIds.has(fixture.listItem.categoryId)) &&
               matchesSearch(fixture, search) &&
-              matchesFilters(fixture, filters) &&
               matchesPriceRange(fixture, priceRange),
           );
+    const filteredFixtures = facetSourceFixtures.filter((fixture) =>
+      matchesFilters(fixture, filters),
+    );
     const sortedFixtures = sortProductFixtures(filteredFixtures, sort);
     const startIndex = (pagination.data.page - 1) * pagination.data.limit;
     const total = sortedFixtures.length;
@@ -487,6 +571,7 @@ const productHandlers = [
         total,
         totalPages: total === 0 ? 0 : Math.ceil(total / pagination.data.limit),
       },
+      facets: createMockFacets(facetSourceFixtures, filters),
     };
 
     return HttpResponse.json(productListResponseSchema.parse(response));

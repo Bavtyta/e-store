@@ -607,13 +607,24 @@ ProductListItem
 ├── name: string
 ├── thumbnail: Image | null
 ├── categoryId: string
+├── addToCartTarget: AddToCartTarget | null
+├── purchaseAction: direct | select_variant | unavailable
+├── variantCount: number
+├── variantSummary: string | null
 ├── priceFrom: Money | null
 ├── priceTo: Money | null
+├── priceType: fixed | from | on_request
 ├── primaryUnit: ProductUnit | null
+├── packageQuantity: string | null
+├── packagePriceFrom: Money | null
 ├── availability: Availability
 ├── shortAttributes: Attribute[]
 └── badges: string[]
 ```
+
+`addToCartTarget` заполняется только для `purchaseAction = direct`. При нескольких
+вариантах карточка ведёт к выбору SKU и не добавляет первый вариант автоматически.
+`priceFrom` относится к одной `primaryUnit`; цена упаковки передаётся отдельно.
 
 ### 12.4. ProductDetails
 
@@ -1466,7 +1477,7 @@ MVP считается принятым, если:
 4. Какой минимальный шаг используется для метров и килограммов.
 5. Входит ли НДС в отображаемую цену.
 6. Возможна ли цена по запросу.
-7. Нужна ли цена за упаковку и цена за единицу одновременно.
+7. Цена за единицу и цена упаковки отображаются одновременно, когда известен размер упаковки (зафиксировано в storefront API v1.3).
 8. Какие контакты магазина отображаются.
 9. Какое действие заменяет оформление заказа в MVP.
 10. Tailwind CSS или CSS Modules.

@@ -25,4 +25,11 @@ describe('EmptyState', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Обновить' }));
     expect(handleRefresh).toHaveBeenCalledOnce();
   });
+
+  it('can omit the decorative icon for a content-led state', () => {
+    const { container } = render(<EmptyState icon={null} title="Нет результатов" />);
+
+    expect(screen.getByRole('heading', { name: 'Нет результатов' })).toBeInTheDocument();
+    expect(container.querySelector('[aria-hidden="true"]')).toBeNull();
+  });
 });

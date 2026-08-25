@@ -71,6 +71,7 @@ test('opens the city popover explicitly and restores focus when it closes', asyn
 test('saves a catalog product locally and removes it from favorites', async ({ page }) => {
   await page.goto('/catalog');
   await page.getByTitle('Добавить в избранное').first().click();
+  await expect(page).toHaveURL(/\/catalog$/);
   await page.getByLabel('Избранное', { exact: true }).first().click();
 
   await expect(page.getByRole('heading', { level: 1, name: 'Избранное' })).toBeVisible();

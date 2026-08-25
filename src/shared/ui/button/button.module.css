@@ -8,11 +8,16 @@
   font-weight: var(--font-weight-semibold);
   line-height: 1;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast);
+}
+
+.root:hover {
+  text-decoration: none;
 }
 
 .root:focus-visible {
@@ -45,6 +50,7 @@
 }
 
 .primary:not(:disabled):hover {
+  color: var(--color-text-primary);
   background: var(--color-primary-action-hover);
 }
 
@@ -55,6 +61,7 @@
 }
 
 .secondary:not(:disabled):hover {
+  color: var(--color-text-primary);
   background: var(--color-surface-subtle);
   border-color: var(--color-dark-surface);
 }
@@ -65,6 +72,7 @@
 }
 
 .danger:not(:disabled):hover {
+  color: var(--color-surface);
   background: var(--color-error-hover);
 }
 

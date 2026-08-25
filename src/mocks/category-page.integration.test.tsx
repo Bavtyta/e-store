@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { MemoryRouter, Route, Routes } from 'react-router';
@@ -87,6 +87,9 @@ describe('CategoryPage integration', () => {
       'href',
       '/catalog/truby',
     );
+    expect(
+      screen.getByRole('link', { name: 'Смотреть все товары категории «Трубы»' }),
+    ).toHaveAttribute('href', '/catalog/truby');
     expect(document.title).toBe('ПНД — BELT');
     expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute(
       'href',
@@ -96,6 +99,25 @@ describe('CategoryPage integration', () => {
       'content',
       'index, follow',
     );
+    expect(screen.getByRole('navigation', { name: 'Хлебные крошки' })).toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: 'Поиск товаров' })).toBeInTheDocument();
+  });
+
+  it('keeps contextual search and exposes recognized specifications as filter chips', async () => {
+    renderCategoryPage('/catalog/truby/pnd');
+
+    expect(await screen.findByText(/Найдено товаров: \d+/)).toBeInTheDocument();
+    const searchbox = screen.getByRole('searchbox', { name: 'Поиск товаров' });
+    fireEvent.change(searchbox, {
+      target: { value: 'труба ПНД 25 мм в наличии' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Найти' }));
+
+    await waitFor(() => {
+      expect(searchbox).toHaveValue('труба');
+    });
+    expect(screen.getByRole('button', { name: 'Убрать фильтр: Материал: ПНД' })).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Убрать фильтр: Диаметр: 25 мм' })).toBeVisible();
   });
 
   it('renders a dedicated non-indexable 404 state', async () => {
@@ -113,6 +135,19 @@ describe('CategoryPage integration', () => {
     expect(document.head.querySelector('meta[name="robots"]')).toHaveAttribute(
       'content',
       'noindex, nofollow',
+    );
+  });
+
+  it('offers the parent category when the current category is empty', async () => {
+    setScenario('empty-products');
+    renderCategoryPage('/catalog/truby/pnd');
+
+    expect(
+      await screen.findByRole('heading', { name: 'В этой категории пока нет товаров' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Смотреть товары категории «Трубы»' })).toHaveAttribute(
+      'href',
+      '/catalog/truby',
     );
   });
 

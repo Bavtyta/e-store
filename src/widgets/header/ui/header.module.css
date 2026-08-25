@@ -88,9 +88,9 @@
 }
 
 .searchShell:focus-within {
-  border-color: var(--color-primary-action);
+  border-color: var(--color-focus);
   outline: 0;
-  box-shadow: inset 0 0 0 1px var(--color-primary-action);
+  box-shadow: inset 0 0 0 1px var(--color-focus);
 }
 
 .searchShellOpen {
@@ -450,6 +450,12 @@
 
 @media (max-width: 47.9375rem) {
   .content {
+    display: grid;
+    grid-template-areas:
+      'burger brand . actions'
+      'search search search search';
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: var(--control-height-md) var(--control-height-md);
     height: auto;
     padding-block: var(--space-2) var(--space-3);
     gap: var(--space-2) var(--space-3);
@@ -457,6 +463,7 @@
 
   .burger {
     display: inline-flex;
+    grid-area: burger;
   }
 
   .nav {
@@ -464,8 +471,8 @@
   }
 
   .search {
-    order: 10;
-    flex-basis: 100%;
+    grid-area: search;
+    width: 100%;
     margin-inline: 0;
   }
 
@@ -474,7 +481,17 @@
   }
 
   .brand {
+    grid-area: brand;
     font-size: var(--font-size-xl);
+  }
+
+  .actions {
+    grid-area: actions;
+    justify-self: end;
+  }
+
+  .mobileRedundantAction {
+    display: none;
   }
 }
 
@@ -501,7 +518,8 @@
 
   .search {
     order: 2;
-    flex: 0 1 18rem;
+    flex: 1 1 18rem;
+    max-width: 23rem;
     margin-inline: 0;
   }
 

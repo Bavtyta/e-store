@@ -8,6 +8,15 @@
   max-width: 50rem;
   color: var(--color-text-secondary);
 }
+
+.parentCategoryLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  margin-top: var(--space-3);
+  color: var(--color-link);
+  font-weight: var(--font-weight-semibold);
+}
 .children {
   margin-bottom: var(--space-6);
 }

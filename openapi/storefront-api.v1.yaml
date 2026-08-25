@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Storefront Catalog API
-  version: 1.2.0
+  version: 1.3.0
   description: |
     Версионированный контракт storefront-каталога. Все суммы передаются
     в копейках, валюта MVP — только RUB.
@@ -53,6 +53,15 @@ paths:
       operationId: listProducts
       summary: Получить список товаров storefront
       parameters:
+        - name: X-Storefront-Contract-Version
+          in: header
+          required: true
+          description: |
+            Версия строгого DTO списка. Клиент этой спецификации отправляет `1.3`;
+            во время миграции backend продолжает отдавать прежнюю форму клиентам без заголовка.
+          schema:
+            type: string
+            const: '1.3'
         - name: category
           in: query
           description: |
@@ -97,8 +106,10 @@ paths:
           in: query
           description: |
             Фильтры по кодам атрибутов в формате deepObject. Значение может содержать
-            несколько вариантов через запятую. Пример:
-            `filter[diameter]=110,160&filter[material]=ПНД`.
+            несколько вариантов через запятую. Значения внутри одной группы объединяются
+            по OR, разные группы — по AND. Зарезервированный код `availability` принимает
+            значения AvailabilityStatus. Пример:
+            `filter[diameter]=110,160&filter[material]=ПНД&filter[availability]=in_stock`.
           style: deepObject
           explode: true
           schema:
@@ -244,6 +255,7 @@ components:
       properties:
         amountMinor:
           type: integer
+          minimum: 0
           description: Сумма в копейках
         currency:
           type: string
@@ -520,15 +532,23 @@ components:
           $ref: '#/components/schemas/ProductUnit'
         quantityStep:
           type: string
+          pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
         minOrderQuantity:
           type: string
+          pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
         maxOrderQuantity:
           anyOf:
             - type: string
+              pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
             - type: 'null'
         packageQuantity:
+          description: |
+            Количество единиц в коммерческой упаковке. Если значение задано,
+            `minOrderQuantity` и `quantityStep` обязаны быть численно равны ему;
+            cross-field равенство проверяется backend.
           anyOf:
             - type: string
+              pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
             - type: 'null'
         availability:
           $ref: '#/components/schemas/Availability'
@@ -548,6 +568,31 @@ components:
           anyOf:
             - type: string
             - type: 'null'
+      allOf:
+        - if:
+            properties:
+              priceType:
+                const: on_request
+            required:
+              - priceType
+          then:
+            properties:
+              oldPrice:
+                type: 'null'
+              price:
+                type: 'null'
+        - if:
+            properties:
+              priceType:
+                enum:
+                  - fixed
+                  - from
+            required:
+              - priceType
+          then:
+            properties:
+              price:
+                $ref: '#/components/schemas/Money'
     ProductListItem:
       type: object
       additionalProperties: false
@@ -558,14 +603,21 @@ components:
         - name
         - thumbnail
         - categoryId
+        - packagePriceFrom
+        - packageQuantity
         - priceFrom
+        - priceType
         - priceTo
         - primaryUnit
+        - purchaseAction
         - availability
         - shortAttributes
         - badges
+        - variantCount
+        - variantSummary
       properties:
         addToCartTarget:
+          description: Заполняется только при `purchaseAction=direct`; для выбора варианта и недоступного товара всегда `null`.
           anyOf:
             - $ref: '#/components/schemas/AddToCartTarget'
             - type: 'null'
@@ -581,18 +633,51 @@ components:
             - type: 'null'
         categoryId:
           type: string
-        priceFrom:
+        packagePriceFrom:
+          description: Итоговая цена упаковки для однозначно покупаемого варианта; может быть `null`, если цена неизвестна.
           anyOf:
             - $ref: '#/components/schemas/Money'
             - type: 'null'
+        packageQuantity:
+          description: |
+            Количество единиц `primaryUnit` в одной коммерческой упаковке; `null`, если
+            товар продаётся не упаковкой или требуется выбрать вариант. Для `direct`
+            значения `addToCartTarget.minOrderQuantity` и `quantityStep` обязаны быть
+            численно равны `packageQuantity`; это cross-field правило проверяется backend.
+          anyOf:
+            - type: string
+              pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
+            - type: 'null'
+        priceFrom:
+          description: Минимальная цена за одну единицу `primaryUnit`; `null` означает цену по запросу.
+          anyOf:
+            - $ref: '#/components/schemas/Money'
+            - type: 'null'
+        priceType:
+          type: string
+          description: Семантика `priceFrom` и `packagePriceFrom`, без эвристик по наличию диапазона.
+          enum:
+            - fixed
+            - from
+            - on_request
         priceTo:
+          description: Максимальная цена за одну единицу `primaryUnit`; `null`, если диапазона нет.
           anyOf:
             - $ref: '#/components/schemas/Money'
             - type: 'null'
         primaryUnit:
-          anyOf:
-            - $ref: '#/components/schemas/ProductUnit'
-            - type: 'null'
+          description: Общая единица продажи всех вариантов товара в списке.
+          $ref: '#/components/schemas/ProductUnit'
+        purchaseAction:
+          type: string
+          description: |
+            `direct` — в списке есть один однозначный доступный SKU и его можно добавить сразу;
+            `select_variant` — перед покупкой требуется открыть карточку и выбрать вариант;
+            `unavailable` — ни один вариант сейчас нельзя купить.
+          enum:
+            - direct
+            - select_variant
+            - unavailable
         availability:
           $ref: '#/components/schemas/Availability'
         shortAttributes:
@@ -603,6 +688,162 @@ components:
           type: array
           items:
             type: string
+        variantCount:
+          type: integer
+          minimum: 1
+        variantSummary:
+          description: Краткая сводка доступных параметров; обязательна для нескольких вариантов и `null` для одного.
+          anyOf:
+            - type: string
+              minLength: 1
+              maxLength: 160
+            - type: 'null'
+      allOf:
+        - if:
+            properties:
+              purchaseAction:
+                const: direct
+            required:
+              - purchaseAction
+          then:
+            properties:
+              addToCartTarget:
+                $ref: '#/components/schemas/AddToCartTarget'
+              variantCount:
+                const: 1
+              variantSummary:
+                type: 'null'
+        - if:
+            properties:
+              purchaseAction:
+                const: select_variant
+            required:
+              - purchaseAction
+          then:
+            properties:
+              addToCartTarget:
+                type: 'null'
+              packagePriceFrom:
+                type: 'null'
+              packageQuantity:
+                type: 'null'
+              variantCount:
+                minimum: 2
+              variantSummary:
+                type: string
+                minLength: 1
+                maxLength: 160
+        - if:
+            properties:
+              purchaseAction:
+                const: unavailable
+            required:
+              - purchaseAction
+          then:
+            properties:
+              addToCartTarget:
+                type: 'null'
+              packagePriceFrom:
+                type: 'null'
+              packageQuantity:
+                type: 'null'
+        - if:
+            properties:
+              variantCount:
+                minimum: 2
+            required:
+              - variantCount
+          then:
+            properties:
+              variantSummary:
+                type: string
+                minLength: 1
+                maxLength: 160
+        - if:
+            properties:
+              variantCount:
+                maximum: 1
+            required:
+              - variantCount
+          then:
+            properties:
+              variantSummary:
+                type: 'null'
+        - if:
+            properties:
+              purchaseAction:
+                const: unavailable
+            required:
+              - purchaseAction
+          then:
+            properties:
+              availability:
+                properties:
+                  status:
+                    const: out_of_stock
+                required:
+                  - status
+        - if:
+            properties:
+              availability:
+                properties:
+                  status:
+                    const: out_of_stock
+                required:
+                  - status
+            required:
+              - availability
+          then:
+            properties:
+              purchaseAction:
+                const: unavailable
+        - if:
+            properties:
+              priceType:
+                const: fixed
+            required:
+              - priceType
+          then:
+            properties:
+              priceFrom:
+                $ref: '#/components/schemas/Money'
+              priceTo:
+                type: 'null'
+        - if:
+            properties:
+              priceType:
+                const: from
+            required:
+              - priceType
+          then:
+            properties:
+              priceFrom:
+                $ref: '#/components/schemas/Money'
+        - if:
+            properties:
+              priceType:
+                const: on_request
+            required:
+              - priceType
+          then:
+            properties:
+              packagePriceFrom:
+                type: 'null'
+              priceFrom:
+                type: 'null'
+              priceTo:
+                type: 'null'
+        - if:
+            properties:
+              packagePriceFrom:
+                $ref: '#/components/schemas/Money'
+            required:
+              - packagePriceFrom
+          then:
+            properties:
+              packageQuantity:
+                type: string
+                pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
     AddToCartTarget:
       type: object
       additionalProperties: false
@@ -616,11 +857,14 @@ components:
           type: string
         quantityStep:
           type: string
+          pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
         minOrderQuantity:
           type: string
+          pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
         maxOrderQuantity:
           anyOf:
             - type: string
+              pattern: '^(?:0\.[0-9]*[1-9][0-9]*|[1-9][0-9]*(?:\.[0-9]+)?)$'
             - type: 'null'
     ProductDetails:
       type: object
@@ -705,6 +949,49 @@ components:
         totalPages:
           type: integer
           minimum: 0
+    ProductFacetOption:
+      type: object
+      additionalProperties: false
+      required:
+        - value
+        - label
+        - count
+        - selected
+      properties:
+        value:
+          type: string
+        label:
+          type: string
+        count:
+          type: integer
+          minimum: 0
+        selected:
+          type: boolean
+    ProductFacet:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - name
+        - type
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - checkbox
+            - range
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductFacetOption'
+        min:
+          type: number
+        max:
+          type: number
     ProductListResponse:
       type: object
       additionalProperties: false
@@ -718,6 +1005,16 @@ components:
             $ref: '#/components/schemas/ProductListItem'
         pagination:
           $ref: '#/components/schemas/Pagination'
+        facets:
+          type: array
+          description: |
+            Доступные нормализованные фильтры для текущей выборки. Для checkbox-фасета
+            count рассчитывается с учётом остальных групп, но без ограничения текущей
+            группы, чтобы пользователь мог добавлять варианты по OR. Сервер возвращает
+            decision-critical фасеты (например material, diameter, length и availability)
+            только когда соответствующие данные применимы и достаточно заполнены.
+          items:
+            $ref: '#/components/schemas/ProductFacet'
     ResolveVariantsRequest:
       type: object
       additionalProperties: false
