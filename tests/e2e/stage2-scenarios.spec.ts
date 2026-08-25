@@ -9,10 +9,14 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('confirms the city locally and does not prompt again after reload', async ({ page }) => {
+test('opens the city choice on demand and restores the confirmed city after reload', async ({
+  page,
+}) => {
   await page.reload();
 
   const cityPopover = page.getByRole('dialog', { name: 'Выберите город' });
+  await expect(cityPopover).toBeHidden();
+  await page.getByRole('button', { name: 'Ваш город: Тольятти' }).click();
   await expect(cityPopover).toBeVisible();
   await cityPopover.getByLabel('Город').selectOption('Самара');
   await cityPopover.getByRole('button', { name: 'Подтвердить' }).click();

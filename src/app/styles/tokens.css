@@ -39,12 +39,12 @@
   --color-link: var(--color-accent-text);
   --color-link-hover: var(--color-interactive-text-hover);
   /* Semantic aliases shared by navigation, search, and primary controls. */
-  --color-control-border: var(--color-border);
-  --color-control-border-hover: var(--color-border-strong);
+  --color-control-border: var(--color-accent);
+  --color-control-border-hover: var(--color-accent-hover);
   --color-primary-action: var(--color-accent);
   --color-primary-action-hover: var(--color-accent-hover);
   --color-navigation-accent: var(--color-accent);
-  --color-navigation-active-surface: var(--color-primary-fixed);
+  --color-navigation-active-surface: var(--color-surface-container);
   --color-navigation-hover-surface: var(--color-surface-subtle);
   --color-navigation-hover-text: var(--color-text-primary);
   --color-overlay: rgb(20 27 43 / 68%);

@@ -2,22 +2,13 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { MapPinIcon } from '@/shared/ui';
 
-import {
-  AVAILABLE_CITIES,
-  LOCATION_SESSION_DISMISSED_KEY,
-  readLocationChoice,
-  writeLocationChoice,
-} from '../model/locationChoice';
+import { AVAILABLE_CITIES, readLocationChoice, writeLocationChoice } from '../model/locationChoice';
 import type { AvailableCity } from '../model/locationChoice';
 import styles from './city-choice-popover.module.css';
 
 interface CityChoicePopoverProps {
   buttonClassName?: string | undefined;
   className?: string | undefined;
-}
-
-function isDesktopViewport(): boolean {
-  return typeof window.matchMedia === 'function' && window.matchMedia('(min-width: 48rem)').matches;
 }
 
 export function CityChoicePopover({
@@ -28,22 +19,11 @@ export function CityChoicePopover({
   const initialCity = initialChoice?.city ?? 'Тольятти';
   const [city, setCity] = useState<AvailableCity>(initialCity);
   const [draftCity, setDraftCity] = useState<AvailableCity>(initialCity);
-  const [isOpen, setIsOpen] = useState(
-    () =>
-      initialChoice === null &&
-      window.sessionStorage.getItem(LOCATION_SESSION_DISMISSED_KEY) === null &&
-      isDesktopViewport(),
-  );
+  const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelId = useId();
   const titleId = useId();
-
-  useEffect(() => {
-    if (initialChoice === null && isOpen) {
-      window.sessionStorage.setItem(LOCATION_SESSION_DISMISSED_KEY, 'true');
-    }
-  }, [initialChoice, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;

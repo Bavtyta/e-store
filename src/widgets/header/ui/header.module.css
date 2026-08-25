@@ -88,9 +88,9 @@
 }
 
 .searchShell:focus-within {
-  border-color: var(--color-focus);
+  border-color: var(--color-primary-action);
   outline: 0;
-  box-shadow: inset 0 0 0 1px var(--color-focus);
+  box-shadow: inset 0 0 0 1px var(--color-primary-action);
 }
 
 .searchShellOpen {
