@@ -28,10 +28,10 @@ function formatLineCount(count: number): string {
 export function CartSummary({ excludedFromTotalCount, lineCount, totalMinor }: CartSummaryProps) {
   return (
     <Card className={styles.root} variant="elevated">
-      <h2>Детали заказа</h2>
+      <h2>Итоги корзины</h2>
       <div className={styles.rows}>
         <p className={styles.row}>
-          <span>Сумма заказа ({formatLineCount(lineCount)})</span>
+          <span>Сумма товаров ({formatLineCount(lineCount)})</span>
           <strong aria-atomic="true" aria-live="polite">
             {formatCartMoney(totalMinor)}
           </strong>
@@ -42,7 +42,7 @@ export function CartSummary({ excludedFromTotalCount, lineCount, totalMinor }: C
         </p>
         <p className={styles.row}>
           <span>Доставка</span>
-          <span className={styles.muted}>Рассчитывается при оформлении</span>
+          <span className={styles.muted}>По Самарской области</span>
         </p>
       </div>
       <p className={styles.total}>
@@ -57,8 +57,7 @@ export function CartSummary({ excludedFromTotalCount, lineCount, totalMinor }: C
         </p>
       )}
       <p className={styles.disclaimer}>
-        Цены ориентировочные. Итоговая стоимость может варьироваться в зависимости от места
-        доставки и оптовых скидок.
+        Цена и наличие требуют подтверждения после подключения каталога к&nbsp;1С.
       </p>
       <CheckoutPlaceholder />
     </Card>

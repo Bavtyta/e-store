@@ -24,5 +24,6 @@ describe('application smoke test', () => {
         name: 'Трубы, фитинги и РТИ для ремонта и монтажа',
       }),
     ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Выбрать товар' })).toHaveAttribute('href', '/catalog');
   });
 });

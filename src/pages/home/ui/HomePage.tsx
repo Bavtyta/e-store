@@ -74,16 +74,24 @@ function HeroSection() {
       <Container className={styles.heroContainer} size="wide">
         <div className={styles.heroLayout}>
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для ремонта и монтажа</h1>
+            <h1 className={styles.heroTitle}>
+              Трубы, фитинги <span className={styles.noBreak}>и РТИ</span>{' '}
+              <span className={styles.noBreak}>для ремонта</span>{' '}
+              <span className={styles.noBreak}>и монтажа</span>
+            </h1>
             <p className={styles.heroText}>
-              Найдите нужный материал и размер в каталоге BELT, сравните характеристики и добавьте
-              подходящий вариант в корзину.
+              Подберите товар по материалу, диаметру и&nbsp;назначению. Сравните характеристики
+              и&nbsp;соберите нужные позиции в&nbsp;корзине.
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.heroCta} to="/catalog">
-                Найти товар в каталоге
+                Выбрать товар
               </Link>
             </div>
+            <p className={styles.heroTrust}>
+              Склад в&nbsp;Тольятти <span aria-hidden="true">·</span> Доставка по&nbsp;Самарской
+              области
+            </p>
           </div>
         </div>
       </Container>

@@ -95,6 +95,24 @@ test('keeps search shell geometry stable when the clear action appears', async (
   await expect(input).toBeFocused();
 });
 
+test('renders the inline search icon and resolves yellow interactive tokens', async ({ page }) => {
+  await page.setViewportSize({ height: 900, width: 1440 });
+  await page.goto('/');
+
+  const input = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  const submit = page.getByRole('button', { name: 'Найти' });
+  const searchShell = input.locator('..');
+
+  await expect(searchShell.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+  await expect(submit).toHaveCSS('background-color', 'rgb(250, 204, 21)');
+
+  await submit.hover();
+  await expect(submit).toHaveCSS('background-color', 'rgb(238, 194, 0)');
+
+  await input.focus();
+  await expect(searchShell).toHaveCSS('border-color', 'rgb(250, 204, 21)');
+});
+
 test('filters the catalog live by material and diameter and resets filters', async ({ page }) => {
   await openCatalog(page);
 
@@ -254,6 +272,9 @@ test('keeps primary navigation labels accessible with decorative outline icons',
     'none',
   );
   await catalogLink.hover();
+  await expect(catalogLink).toHaveCSS('color', 'rgb(20, 27, 43)');
+  await expect(catalogLink).toHaveCSS('background-color', 'rgb(241, 243, 255)');
+  await expect(catalogLink).toHaveCSS('border-bottom-color', 'rgb(250, 204, 21)');
   expect(await page.locator('header').evaluate((header) => header.clientHeight)).toBe(headerHeight);
 
   await page.goto('/catalog');
@@ -262,7 +283,7 @@ test('keeps primary navigation labels accessible with decorative outline icons',
     .getByRole('link', { name: 'Каталог' });
   expect(
     await activeCatalogLink.evaluate((element) => getComputedStyle(element).borderBottomColor),
-  ).not.toBe('rgba(0, 0, 0, 0)');
+  ).toBe('rgb(250, 204, 21)');
 });
 
 test('keeps mobile menu focus trapped and restores focus to the opener', async ({ page }) => {
