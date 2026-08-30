@@ -1,14 +1,26 @@
 export {
+  AlertIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  CartIcon,
+  CheckIcon,
   CloseIcon,
+  DiscountTagIcon,
   Grid2x2Icon,
+  HeartIcon,
+  HomeIcon,
+  ImageIcon,
+  InfoIcon,
   MapPinIcon,
+  MenuIcon,
+  MinusIcon,
   PhoneIcon,
+  PlusIcon,
   SearchIcon,
   SpinnerIcon,
   TruckIcon,
+  UserIcon,
   WrenchIcon,
-} from './SearchIcons';
-export { Grid2x2Icon as CatalogIcon } from './SearchIcons';
-export type { SearchIconProps } from './SearchIcons';
+} from './BeltIcons';
+export { Grid2x2Icon as CatalogIcon } from './BeltIcons';
+export type { BeltIconProps, BeltIconSize } from './BeltIcons';

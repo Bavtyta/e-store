@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
 import { useCategoriesQuery } from '@/entities/category';
-import { Skeleton } from '@/shared/ui';
+import { ArrowRightIcon, Skeleton } from '@/shared/ui';
 
 import styles from './home-categories.module.css';
 
@@ -78,7 +78,7 @@ export function HomeCategories() {
                 </span>
               </span>
               <span aria-hidden="true" className={styles.categoryArrow}>
-                →
+                <ArrowRightIcon size={20} />
               </span>
             </Link>
           ))}

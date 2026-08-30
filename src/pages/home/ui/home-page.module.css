@@ -24,6 +24,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 0.45rem;
   min-height: var(--control-height-sm);
   padding-inline: var(--space-4);
   color: var(--color-text-secondary);
@@ -44,6 +45,10 @@
 .serviceBarPromo {
   color: var(--color-secondary);
   font-weight: var(--font-weight-semibold);
+}
+
+.serviceBarIcon {
+  flex: 0 0 auto;
 }
 
 .serviceBarContent > * + * {

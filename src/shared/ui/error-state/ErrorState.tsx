@@ -2,6 +2,7 @@ import { useId } from 'react';
 import type { ReactNode } from 'react';
 
 import { Button } from '@/shared/ui/button';
+import { AlertIcon } from '@/shared/ui/icons';
 
 import styles from './error-state.module.css';
 
@@ -33,7 +34,7 @@ export function ErrorState({
       role="alert"
     >
       <span aria-hidden="true" className={styles.icon}>
-        !
+        <AlertIcon size={24} />
       </span>
       <div className={styles.copy}>
         <h2 id={titleId}>{title}</h2>

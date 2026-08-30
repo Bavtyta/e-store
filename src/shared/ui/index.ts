@@ -17,19 +17,31 @@ export type { ErrorStateProps } from './error-state';
 export { IconButton } from './icon-button';
 export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './icon-button';
 export {
+  AlertIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  CartIcon,
   CatalogIcon,
+  CheckIcon,
   CloseIcon,
+  DiscountTagIcon,
   Grid2x2Icon,
+  HeartIcon,
+  HomeIcon,
+  ImageIcon,
+  InfoIcon,
   MapPinIcon,
+  MenuIcon,
+  MinusIcon,
   PhoneIcon,
+  PlusIcon,
   SearchIcon,
   SpinnerIcon,
   TruckIcon,
+  UserIcon,
   WrenchIcon,
 } from './icons';
-export type { SearchIconProps } from './icons';
+export type { BeltIconProps, BeltIconSize } from './icons';
 export { ImagePlaceholder } from './image-placeholder';
 export type { ImagePlaceholderProps, ImagePlaceholderRatio } from './image-placeholder';
 export { Input } from './input';

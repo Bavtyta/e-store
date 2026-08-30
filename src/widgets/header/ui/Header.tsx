@@ -8,7 +8,19 @@ import {
   useFavoritesStore,
 } from '@/features/favorites';
 import { getFocusableElements } from '@/shared/lib';
-import { Container, Grid2x2Icon, IconButton, PhoneIcon, TruckIcon, WrenchIcon } from '@/shared/ui';
+import {
+  CartIcon,
+  CloseIcon,
+  Container,
+  Grid2x2Icon,
+  HeartIcon,
+  IconButton,
+  MenuIcon,
+  PhoneIcon,
+  TruckIcon,
+  UserIcon,
+  WrenchIcon,
+} from '@/shared/ui';
 
 import { HeaderSearch } from './HeaderSearch';
 import styles from './header.module.css';
@@ -18,61 +30,6 @@ function BrandMark() {
     <Link aria-label="BELT — на главную" className={styles.brand} to="/">
       BELT
     </Link>
-  );
-}
-
-function BurgerIcon({ isOpen }: { isOpen: boolean }) {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="24"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      viewBox="0 0 24 24"
-      width="24"
-    >
-      {isOpen ? (
-        <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
-      ) : (
-        <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-      )}
-    </svg>
-  );
-}
-
-function UserIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="22"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      viewBox="0 0 24 24"
-      width="22"
-    >
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CartGlyph() {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      height="22"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      viewBox="0 0 24 24"
-      width="22"
-    >
-      <path d="M6 6h15l-1.5 9h-12L5 3H2" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="9" cy="20" r="1.5" />
-      <circle cx="18" cy="20" r="1.5" />
-    </svg>
   );
 }
 
@@ -175,7 +132,7 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
             ref={closeReference}
             type="button"
           >
-            <BurgerIcon isOpen />
+            <CloseIcon size={24} />
           </button>
         </div>
         <nav aria-label="Мобильное меню" className={styles.drawerNav}>
@@ -259,7 +216,7 @@ export function Header() {
           }}
           variant="ghost"
         >
-          <BurgerIcon isOpen={isMenuOpen} />
+          {isMenuOpen ? <CloseIcon size={24} /> : <MenuIcon />}
         </IconButton>
 
         <BrandMark />
@@ -290,9 +247,7 @@ export function Header() {
             title="Избранное"
             to="/favorites"
           >
-            <span aria-hidden="true" className={styles.favoriteGlyph}>
-              ♡
-            </span>
+            <HeartIcon />
             {favoriteCount > 0 ? (
               <span className={styles.cartBadge}>{favoriteCount > 99 ? '99+' : favoriteCount}</span>
             ) : null}
@@ -319,7 +274,7 @@ export function Header() {
             title="Корзина"
             to="/cart"
           >
-            <CartGlyph />
+            <CartIcon />
             {cartLineCount > 0 ? <span className={styles.cartBadge}>{cartCountText}</span> : null}
           </NavLink>
         </div>

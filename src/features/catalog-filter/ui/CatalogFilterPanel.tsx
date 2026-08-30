@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from 'react';
 import type { ReactNode } from 'react';
 
 import type { ProductFacet } from '@/entities/product';
-import { Button } from '@/shared/ui';
+import { Button, CloseIcon, MinusIcon, PlusIcon } from '@/shared/ui';
 
 import { isCatalogFilterActive } from '../model/catalogFilter';
 import type { CatalogFacetSelections, CatalogFilterState } from '../model/catalogFilter';
@@ -184,7 +184,7 @@ function ActiveFilterChip({ label, onRemove }: { label: string; onRemove: () => 
         type="button"
       >
         <span>{label}</span>
-        <span aria-hidden="true">×</span>
+        <CloseIcon />
       </button>
     </li>
   );
@@ -214,7 +214,7 @@ function FilterGroup({
       <summary className={styles.groupSummary}>
         <span>{title}</span>
         <span aria-hidden="true" className={styles.groupIcon}>
-          {isOpen ? '−' : '+'}
+          {isOpen ? <MinusIcon /> : <PlusIcon />}
         </span>
       </summary>
       <div className={styles.groupBody}>

@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
+import { Badge, Card, ImageIcon } from '@/shared/ui';
+
 import type { ProductListItem } from '../model/product';
 import { formatProductPrice } from '../model/formatProductPrice';
-import { Badge, Card } from '@/shared/ui';
 
 import { ProductAvailability } from './ProductAvailability';
 import styles from './product-card.module.css';
@@ -109,19 +110,7 @@ export function ProductCard({ action, onProductOpen, overlayAction, product }: P
         >
           {product.thumbnail === null ? (
             <div className={styles.imagePlaceholder}>
-              <svg
-                aria-hidden="true"
-                fill="none"
-                height="48"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-                width="48"
-              >
-                <rect height="18" rx="2" width="18" x="3" y="3" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
+              <ImageIcon />
             </div>
           ) : (
             <img

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { CityChoicePopover } from '@/features/location-choice';
 import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata, StructuredData } from '@/shared/lib';
-import { Container } from '@/shared/ui';
+import { ArrowRightIcon, Container, DiscountTagIcon } from '@/shared/ui';
 import { HomeCategories } from '@/widgets/home-categories';
 import { HomeFeaturedProducts } from '@/widgets/home-featured-products';
 
@@ -105,6 +105,7 @@ function HomeServiceBar() {
       <Container size="wide">
         <nav aria-label="Предложения и регион работы" className={styles.serviceBarContent}>
           <Link className={[styles.serviceBarLink, styles.serviceBarPromo].join(' ')} to="/offers">
+            <DiscountTagIcon className={styles.serviceBarIcon} size={16} />
             <span className={styles.serviceBarLabelDesktop}>Акции и спецпредложения</span>
             <span className={styles.serviceBarLabelMobile}>Акции</span>
           </Link>
@@ -148,7 +149,7 @@ export function HomePage() {
                   <span className={styles.taskDescription}>{task.description}</span>
                 </span>
                 <span aria-hidden="true" className={styles.taskArrow}>
-                  →
+                  <ArrowRightIcon size={20} />
                 </span>
               </Link>
             ))}

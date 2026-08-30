@@ -31,9 +31,4 @@
   width: 3rem;
   height: 3rem;
   margin-inline: auto;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
 }

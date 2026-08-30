@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ProductCard, useProductsQuery } from '@/entities/product';
 import { ProductCardAddToCartButton } from '@/features/add-to-cart';
 import { FavoriteToggleButton } from '@/features/favorites';
-import { Container, Skeleton } from '@/shared/ui';
+import { ArrowRightIcon, Container, Skeleton } from '@/shared/ui';
 
 import styles from './home-featured-products.module.css';
 
@@ -82,7 +82,7 @@ export function HomeFeaturedProducts() {
           <Link className={styles.catalogLink} to="/catalog">
             <span>Открыть весь каталог</span>
             <span aria-hidden="true" className={styles.catalogArrow}>
-              →
+              <ArrowRightIcon />
             </span>
           </Link>
         </div>

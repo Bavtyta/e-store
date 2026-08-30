@@ -9,7 +9,7 @@ import {
   useCartStore,
 } from '@/entities/cart';
 import type { ProductVariant } from '@/entities/product';
-import { IconButton, NumberInput } from '@/shared/ui';
+import { IconButton, MinusIcon, NumberInput, PlusIcon } from '@/shared/ui';
 
 import styles from './quantity-control.module.css';
 
@@ -89,7 +89,7 @@ export function QuantityControl({ itemName, quantity, variant }: QuantityControl
         }}
         variant="ghost"
       >
-        −
+        <MinusIcon />
       </IconButton>
       <NumberInput
         className={styles.input}
@@ -110,7 +110,7 @@ export function QuantityControl({ itemName, quantity, variant }: QuantityControl
         }}
         variant="ghost"
       >
-        +
+        <PlusIcon />
       </IconButton>
       <span className={styles.unit}>{variant.unit.label}</span>
       <span aria-atomic="true" aria-live="polite" className={styles.announcement} role="status">

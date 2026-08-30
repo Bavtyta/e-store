@@ -112,8 +112,6 @@
   justify-content: center;
   min-width: 1.5rem;
   color: var(--color-text-secondary);
-  font-size: 1.5rem;
-  line-height: 1;
   transition:
     color var(--transition-fast),
     transform var(--transition-fast);
