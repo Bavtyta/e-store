@@ -95,6 +95,24 @@ test('keeps search shell geometry stable when the clear action appears', async (
   await expect(input).toBeFocused();
 });
 
+test('renders the inline search icon and resolves yellow interactive tokens', async ({ page }) => {
+  await page.setViewportSize({ height: 900, width: 1440 });
+  await page.goto('/');
+
+  const input = page.getByRole('searchbox', { name: 'Поиск по каталогу' });
+  const submit = page.getByRole('button', { name: 'Найти' });
+  const searchShell = input.locator('..');
+
+  await expect(searchShell.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+  await expect(submit).toHaveCSS('background-color', 'rgb(250, 204, 21)');
+
+  await submit.hover();
+  await expect(submit).toHaveCSS('background-color', 'rgb(238, 194, 0)');
+
+  await input.focus();
+  await expect(searchShell).toHaveCSS('border-color', 'rgb(250, 204, 21)');
+});
+
 test('filters the catalog live by material and diameter and resets filters', async ({ page }) => {
   await openCatalog(page);
 
@@ -231,7 +249,6 @@ test('keeps primary navigation labels accessible with decorative outline icons',
   const headerHeight = await page.locator('header').evaluate((header) => header.clientHeight);
 
   for (const item of [
-    { label: 'Каталог', path: '/catalog' },
     { label: 'Услуги', path: '/services' },
     { label: 'Доставка', path: '/delivery' },
     { label: 'Контакты', path: '/contacts' },
@@ -247,22 +264,30 @@ test('keeps primary navigation labels accessible with decorative outline icons',
     ).toBeTruthy();
   }
 
-  const catalogLink = navigation.getByRole('link', { name: 'Каталог' });
-  await catalogLink.focus();
-  await expect(catalogLink).toBeFocused();
-  expect(await catalogLink.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe(
-    'none',
-  );
-  await catalogLink.hover();
+  const catalogButton = navigation.getByRole('button', { name: 'Каталог' });
+  await expect(catalogButton.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+  await expect(catalogButton.locator('svg')).toHaveAttribute('stroke', 'currentColor');
+  await expect(catalogButton.locator('svg')).toHaveAttribute('width', '18');
+  await catalogButton.focus();
+  await expect(catalogButton).toBeFocused();
+  expect(
+    await catalogButton.evaluate((element) => getComputedStyle(element).outlineStyle),
+  ).not.toBe('none');
+  await catalogButton.hover();
+  await expect(catalogButton).toHaveCSS('color', 'rgb(20, 27, 43)');
+  await expect(catalogButton).toHaveCSS('background-color', 'rgb(241, 243, 255)');
+  await catalogButton.click();
+  await expect(catalogButton).toHaveAttribute('aria-expanded', 'true');
+  await expect(catalogButton).toHaveCSS('border-bottom-color', 'rgb(250, 204, 21)');
   expect(await page.locator('header').evaluate((header) => header.clientHeight)).toBe(headerHeight);
 
   await page.goto('/catalog');
-  const activeCatalogLink = page
+  const activeCatalogButton = page
     .getByRole('navigation', { name: 'Основная навигация' })
-    .getByRole('link', { name: 'Каталог' });
+    .getByRole('button', { name: 'Каталог' });
   expect(
-    await activeCatalogLink.evaluate((element) => getComputedStyle(element).borderBottomColor),
-  ).not.toBe('rgba(0, 0, 0, 0)');
+    await activeCatalogButton.evaluate((element) => getComputedStyle(element).borderBottomColor),
+  ).toBe('rgb(250, 204, 21)');
 });
 
 test('keeps mobile menu focus trapped and restores focus to the opener', async ({ page }) => {
@@ -280,7 +305,7 @@ test('keeps mobile menu focus trapped and restores focus to the opener', async (
 
   await expect(dialog).toBeVisible();
   await expect(closeButton).toBeFocused();
-  await expect(dialog.getByRole('link', { name: 'Каталог' }).locator('svg')).toHaveCount(1);
+  await expect(dialog.getByRole('button', { name: 'Каталог' }).locator('svg')).toHaveCount(2);
 
   await page.keyboard.press('Shift+Tab');
   await expect(cartLink).toBeFocused();
@@ -351,7 +376,7 @@ test('uses the existing menu pattern for navigation at 1024px', async ({ page })
   await opener.click();
 
   const dialog = page.getByRole('dialog', { name: 'BELT' });
-  await expect(dialog.getByRole('link', { name: 'Каталог' })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Каталог' })).toBeVisible();
   await expect(dialog.getByRole('link', { name: 'Контакты' })).toBeVisible();
 });
 

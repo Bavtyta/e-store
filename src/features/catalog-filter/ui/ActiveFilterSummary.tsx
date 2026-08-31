@@ -1,4 +1,5 @@
 import type { ProductFacet } from '@/entities/product';
+import { CloseIcon } from '@/shared/ui';
 
 import type { CatalogFacetSelections, CatalogFilterState } from '../model/catalogFilter';
 
@@ -23,7 +24,7 @@ function ActiveFilterChip({ label, onRemove }: { label: string; onRemove: () => 
         type="button"
       >
         <span>{label}</span>
-        <span aria-hidden="true">×</span>
+        <CloseIcon />
       </button>
     </li>
   );

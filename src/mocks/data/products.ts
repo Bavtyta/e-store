@@ -463,7 +463,7 @@ const productSeeds: readonly ProductSeed[] = [
       createAttribute('material', 'Материал', 'ПНД'),
       createAttribute('application', 'Назначение', 'Питьевая вода'),
     ],
-    badges: ['Популярный'],
+    badges: ['Рекомендуем'],
     categoryId: CATEGORY_IDS.pndPipes,
     description: 'Напорная труба ПНД PE100 для систем водоснабжения.',
     id: 'product-001',

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { CityChoicePopover } from '@/features/location-choice';
 import { appConfig } from '@/shared/config';
 import { createPageMetadata, PageMetadata, StructuredData } from '@/shared/lib';
-import { Container } from '@/shared/ui';
+import { ArrowRightIcon, Container, DiscountTagIcon } from '@/shared/ui';
 import { HomeCategories } from '@/widgets/home-categories';
 import { HomeFeaturedProducts } from '@/widgets/home-featured-products';
 
@@ -74,16 +74,24 @@ function HeroSection() {
       <Container className={styles.heroContainer} size="wide">
         <div className={styles.heroLayout}>
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>Трубы, фитинги и РТИ для ремонта и монтажа</h1>
+            <h1 className={styles.heroTitle}>
+              <span className={styles.heroTitleLine}>Трубы, фитинги и РТИ</span>{' '}
+              <span className={styles.heroTitleLine}>для ремонта и монтажа</span>
+            </h1>
             <p className={styles.heroText}>
-              Найдите нужный материал и размер в каталоге BELT, сравните характеристики и добавьте
-              подходящий вариант в корзину.
+              Подберите товар по материалу, диаметру и&nbsp;назначению. Сравните характеристики
+              и&nbsp;соберите нужные позиции в&nbsp;корзине.
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.heroCta} to="/catalog">
-                Найти товар в каталоге
+                <span>Выбрать товар</span>
+                <ArrowRightIcon size={18} />
               </Link>
             </div>
+            <ul aria-label="Условия работы" className={styles.heroTrust}>
+              <li>Склад в&nbsp;Тольятти</li>
+              <li>Доставка по&nbsp;Самарской области</li>
+            </ul>
           </div>
         </div>
       </Container>
@@ -97,6 +105,7 @@ function HomeServiceBar() {
       <Container size="wide">
         <nav aria-label="Предложения и регион работы" className={styles.serviceBarContent}>
           <Link className={[styles.serviceBarLink, styles.serviceBarPromo].join(' ')} to="/offers">
+            <DiscountTagIcon className={styles.serviceBarIcon} size={16} />
             <span className={styles.serviceBarLabelDesktop}>Акции и спецпредложения</span>
             <span className={styles.serviceBarLabelMobile}>Акции</span>
           </Link>
@@ -140,7 +149,7 @@ export function HomePage() {
                   <span className={styles.taskDescription}>{task.description}</span>
                 </span>
                 <span aria-hidden="true" className={styles.taskArrow}>
-                  →
+                  <ArrowRightIcon size={20} />
                 </span>
               </Link>
             ))}

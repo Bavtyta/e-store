@@ -74,7 +74,8 @@ test('opens a product from the catalog, changes its variant and handles 404', as
     }),
   ).toBeVisible();
 
-  await page.getByRole('link', { name: 'Каталог' }).first().click();
+  await page.getByRole('button', { name: 'Каталог' }).click();
+  await page.getByRole('link', { name: 'Смотреть весь каталог' }).click();
   await expect(page.getByRole('heading', { name: 'Каталог товаров' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
 
@@ -144,6 +145,12 @@ test('keeps the product page responsive and supports keyboard variant selection'
 
   await expectNoHorizontalOverflow(page);
 
+  const firstThumbnail = page.getByRole('button', { name: /Показать изображение 1:/ });
+  const thumbnailBox = await firstThumbnail.boundingBox();
+
+  expect(thumbnailBox).not.toBeNull();
+  expect(thumbnailBox?.height ?? Number.POSITIVE_INFINITY).toBeLessThan(thumbnailBox?.width ?? 0);
+
   const initialVariant = page.getByRole('radio', { name: '20 мм' });
   const nextVariant = page.getByRole('radio', { name: '25 мм' });
 
@@ -199,6 +206,8 @@ test('adds a variant, changes quantity and restores the cart after reload', asyn
     }),
   ).toBeVisible();
   await expect(quantityInput).toHaveValue('1');
+  await expect(page.getByText('Оформление заказа пока недоступно')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Оформить заказ' })).toHaveCount(0);
 
   await quantityInput.focus();
   await page.keyboard.press('ArrowUp');

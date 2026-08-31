@@ -1,6 +1,8 @@
 import { useId } from 'react';
 import type { ReactNode } from 'react';
 
+import { MinusIcon } from '@/shared/ui/icons';
+
 import styles from './empty-state.module.css';
 
 export type EmptyStateVariant = 'page' | 'inline';
@@ -16,7 +18,7 @@ export interface EmptyStateProps {
 export function EmptyState({
   action,
   description,
-  icon = '—',
+  icon = <MinusIcon size={24} />,
   title,
   variant = 'page',
 }: EmptyStateProps) {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router';
 
 import type { Category } from '@/entities/category';
+import { MinusIcon, PlusIcon } from '@/shared/ui';
 
 import styles from './catalog-navigation.module.css';
 
@@ -75,7 +76,7 @@ function CategoryItem({
             }}
             type="button"
           >
-            <span aria-hidden="true">{isExpanded ? '−' : '+'}</span>
+            {isExpanded ? <MinusIcon /> : <PlusIcon />}
           </button>
         ) : null}
       </div>

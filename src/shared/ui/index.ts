@@ -6,6 +6,12 @@ export { Button, ButtonLink } from './button';
 export type { ButtonLinkProps, ButtonProps, ButtonSize, ButtonVariant } from './button';
 export { Card } from './card';
 export type { CardPadding, CardProps, CardVariant } from './card';
+export {
+  CollectionShowcase,
+  CollectionShowcaseGrid,
+  CollectionShowcaseSkeleton,
+  CollectionShowcaseState,
+} from './collection-showcase';
 export { Container } from './container';
 export type { ContainerProps, ContainerSize } from './container';
 export { Dialog } from './dialog';
@@ -17,19 +23,36 @@ export type { ErrorStateProps } from './error-state';
 export { IconButton } from './icon-button';
 export type { IconButtonProps, IconButtonSize, IconButtonVariant } from './icon-button';
 export {
+  AlertIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
+  CartIcon,
   CatalogIcon,
+  CheckIcon,
   CloseIcon,
+  DiscountTagIcon,
+  FittingIcon,
+  GasketIcon,
   Grid2x2Icon,
+  HeartIcon,
+  HomeIcon,
+  ImageIcon,
+  InnerTubeIcon,
+  InfoIcon,
   MapPinIcon,
+  MenuIcon,
+  MinusIcon,
+  PackageIcon,
+  PipeIcon,
   PhoneIcon,
+  PlusIcon,
   SearchIcon,
   SpinnerIcon,
   TruckIcon,
+  UserIcon,
   WrenchIcon,
 } from './icons';
-export type { SearchIconProps } from './icons';
+export type { BeltIconProps, BeltIconSize } from './icons';
 export { ImagePlaceholder } from './image-placeholder';
 export type { ImagePlaceholderProps, ImagePlaceholderRatio } from './image-placeholder';
 export { Input } from './input';

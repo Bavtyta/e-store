@@ -2,6 +2,7 @@ import { useEffect, useId, useRef } from 'react';
 import type { KeyboardEvent, MouseEvent, ReactNode, RefObject, SyntheticEvent } from 'react';
 
 import { getFocusableElements } from '@/shared/lib';
+import { CloseIcon } from '@/shared/ui/icons';
 
 import styles from './dialog.module.css';
 
@@ -161,7 +162,7 @@ export function Dialog({
             ref={closeButtonRef}
             type="button"
           >
-            <span aria-hidden="true">×</span>
+            <CloseIcon />
           </button>
         </header>
         <div className={styles.content}>{children}</div>

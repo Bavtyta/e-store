@@ -24,6 +24,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 0.45rem;
   min-height: var(--control-height-sm);
   padding-inline: var(--space-4);
   color: var(--color-text-secondary);
@@ -46,6 +47,10 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.serviceBarIcon {
+  flex: 0 0 auto;
+}
+
 .serviceBarContent > * + * {
   border-left: 1px solid var(--color-border);
 }
@@ -54,8 +59,9 @@
 .serviceBarLink:focus-visible,
 .serviceBarButton:hover,
 .serviceBarButton:focus-visible {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-hover);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
 }
 
 .serviceBarPromo:hover,
@@ -65,8 +71,8 @@
 
 .serviceBarLink:active,
 .serviceBarButton:active {
-  color: var(--color-on-accent);
-  background: var(--color-interactive-surface-active);
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-active-surface);
 }
 
 .serviceBarPromo:active {
@@ -90,7 +96,7 @@
 /* Hero */
 .hero {
   position: relative;
-  min-height: 30rem;
+  min-height: clamp(31rem, 40vw, 35rem);
   background-color: var(--color-dark-surface);
   color: var(--color-surface);
   overflow: hidden;
@@ -102,9 +108,10 @@
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgb(11 15 24 / 96%) 0%,
-    rgb(11 15 24 / 88%) 48%,
-    transparent 78%
+    rgb(11 15 24 / 98%) 0%,
+    rgb(11 15 24 / 94%) 34%,
+    rgb(11 15 24 / 70%) 52%,
+    rgb(11 15 24 / 14%) 76%
   );
   content: '';
 }
@@ -119,7 +126,7 @@
 
 .heroMedia img {
   object-fit: cover;
-  object-position: center;
+  object-position: 64% center;
 }
 
 .heroContainer {
@@ -130,23 +137,33 @@
 .heroLayout {
   display: grid;
   align-items: center;
-  min-height: 30rem;
+  min-height: clamp(31rem, 40vw, 35rem);
 }
 
 .heroContent {
-  max-width: 56rem;
-  padding-block: clamp(var(--space-12), 7vw, 5.5rem);
+  position: relative;
+  max-width: 47rem;
+  padding-block: clamp(var(--space-10), 6vw, var(--space-16));
+}
+
+.heroContent::before {
+  display: block;
+  width: 3rem;
+  height: 0.1875rem;
+  margin-bottom: var(--space-5);
+  background: var(--color-accent);
+  content: '';
 }
 
 .heroTitle {
-  max-width: 54rem;
+  max-width: 47rem;
   margin: 0 0 var(--space-6);
-  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  font-size: clamp(2.625rem, 4.25vw, 4rem);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.035em;
-  line-height: 1.08;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
   color: var(--color-surface);
-  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .heroText {
@@ -154,7 +171,7 @@
   font-size: clamp(var(--font-size-md), 1.4vw, 1.125rem);
   line-height: 1.6;
   color: var(--color-surface-subtle);
-  max-width: 40rem;
+  max-width: 36rem;
 }
 
 .heroActions {
@@ -167,9 +184,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--control-height-sm);
+  gap: var(--space-2);
+  min-height: var(--control-height-md);
   padding: var(--space-3) var(--space-6);
-  background: var(--color-accent);
+  background: var(--color-primary-action);
   color: var(--color-on-accent);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
@@ -180,13 +198,51 @@
     transform var(--transition-fast);
 }
 
+.heroCta svg {
+  flex: 0 0 auto;
+  transition: transform var(--transition-fast);
+}
+
 .heroCta:hover {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
   color: var(--color-on-accent);
+}
+
+.heroCta:hover svg,
+.heroCta:focus-visible svg {
+  transform: translateX(0.125rem);
 }
 
 .heroCta:active {
   transform: translateY(0.0625rem);
+}
+
+.heroTrust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  color: var(--color-surface-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  list-style: none;
+}
+
+.heroTrust li {
+  position: relative;
+  padding-left: var(--space-3);
+}
+
+.heroTrust li::before {
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 0.25rem;
+  height: 0.25rem;
+  background: var(--color-accent);
+  content: '';
 }
 
 .taskSelection {
@@ -264,7 +320,7 @@
   width: var(--control-height-md);
   height: var(--control-height-md);
   color: var(--color-on-accent);
-  background: var(--color-accent);
+  background: var(--color-primary-action);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xl);
   transition:
@@ -274,7 +330,7 @@
 
 .taskLink:hover .taskArrow,
 .taskLink:focus-visible .taskArrow {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
   transform: translateX(var(--space-1));
 }
 
@@ -315,13 +371,13 @@
 
 .selectionPrimary {
   color: var(--color-on-accent);
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--color-primary-action);
+  border-color: var(--color-primary-action);
 }
 
 .selectionPrimary:hover {
   color: var(--color-on-accent);
-  background: var(--color-accent-hover);
+  background: var(--color-primary-action-hover);
 }
 
 .serviceArea {
@@ -360,7 +416,7 @@
   }
 
   .hero {
-    min-height: 36rem;
+    min-height: 35rem;
   }
 
   .hero::after {
@@ -413,12 +469,17 @@
     line-height: 1.12;
   }
 
+  .heroContent::before {
+    width: 2.5rem;
+    margin-bottom: var(--space-4);
+  }
+
   .heroText {
     font-size: var(--font-size-sm);
   }
 
   .heroContent {
-    padding-block: var(--space-12);
+    padding-block: var(--space-10) var(--space-12);
   }
 
   .heroActions {
@@ -440,8 +501,12 @@
 }
 
 @media (min-width: 48rem) {
+  .heroTitleLine {
+    display: block;
+  }
+
   .heroLayout {
-    grid-template-columns: minmax(0, 0.58fr) minmax(20rem, 0.42fr);
+    grid-template-columns: minmax(0, 0.72fr) minmax(10rem, 0.28fr);
   }
 
   .taskSelectionContent {
@@ -455,7 +520,15 @@
   }
 }
 
+@media (min-width: 64rem) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 0.6fr) minmax(18rem, 0.4fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .heroCta:hover svg,
+  .heroCta:focus-visible svg,
   .taskLink:hover .taskArrow,
   .taskLink:focus-visible .taskArrow {
     transform: none;

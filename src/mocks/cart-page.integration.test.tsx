@@ -119,7 +119,7 @@ describe('CartPage integration', () => {
       'polite',
     );
 
-    const summary = screen.getByRole('heading', { name: 'Детали заказа' }).parentElement;
+    const summary = screen.getByRole('heading', { name: 'Итоги корзины' }).parentElement;
 
     expect(summary).not.toBeNull();
     expect(within(summary ?? document.body).getAllByText(/125,00/).length).toBeGreaterThan(0);
@@ -181,7 +181,7 @@ describe('CartPage integration', () => {
       screen.queryByLabelText('Количество «Труба ПНД PE100 питьевая»'),
     ).not.toBeInTheDocument();
 
-    const summary = screen.getByRole('heading', { name: 'Детали заказа' }).parentElement;
+    const summary = screen.getByRole('heading', { name: 'Итоги корзины' }).parentElement;
 
     expect(summary).not.toBeNull();
     expect(within(summary ?? document.body).getAllByText('0,00 ₽').length).toBeGreaterThan(0);

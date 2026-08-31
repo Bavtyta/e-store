@@ -1,6 +1,8 @@
 import type { HTMLAttributes } from 'react';
+import type { ReactNode } from 'react';
 
 import { classNames } from '@/shared/lib';
+import { AlertIcon, CheckIcon, CloseIcon, InfoIcon } from '@/shared/ui/icons';
 
 import styles from './toast.module.css';
 
@@ -17,10 +19,10 @@ export interface ToastProps extends Omit<
   tone?: ToastTone;
 }
 
-const toneIcon: Record<ToastTone, string> = {
-  error: '!',
-  info: 'i',
-  success: '✓',
+const toneIcon: Record<ToastTone, ReactNode> = {
+  error: <AlertIcon size={20} />,
+  info: <InfoIcon size={20} />,
+  success: <CheckIcon size={20} />,
 };
 
 export function Toast({
@@ -56,7 +58,7 @@ export function Toast({
           onClick={onDismiss}
           type="button"
         >
-          <span aria-hidden="true">×</span>
+          <CloseIcon />
         </button>
       )}
     </div>

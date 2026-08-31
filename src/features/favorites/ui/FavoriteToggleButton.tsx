@@ -1,4 +1,5 @@
 import type { ProductListItem } from '@/entities/product';
+import { HeartIcon } from '@/shared/ui';
 
 import { useFavoritesStore } from '../model/favoritesStore';
 import styles from './favorite-toggle-button.module.css';
@@ -26,7 +27,7 @@ export function FavoriteToggleButton({ product }: FavoriteToggleButtonProps) {
       title={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
       type="button"
     >
-      <span aria-hidden="true">{isFavorite ? '♥' : '♡'}</span>
+      <HeartIcon size={20} />
     </button>
   );
 }

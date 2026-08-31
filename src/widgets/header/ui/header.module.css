@@ -63,7 +63,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 24rem;
+  max-width: 30rem;
 }
 
 .searchRoot {
@@ -88,9 +88,9 @@
 }
 
 .searchShell:focus-within {
-  border-color: var(--color-focus);
+  border-color: var(--color-primary-action);
   outline: 0;
-  box-shadow: inset 0 0 0 1px var(--color-focus);
+  box-shadow: 0 0 0 1px var(--color-primary-action);
 }
 
 .searchShellOpen {
@@ -188,6 +188,11 @@
 
 .searchSubmit:hover {
   background: var(--color-primary-action-hover);
+}
+
+.searchSubmit:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus);
+  outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
 @keyframes search-spinner {
@@ -303,11 +308,6 @@
   gap: var(--space-2);
 }
 
-.favoriteGlyph {
-  font-size: var(--font-size-xl);
-  line-height: 1;
-}
-
 .actionLink {
   position: relative;
   display: inline-flex;
@@ -368,7 +368,7 @@
 .drawer {
   display: flex;
   flex-direction: column;
-  width: min(20rem, 85vw);
+  width: min(24rem, 100vw);
   height: 100%;
   background: var(--color-surface);
   box-shadow: var(--shadow-dialog);
@@ -430,6 +430,18 @@
   transition:
     background-color var(--transition-fast),
     color var(--transition-fast);
+}
+
+.drawerCatalogTrigger {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.drawerLinkArrow {
+  margin-left: auto;
 }
 
 .drawerLink:hover {
@@ -518,8 +530,8 @@
 
   .search {
     order: 2;
-    flex: 1 1 20rem;
-    max-width: 24rem;
+    flex: 1 1 18rem;
+    max-width: 28rem;
     margin-inline: 0;
   }
 
@@ -535,6 +547,7 @@
 
 @media (min-width: 80rem) {
   .search {
-    flex-basis: 20rem;
+    flex-basis: 30rem;
+    max-width: 30rem;
   }
 }

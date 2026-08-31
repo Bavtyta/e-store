@@ -29,22 +29,33 @@
   --color-error: #ba1a1a;
   --color-error-hover: #9a3412;
   --color-error-surface: #ffdad6;
-  /* Interactive yellow stays a visual accent; readable copy remains dark on light surfaces. */
+  /* Semantic interaction roles: yellow fill is reserved for primary actions and selection. */
+  --color-primary-action: var(--color-accent);
+  --color-primary-action-hover: var(--color-accent-hover);
+  --color-primary-action-active: var(--color-accent-hover);
+  --color-navigation-hover-surface: var(--color-surface-subtle);
+  --color-navigation-active-surface: var(--color-surface-container);
+  --color-navigation-hover-text: var(--color-text-primary);
+  --color-navigation-accent: var(--color-accent);
+  --color-control-border: var(--color-border);
+  --color-control-border-hover: var(--color-accent);
+  --color-control-border-focus: var(--color-accent);
+  --color-footer-accent: var(--color-primary-fixed);
   --color-interactive-text-hover: var(--color-text-primary);
   --color-interactive-accent: var(--color-accent);
   --color-interactive-accent-hover: var(--color-accent-hover);
-  --color-interactive-surface-hover: var(--color-accent);
-  --color-interactive-surface-active: var(--color-accent-hover);
+  --color-interactive-surface-hover: var(--color-navigation-hover-surface);
+  --color-interactive-surface-active: var(--color-navigation-active-surface);
   --color-focus: var(--color-text-primary);
   --color-link: var(--color-accent-text);
   --color-link-hover: var(--color-interactive-text-hover);
   /* Semantic aliases shared by navigation, search, and primary controls. */
-  --color-control-border: var(--color-border);
-  --color-control-border-hover: var(--color-border-strong);
+  --color-control-border: var(--color-accent);
+  --color-control-border-hover: var(--color-accent-hover);
   --color-primary-action: var(--color-accent);
   --color-primary-action-hover: var(--color-accent-hover);
   --color-navigation-accent: var(--color-accent);
-  --color-navigation-active-surface: var(--color-primary-fixed);
+  --color-navigation-active-surface: var(--color-surface-container);
   --color-navigation-hover-surface: var(--color-surface-subtle);
   --color-navigation-hover-text: var(--color-text-primary);
   --color-overlay: rgb(20 27 43 / 68%);

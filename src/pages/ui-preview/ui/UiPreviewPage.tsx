@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { appConfig } from '@/shared/config';
 import { classNames, createPageMetadata, PageMetadata } from '@/shared/lib';
 import {
+  AlertIcon,
   Badge,
   Button,
   Card,
+  CloseIcon,
   Container,
   Dialog,
   EmptyState,
@@ -14,6 +16,7 @@ import {
   ImagePlaceholder,
   Input,
   NumberInput,
+  PlusIcon,
   Skeleton,
   Toast,
 } from '@/shared/ui';
@@ -95,12 +98,14 @@ export function UiPreviewPage() {
                   <Button isLoading>Загрузка</Button>
                 </div>
                 <div className={styles.row}>
-                  <IconButton label="Добавить">+</IconButton>
+                  <IconButton label="Добавить">
+                    <PlusIcon />
+                  </IconButton>
                   <IconButton label="Закрыть" variant="ghost">
-                    ×
+                    <CloseIcon />
                   </IconButton>
                   <IconButton disabled label="Недоступное действие">
-                    ?
+                    <AlertIcon />
                   </IconButton>
                   <Badge>Нейтрально</Badge>
                   <Badge tone="success">Успешно</Badge>

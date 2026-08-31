@@ -1,0 +1,331 @@
+.desktopRoot {
+  display: flex;
+  align-items: stretch;
+}
+.trigger {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+.trigger.triggerActive,
+.trigger.triggerOpen {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-navigation-accent);
+}
+.trigger.triggerOpen {
+  background: var(--color-navigation-hover-surface);
+}
+.backdrop {
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 100vh;
+  background: rgb(20 27 43 / 18%);
+}
+
+.megaPanel {
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  left: 50%;
+  width: min(calc(100vw - 2 * var(--container-gutter)), 56rem);
+  max-height: calc(100dvh - 5rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: 0 1rem 2.5rem rgb(20 27 43 / 14%);
+  transform: translateX(-50%);
+  animation: catalog-enter var(--transition-fast) ease-out both;
+}
+.megaHeading {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.megaHeading h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.02em;
+}
+.allCatalogLink,
+.categoryContentHeading > a {
+  display: inline-flex;
+  min-height: var(--control-height-sm);
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.allCatalogLink {
+  align-self: flex-end;
+  min-height: 2.25rem;
+  margin-top: auto;
+  padding-inline: var(--space-3);
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-bottom: 2px solid var(--color-navigation-accent);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+.allCatalogLink:hover,
+.allCatalogLink:focus-visible,
+.categoryContentHeading > a:hover,
+.categoryContentHeading > a:focus-visible {
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+}
+.allCatalogLink:hover,
+.allCatalogLink:focus-visible {
+  border-color: var(--color-navigation-accent);
+}
+
+.catalogExplorer {
+  display: grid;
+  height: 13.5rem;
+  grid-template-columns: 13.5rem minmax(0, 1fr);
+}
+.rootCategoryList,
+.childList,
+.mobileRootList,
+.mobileChildList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rootCategoryList {
+  padding: var(--space-2);
+  overflow: auto;
+  background: var(--color-surface-subtle);
+  border-right: 1px solid var(--color-border);
+}
+.rootCategoryList a {
+  display: grid;
+  min-height: 2.5rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-text-primary);
+  border-left: 3px solid transparent;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-heading);
+  text-decoration: none;
+}
+.rootCategoryList a:hover,
+.rootCategoryList a:focus-visible,
+.rootCategoryList .rootCategoryActive {
+  color: var(--color-navigation-hover-text);
+  background: var(--color-surface);
+  border-left-color: var(--color-navigation-accent);
+}
+.categoryContent {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: var(--space-3);
+  overflow: auto;
+}
+.categoryContentHeading {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.categoryContentHeading h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.02em;
+}
+.childList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+.childList a {
+  display: grid;
+  min-height: 2.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-text-primary);
+  background: var(--color-surface-subtle);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+}
+.childList a:hover,
+.childList a:focus-visible {
+  border-color: var(--color-navigation-accent);
+  background: var(--color-navigation-hover-surface);
+}
+.categoryEmpty,
+.state {
+  margin: 0;
+  padding: var(--space-6);
+  color: var(--color-text-secondary);
+}
+.categoryEmpty {
+  max-width: 36rem;
+  padding: var(--space-4) 0;
+}
+.state {
+  grid-column: 1 / -1;
+}
+.catalogFallback {
+  display: flex;
+  min-width: 0;
+  grid-column: 1 / -1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-4);
+}
+.catalogFallback .state {
+  padding: var(--space-2) 0;
+}
+.catalogFallback .allCatalogLink {
+  align-self: flex-end;
+}
+
+.mobileCatalog {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.mobileCatalogHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 3.5rem;
+  padding-inline: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+.mobileCatalogHeader button {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  padding: 0 var(--space-2) 0 0;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 0;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+.mobileCatalogHeader strong {
+  max-width: 12rem;
+  grid-column: 2;
+  overflow: hidden;
+  font-size: var(--font-size-md);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mobileCatalogNav {
+  min-height: 0;
+  padding: var(--space-3);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.mobileAllCatalog,
+.mobileRootList a,
+.mobileRootList button,
+.mobileSectionLink,
+.mobileChildList a {
+  display: grid;
+  width: 100%;
+  min-height: 3rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.mobileAllCatalog {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-bottom: var(--space-3);
+  background: var(--color-surface-subtle);
+  border-left: 3px solid var(--color-navigation-accent);
+  font-weight: var(--font-weight-semibold);
+}
+.mobileRootList a,
+.mobileRootList button {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.mobileRootList li + li,
+.mobileChildList li + li {
+  border-top: 1px solid var(--color-border);
+}
+.mobileCategoryContent {
+  display: grid;
+  gap: var(--space-3);
+}
+.mobileSectionLink {
+  background: var(--color-navigation-hover-surface);
+  border-left: 3px solid var(--color-navigation-accent);
+  font-weight: var(--font-weight-semibold);
+}
+.mobileAllCatalog:hover,
+.mobileAllCatalog:focus-visible,
+.mobileRootList a:hover,
+.mobileRootList a:focus-visible,
+.mobileRootList button:hover,
+.mobileRootList button:focus-visible,
+.mobileSectionLink:hover,
+.mobileSectionLink:focus-visible,
+.mobileChildList a:hover,
+.mobileChildList a:focus-visible {
+  color: var(--color-navigation-hover-text);
+  background: var(--color-navigation-hover-surface);
+  box-shadow: inset 0 -2px var(--color-navigation-accent);
+}
+
+@keyframes catalog-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.25rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .megaPanel {
+    animation: none;
+  }
+}
+@media (min-width: 70rem) {
+  .mobileCatalog {
+    display: none;
+  }
+}
+@media (max-width: 69.9375rem) {
+  .desktopRoot {
+    display: none;
+  }
+}
