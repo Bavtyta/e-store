@@ -75,9 +75,8 @@ function HeroSection() {
         <div className={styles.heroLayout}>
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>
-              Трубы, фитинги <span className={styles.noBreak}>и РТИ</span>{' '}
-              <span className={styles.noBreak}>для ремонта</span>{' '}
-              <span className={styles.noBreak}>и монтажа</span>
+              <span className={styles.heroTitleLine}>Трубы, фитинги и РТИ</span>{' '}
+              <span className={styles.heroTitleLine}>для ремонта и монтажа</span>
             </h1>
             <p className={styles.heroText}>
               Подберите товар по материалу, диаметру и&nbsp;назначению. Сравните характеристики
@@ -85,13 +84,14 @@ function HeroSection() {
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.heroCta} to="/catalog">
-                Выбрать товар
+                <span>Выбрать товар</span>
+                <ArrowRightIcon size={18} />
               </Link>
             </div>
-            <p className={styles.heroTrust}>
-              Склад в&nbsp;Тольятти <span aria-hidden="true">·</span> Доставка по&nbsp;Самарской
-              области
-            </p>
+            <ul aria-label="Условия работы" className={styles.heroTrust}>
+              <li>Склад в&nbsp;Тольятти</li>
+              <li>Доставка по&nbsp;Самарской области</li>
+            </ul>
           </div>
         </div>
       </Container>

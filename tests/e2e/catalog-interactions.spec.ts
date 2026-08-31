@@ -249,7 +249,6 @@ test('keeps primary navigation labels accessible with decorative outline icons',
   const headerHeight = await page.locator('header').evaluate((header) => header.clientHeight);
 
   for (const item of [
-    { label: 'Каталог', path: '/catalog' },
     { label: 'Услуги', path: '/services' },
     { label: 'Доставка', path: '/delivery' },
     { label: 'Контакты', path: '/contacts' },
@@ -265,24 +264,29 @@ test('keeps primary navigation labels accessible with decorative outline icons',
     ).toBeTruthy();
   }
 
-  const catalogLink = navigation.getByRole('link', { name: 'Каталог' });
-  await catalogLink.focus();
-  await expect(catalogLink).toBeFocused();
-  expect(await catalogLink.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe(
-    'none',
-  );
-  await catalogLink.hover();
-  await expect(catalogLink).toHaveCSS('color', 'rgb(20, 27, 43)');
-  await expect(catalogLink).toHaveCSS('background-color', 'rgb(241, 243, 255)');
-  await expect(catalogLink).toHaveCSS('border-bottom-color', 'rgb(250, 204, 21)');
+  const catalogButton = navigation.getByRole('button', { name: 'Каталог' });
+  await expect(catalogButton.locator('svg[aria-hidden="true"]')).toHaveCount(1);
+  await expect(catalogButton.locator('svg')).toHaveAttribute('stroke', 'currentColor');
+  await expect(catalogButton.locator('svg')).toHaveAttribute('width', '18');
+  await catalogButton.focus();
+  await expect(catalogButton).toBeFocused();
+  expect(
+    await catalogButton.evaluate((element) => getComputedStyle(element).outlineStyle),
+  ).not.toBe('none');
+  await catalogButton.hover();
+  await expect(catalogButton).toHaveCSS('color', 'rgb(20, 27, 43)');
+  await expect(catalogButton).toHaveCSS('background-color', 'rgb(241, 243, 255)');
+  await catalogButton.click();
+  await expect(catalogButton).toHaveAttribute('aria-expanded', 'true');
+  await expect(catalogButton).toHaveCSS('border-bottom-color', 'rgb(250, 204, 21)');
   expect(await page.locator('header').evaluate((header) => header.clientHeight)).toBe(headerHeight);
 
   await page.goto('/catalog');
-  const activeCatalogLink = page
+  const activeCatalogButton = page
     .getByRole('navigation', { name: 'Основная навигация' })
-    .getByRole('link', { name: 'Каталог' });
+    .getByRole('button', { name: 'Каталог' });
   expect(
-    await activeCatalogLink.evaluate((element) => getComputedStyle(element).borderBottomColor),
+    await activeCatalogButton.evaluate((element) => getComputedStyle(element).borderBottomColor),
   ).toBe('rgb(250, 204, 21)');
 });
 
@@ -301,7 +305,7 @@ test('keeps mobile menu focus trapped and restores focus to the opener', async (
 
   await expect(dialog).toBeVisible();
   await expect(closeButton).toBeFocused();
-  await expect(dialog.getByRole('link', { name: 'Каталог' }).locator('svg')).toHaveCount(1);
+  await expect(dialog.getByRole('button', { name: 'Каталог' }).locator('svg')).toHaveCount(2);
 
   await page.keyboard.press('Shift+Tab');
   await expect(cartLink).toBeFocused();
@@ -372,7 +376,7 @@ test('uses the existing menu pattern for navigation at 1024px', async ({ page })
   await opener.click();
 
   const dialog = page.getByRole('dialog', { name: 'BELT' });
-  await expect(dialog.getByRole('link', { name: 'Каталог' })).toBeVisible();
+  await expect(dialog.getByRole('button', { name: 'Каталог' })).toBeVisible();
   await expect(dialog.getByRole('link', { name: 'Контакты' })).toBeVisible();
 });
 

@@ -8,7 +8,12 @@ function isCatalogPath(pathname: string): boolean {
   return pathname === '/catalog' || pathname.startsWith('/catalog/');
 }
 
-export function HeaderSearch() {
+interface HeaderSearchProps {
+  onOpen?: () => void;
+  shouldClose?: boolean;
+}
+
+export function HeaderSearch({ onOpen, shouldClose = false }: HeaderSearchProps = {}) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +33,22 @@ export function HeaderSearch() {
   }
 
   function openSearch(): void {
+    onOpen?.();
     updateOverlayTop();
     setIsOpen(true);
   }
+
+  useEffect(() => {
+    if (!shouldClose) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setIsOpen(false);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [shouldClose]);
 
   useEffect(() => {
     if (!isOpen) return;

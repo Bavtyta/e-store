@@ -6,6 +6,12 @@ export { Button, ButtonLink } from './button';
 export type { ButtonLinkProps, ButtonProps, ButtonSize, ButtonVariant } from './button';
 export { Card } from './card';
 export type { CardPadding, CardProps, CardVariant } from './card';
+export {
+  CollectionShowcase,
+  CollectionShowcaseGrid,
+  CollectionShowcaseSkeleton,
+  CollectionShowcaseState,
+} from './collection-showcase';
 export { Container } from './container';
 export type { ContainerProps, ContainerSize } from './container';
 export { Dialog } from './dialog';
@@ -25,14 +31,19 @@ export {
   CheckIcon,
   CloseIcon,
   DiscountTagIcon,
+  FittingIcon,
+  GasketIcon,
   Grid2x2Icon,
   HeartIcon,
   HomeIcon,
   ImageIcon,
+  InnerTubeIcon,
   InfoIcon,
   MapPinIcon,
   MenuIcon,
   MinusIcon,
+  PackageIcon,
+  PipeIcon,
   PhoneIcon,
   PlusIcon,
   SearchIcon,

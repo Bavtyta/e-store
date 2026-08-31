@@ -219,3 +219,51 @@ export function DiscountTagIcon({ size = 20, ...props }: BeltIconProps) {
     </svg>
   );
 }
+
+export function PipeIcon({ size = 20, ...props }: BeltIconProps) {
+  return (
+    <svg {...props} {...iconProps(size)}>
+      <ellipse cx="7" cy="12" rx="3.5" ry="6.5" />
+      <path d="M7 5.5h10c1.93 0 3.5 2.91 3.5 6.5s-1.57 6.5-3.5 6.5H7" />
+      <path d="M7 8.5c.83 0 1.5 1.57 1.5 3.5s-.67 3.5-1.5 3.5" />
+    </svg>
+  );
+}
+
+export function FittingIcon({ size = 20, ...props }: BeltIconProps) {
+  return (
+    <svg {...props} {...iconProps(size)}>
+      <path d="M4 6.5h16v5h-5.5v8h-5v-8H4v-5Z" />
+      <path d="M7 6.5v5M17 6.5v5M9.5 15.5h5" />
+    </svg>
+  );
+}
+
+export function GasketIcon({ size = 20, ...props }: BeltIconProps) {
+  return (
+    <svg {...props} {...iconProps(size)}>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 3.5v4M12 16.5v4" />
+    </svg>
+  );
+}
+
+export function InnerTubeIcon({ size = 20, ...props }: BeltIconProps) {
+  return (
+    <svg {...props} {...iconProps(size)}>
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="4" />
+      <path d="m15.7 4.9 1.2-2.4M16.4 3.5l1.8.9" />
+    </svg>
+  );
+}
+
+export function PackageIcon({ size = 20, ...props }: BeltIconProps) {
+  return (
+    <svg {...props} {...iconProps(size)}>
+      <path d="m4 7 8-4 8 4-8 4-8-4Z" />
+      <path d="M4 7v10l8 4 8-4V7M12 11v10M8 5l8 4" />
+    </svg>
+  );
+}

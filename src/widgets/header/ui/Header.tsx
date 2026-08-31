@@ -2,6 +2,8 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
 
 import { selectCartLineCount, useCartHydration, useCartStore } from '@/entities/cart';
+import { useCategoriesQuery } from '@/entities/category';
+import type { Category } from '@/entities/category';
 import {
   selectFavoriteCount,
   useFavoritesHydration,
@@ -9,6 +11,7 @@ import {
 } from '@/features/favorites';
 import { getFocusableElements } from '@/shared/lib';
 import {
+  ArrowRightIcon,
   CartIcon,
   CloseIcon,
   Container,
@@ -22,6 +25,7 @@ import {
   WrenchIcon,
 } from '@/shared/ui';
 
+import { DesktopCatalogMenu, MobileCatalogMenu } from './CatalogMenu';
 import { HeaderSearch } from './HeaderSearch';
 import styles from './header.module.css';
 
@@ -34,22 +38,36 @@ function BrandMark() {
 }
 
 const NAV_ITEMS = [
-  { icon: Grid2x2Icon, label: 'Каталог', to: '/catalog' },
   { icon: WrenchIcon, label: 'Услуги', to: '/services' },
   { icon: TruckIcon, label: 'Доставка', to: '/delivery' },
   { icon: PhoneIcon, label: 'Контакты', to: '/contacts' },
 ] as const;
 
 interface MobileMenuProps {
+  categories: readonly Category[];
+  categoriesError: boolean;
+  categoriesPending: boolean;
   drawerId: string;
   isOpen: boolean;
   onClose: () => void;
   titleId: string;
 }
 
-function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
+function MobileMenu({
+  categories,
+  categoriesError,
+  categoriesPending,
+  drawerId,
+  isOpen,
+  onClose,
+  titleId,
+}: MobileMenuProps) {
+  const [view, setView] = useState<'catalog' | 'main'>('main');
+  const mobileCatalogId = useId();
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const closeReference = useRef<HTMLButtonElement | null>(null);
+  const catalogBackReference = useRef<HTMLButtonElement | null>(null);
+  const catalogTriggerReference = useRef<HTMLButtonElement | null>(null);
   const openerReference = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -65,6 +83,15 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
 
     function handleKeyDown(event: globalThis.KeyboardEvent) {
       if (event.key === 'Escape') {
+        if (view === 'catalog') {
+          event.preventDefault();
+          setView('main');
+          window.setTimeout(() => {
+            catalogTriggerReference.current?.focus();
+          }, 0);
+          return;
+        }
+
         onClose();
         return;
       }
@@ -103,7 +130,7 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
       openerReference.current?.focus();
       openerReference.current = null;
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, view]);
 
   function handleBackdropClick(event: React.MouseEvent<HTMLDivElement>) {
     if (event.target === event.currentTarget) onClose();
@@ -135,49 +162,84 @@ function MobileMenu({ drawerId, isOpen, onClose, titleId }: MobileMenuProps) {
             <CloseIcon size={24} />
           </button>
         </div>
-        <nav aria-label="Мобильное меню" className={styles.drawerNav}>
-          {NAV_ITEMS.map((item) => (
+        {view === 'main' ? (
+          <nav aria-label="Мобильное меню" className={styles.drawerNav}>
+            <button
+              aria-controls={mobileCatalogId}
+              aria-expanded="false"
+              className={[styles.drawerLink, styles.drawerCatalogTrigger].join(' ')}
+              onClick={() => {
+                setView('catalog');
+                window.setTimeout(() => {
+                  catalogBackReference.current?.focus();
+                }, 0);
+              }}
+              ref={catalogTriggerReference}
+              type="button"
+            >
+              <Grid2x2Icon size={20} />
+              <span>Каталог</span>
+              <ArrowRightIcon className={styles.drawerLinkArrow} size={16} />
+            </button>
+
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                className={({ isActive }) =>
+                  [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
+                }
+                key={item.to}
+                onClick={onClose}
+                to={item.to}
+              >
+                <item.icon size={20} />
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+
             <NavLink
               className={({ isActive }) =>
                 [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
               }
-              key={item.to}
               onClick={onClose}
-              to={item.to}
+              to="/favorites"
             >
-              <item.icon size={20} />
-              <span>{item.label}</span>
+              Избранное
             </NavLink>
-          ))}
-
-          <NavLink
-            className={({ isActive }) =>
-              [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
-            }
-            onClick={onClose}
-            to="/favorites"
-          >
-            Избранное
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
-            }
-            onClick={onClose}
-            to="/login"
-          >
-            Профиль
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
-            }
-            onClick={onClose}
-            to="/cart"
-          >
-            Корзина
-          </NavLink>
-        </nav>
+            <NavLink
+              className={({ isActive }) =>
+                [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
+              }
+              onClick={onClose}
+              to="/login"
+            >
+              Профиль
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                [styles.drawerLink, isActive ? styles.drawerLinkActive : ''].join(' ').trim()
+              }
+              onClick={onClose}
+              to="/cart"
+            >
+              Корзина
+            </NavLink>
+          </nav>
+        ) : (
+          <MobileCatalogMenu
+            backButtonRef={catalogBackReference}
+            categories={categories}
+            id={mobileCatalogId}
+            isError={categoriesError}
+            isPending={categoriesPending}
+            onBack={() => {
+              setView('main');
+              window.setTimeout(() => {
+                catalogTriggerReference.current?.focus();
+              }, 0);
+            }}
+            onNavigate={onClose}
+          />
+        )}
       </div>
     </div>
   );
@@ -188,6 +250,8 @@ export function Header() {
   useFavoritesHydration();
   const cartLineCount = useCartStore(selectCartLineCount);
   const favoriteCount = useFavoritesStore(selectFavoriteCount);
+  const categoriesQuery = useCategoriesQuery();
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const drawerId = useId();
@@ -195,6 +259,15 @@ export function Header() {
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
+  }, []);
+
+  const closeCatalog = useCallback(() => {
+    setIsCatalogOpen(false);
+  }, []);
+
+  const handleCatalogOpenChange = useCallback((isOpen: boolean) => {
+    setIsCatalogOpen(isOpen);
+    if (isOpen) setIsMenuOpen(false);
   }, []);
 
   const cartCountText = cartLineCount > 99 ? '99+' : String(cartLineCount);
@@ -212,6 +285,7 @@ export function Header() {
           className={styles.burger}
           label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
           onClick={() => {
+            setIsCatalogOpen(false);
             setIsMenuOpen((previous) => !previous);
           }}
           variant="ghost"
@@ -222,6 +296,16 @@ export function Header() {
         <BrandMark />
 
         <nav aria-label="Основная навигация" className={styles.nav}>
+          <DesktopCatalogMenu
+            categories={categoriesQuery.data ?? []}
+            currentPath={location.pathname}
+            isActive={location.pathname === '/catalog' || location.pathname.startsWith('/catalog/')}
+            isError={categoriesQuery.isError}
+            isOpen={isCatalogOpen}
+            isPending={categoriesQuery.isPending}
+            onNavigate={closeCatalog}
+            onOpenChange={handleCatalogOpenChange}
+          />
           {NAV_ITEMS.map((item) => (
             <NavLink
               className={({ isActive }) =>
@@ -237,7 +321,7 @@ export function Header() {
         </nav>
 
         <div className={styles.search}>
-          <HeaderSearch />
+          <HeaderSearch onOpen={closeCatalog} shouldClose={isCatalogOpen || isMenuOpen} />
         </div>
 
         <div className={styles.actions}>
@@ -279,13 +363,17 @@ export function Header() {
           </NavLink>
         </div>
       </Container>
-      <MobileMenu
-        drawerId={drawerId}
-        isOpen={isMenuOpen}
-        key={location.key}
-        onClose={closeMenu}
-        titleId={drawerTitleId}
-      />
+      {isMenuOpen ? (
+        <MobileMenu
+          categories={categoriesQuery.data ?? []}
+          categoriesError={categoriesQuery.isError}
+          categoriesPending={categoriesQuery.isPending}
+          drawerId={drawerId}
+          isOpen
+          onClose={closeMenu}
+          titleId={drawerTitleId}
+        />
+      ) : null}
     </header>
   );
 }

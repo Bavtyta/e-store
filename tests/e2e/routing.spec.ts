@@ -74,7 +74,8 @@ test('opens a product from the catalog, changes its variant and handles 404', as
     }),
   ).toBeVisible();
 
-  await page.getByRole('link', { name: 'Каталог' }).first().click();
+  await page.getByRole('button', { name: 'Каталог' }).click();
+  await page.getByRole('link', { name: 'Смотреть весь каталог' }).click();
   await expect(page.getByRole('heading', { name: 'Каталог товаров' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2 }).first()).toBeVisible();
 

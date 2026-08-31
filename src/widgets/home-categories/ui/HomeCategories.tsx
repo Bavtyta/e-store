@@ -24,9 +24,27 @@ export function HomeCategories() {
 
   if (query.isPending) {
     return (
-      <section className={styles.section}>
+      <section aria-labelledby="home-categories-title" className={styles.section}>
         <div className={styles.container}>
-          <Skeleton height="12rem" label="Загрузка категорий" variant="rectangle" />
+          <h2 className={styles.sectionTitle} id="home-categories-title">
+            Категории
+          </h2>
+          <div
+            aria-busy="true"
+            aria-label="Загрузка категорий"
+            className={styles.categoriesGrid}
+            role="status"
+          >
+            {Array.from({ length: 4 }, (_, index) => (
+              <Skeleton
+                height="13rem"
+                isDecorative
+                key={index}
+                label="Загрузка категории"
+                variant="rectangle"
+              />
+            ))}
+          </div>
         </div>
       </section>
     );
@@ -34,9 +52,11 @@ export function HomeCategories() {
 
   if (query.isError) {
     return (
-      <section className={styles.section}>
+      <section aria-labelledby="home-categories-title" className={styles.section}>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Категории</h2>
+          <h2 className={styles.sectionTitle} id="home-categories-title">
+            Категории
+          </h2>
           <p className={styles.sectionText}>Не удалось загрузить категории.</p>
         </div>
       </section>
@@ -53,9 +73,11 @@ export function HomeCategories() {
   }
 
   return (
-    <section className={styles.section}>
+    <section aria-labelledby="home-categories-title" className={styles.section}>
       <div className={styles.container}>
-        <h2 className={styles.sectionTitle}>Категории</h2>
+        <h2 className={styles.sectionTitle} id="home-categories-title">
+          Категории
+        </h2>
         <div className={styles.categoriesGrid}>
           {categories.map((category) => (
             <Link className={styles.categoryCard} key={category.id} to={category.path}>
