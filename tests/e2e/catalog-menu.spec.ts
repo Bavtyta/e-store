@@ -169,10 +169,10 @@ test.describe('desktop catalog mega menu', () => {
         };
       });
 
-      expect(geometry.panelWidth).toBeLessThanOrEqual(1024);
-      expect(geometry.leftWidth).toBeLessThanOrEqual(232);
-      expect(geometry.childWidth).toBeLessThan(260);
-      expect(geometry.height).toBeLessThan(320);
+      expect(geometry.panelWidth).toBeLessThanOrEqual(896);
+      expect(geometry.leftWidth).toBeLessThanOrEqual(216);
+      expect(geometry.childWidth).toBeLessThan(230);
+      expect(geometry.height).toBeLessThan(280);
     });
   }
 });
